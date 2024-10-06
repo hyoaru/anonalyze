@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ThreadController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -13,3 +14,6 @@ Route::prefix('/auth')->group(function () {
     Route::post('/sign-up', [AuthController::class, 'sign_up']);
     Route::post('/sign-out', [AuthController::class, 'sign_out'])->middleware('auth:sanctum');
 });
+
+
+Route::apiResource('threads', ThreadController::class);

@@ -4,16 +4,18 @@ namespace App\Policies;
 
 use App\Models\Thread;
 use App\Models\User;
+use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Auth\Access\Response;
 
 class ThreadPolicy
 {
+    use HandlesAuthorization;
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -21,7 +23,7 @@ class ThreadPolicy
      */
     public function view(User $user, Thread $thread): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -29,7 +31,7 @@ class ThreadPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -37,7 +39,7 @@ class ThreadPolicy
      */
     public function update(User $user, Thread $thread): bool
     {
-        //
+        return $user->id === $thread->user->id;
     }
 
     /**
@@ -45,7 +47,7 @@ class ThreadPolicy
      */
     public function delete(User $user, Thread $thread): bool
     {
-        //
+        return $user->id === $thread->user->id;
     }
 
     /**
@@ -53,7 +55,7 @@ class ThreadPolicy
      */
     public function restore(User $user, Thread $thread): bool
     {
-        //
+        return $user->id === $thread->user->id;
     }
 
     /**
@@ -61,6 +63,6 @@ class ThreadPolicy
      */
     public function forceDelete(User $user, Thread $thread): bool
     {
-        //
+        return $user->id === $thread->user->id;
     }
 }

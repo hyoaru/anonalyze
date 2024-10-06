@@ -2,18 +2,37 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreThreadRequest;
-use App\Http\Requests\UpdateThreadRequest;
-use App\Models\Thread;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class ThreadController extends Controller
+use App\Models\Thread;
+use App\Http\Requests\Threads\StoreThreadRequest;
+use App\Http\Requests\Threads\UpdateThreadRequest;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+
+class ThreadController extends Controller implements HasMiddleware
 {
+    use AuthorizesRequests;
+
+    public static function middleware()
+    {
+        return [
+            new Middleware('auth:sanctum', except: [
+                'index', 'show'
+            ])
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $response = [
+            'data' => Thread::all()
+        ];
+
+        return $response;
     }
 
     /**
@@ -21,7 +40,12 @@ class ThreadController extends Controller
      */
     public function store(StoreThreadRequest $request)
     {
-        //
+        $validatedData = $request->validated();
+        $user = $request->user();
+        $thread = $user->threads()->create($validatedData);
+        $response = ['data' => $thread];
+
+        return $response;
     }
 
     /**
@@ -29,7 +53,8 @@ class ThreadController extends Controller
      */
     public function show(Thread $thread)
     {
-        //
+        $response = ['data' => $thread];
+        return $response;
     }
 
     /**
@@ -37,7 +62,12 @@ class ThreadController extends Controller
      */
     public function update(UpdateThreadRequest $request, Thread $thread)
     {
-        //
+        $this->authorize('update', $thread);
+        $validatedData = $request->validated();
+        $thread->update($validatedData);
+        $response = ['data' => $thread];
+
+        return $response;
     }
 
     /**
@@ -45,6 +75,11 @@ class ThreadController extends Controller
      */
     public function destroy(Thread $thread)
     {
-        //
+        $this->authorize('delete', $thread);
+        $thread->delete();
+        $response = ['data' => $thread];
+
+        return $response;
+
     }
 }
