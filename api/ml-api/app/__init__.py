@@ -13,8 +13,6 @@ from app.api.namespaces.concept import ns as ns_concept
 from app.instances import api
 
 def create_app():
-    initalize_resource()    
-
     ModelSentiment._initialize()
     ModelEmotion._initialize()
     
@@ -30,10 +28,12 @@ def create_app():
 
     return app
 
-def initalize_resource():
-    path = nltk.data.find('corpora')
-    nltk_resource = ['stopwords', 'wordnet']
-    for resource in nltk_resource:
-        if f"{resource}.zip" not in os.listdir(path):
-            download_nltk_resource('stopwords')
-            download_nltk_resource('wordnet')
+def initalize_nltk_resource():
+    nltk_resources = [ 
+        "stopwords", "wordnet", "punkt", "punkt_tab", "omw-1.4",
+        "averaged_perceptron_tagger", "averaged_perceptron_tagger_eng", 
+        "maxent_ne_chunker", "words", "maxent_ne_chunker_tab", "tagsets",
+        "tagsets_json", ]
+
+    for resource in nltk_resources:
+        nltk.download(resource)
