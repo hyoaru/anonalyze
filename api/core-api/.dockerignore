@@ -1,0 +1,96 @@
+# Ignore the .env file for security purposes, but copy over a template if needed
+.env
+
+# Node modules and vendor
+/node_modules
+/public/hot
+/public/storage
+/storage/*.key
+/vendor
+/resources/assets/js/manifest.js
+/resources/assets/sass/_variables.scss
+
+# Ignore all hidden files and folders except .env.example (common in development)
+/.*
+!.env.example
+!.dockerignore
+!.gitignore
+
+# Ignore OS generated files
+*.DS_Store
+*.AppleDouble
+*.LSOverride
+
+# Thumbnails
+._*
+
+# Directories for caches, logs, and build artifacts
+/storage/logs
+/storage/framework/cache
+/storage/framework/sessions
+/storage/framework/testing
+/storage/framework/views
+
+# Exclude compiled assets
+/public/mix-manifest.json
+/public/css
+/public/js
+/public/images
+/public/fonts
+/public/favicon.ico
+
+# Exclude Composer and NPM/Yarn dependencies (because they will be installed in the Docker container)
+/vendor
+/node_modules
+
+# Exclude Docker build-related files
+/docker-compose.yml
+/Dockerfile
+# Ignore the .env file for security purposes, but copy over a template if needed
+.env
+
+# Node modules and vendor
+/node_modules
+/public/hot
+/public/storage
+/storage/*.key
+/vendor
+/resources/assets/js/manifest.js
+/resources/assets/sass/_variables.scss
+
+# Ignore all hidden files and folders except .env.example (common in development)
+/.*
+!.env.example
+!.dockerignore
+!.gitignore
+
+# Ignore OS generated files
+*.DS_Store
+*.AppleDouble
+*.LSOverride
+
+# Thumbnails
+._*
+
+# Directories for caches, logs, and build artifacts
+/storage/logs
+/storage/framework/cache
+/storage/framework/sessions
+/storage/framework/testing
+/storage/framework/views
+
+# Exclude compiled assets
+/public/mix-manifest.json
+/public/css
+/public/js
+/public/images
+/public/fonts
+/public/favicon.ico
+
+# Exclude Composer and NPM/Yarn dependencies (because they will be installed in the Docker container)
+/vendor
+/node_modules
+
+# Exclude Docker build-related files
+/docker-compose.yml
+/Dockerfile
