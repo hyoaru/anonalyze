@@ -60,6 +60,9 @@ class AuthController extends Controller
 
     public function sign_out(Request $request)
     {
-        return 'sign-out';
+        $user = $request->user();
+        $user->tokens()->delete();
+
+        return $user;
     }
 }
