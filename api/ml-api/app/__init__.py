@@ -36,4 +36,4 @@ def initalize_nltk_resource():
         "tagsets_json", ]
 
     for resource in nltk_resources:
-        nltk.download(resource)
+        nltk.download(resource, quiet=True)
