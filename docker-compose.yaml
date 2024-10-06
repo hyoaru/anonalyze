@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  flask-ml-api:
+    build: ./api/ml-api
+    container_name: ml_api
+    volumes:
+      - ./api/ml-api:/app
+    ports:
+      - "8000:8000"
