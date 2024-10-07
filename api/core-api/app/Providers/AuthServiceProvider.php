@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
+use App\Models\Emotion;
 use App\Models\Post;
 use App\Models\Thread;
 use App\Models\ThreadSummary;
+use App\Policies\EmotionPolicy;
 use App\Policies\PostPolicy;
 use App\Policies\ThreadPolicy;
 use App\Policies\ThreadSummaryPolicy;
@@ -16,6 +18,7 @@ class AuthServiceProvider extends ServiceProvider
         Thread::class => ThreadPolicy::class,
         ThreadSummary::class => ThreadSummaryPolicy::class,
         Post::class => PostPolicy::class,
+        Emotion::class => EmotionPolicy::class,
     ];
 
     /**

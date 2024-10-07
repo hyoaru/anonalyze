@@ -4,16 +4,19 @@ namespace App\Policies;
 
 use App\Models\Emotion;
 use App\Models\User;
+use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Auth\Access\Response;
 
 class EmotionPolicy
 {
+    use HandlesAuthorization;
+
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -21,7 +24,7 @@ class EmotionPolicy
      */
     public function view(User $user, Emotion $emotion): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -29,7 +32,7 @@ class EmotionPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return false;
     }
 
     /**
@@ -37,7 +40,7 @@ class EmotionPolicy
      */
     public function update(User $user, Emotion $emotion): bool
     {
-        //
+        return false;
     }
 
     /**
@@ -45,7 +48,7 @@ class EmotionPolicy
      */
     public function delete(User $user, Emotion $emotion): bool
     {
-        //
+        return false;
     }
 
     /**
@@ -53,7 +56,7 @@ class EmotionPolicy
      */
     public function restore(User $user, Emotion $emotion): bool
     {
-        //
+        return false;
     }
 
     /**
@@ -61,6 +64,6 @@ class EmotionPolicy
      */
     public function forceDelete(User $user, Emotion $emotion): bool
     {
-        //
+        return false;
     }
 }
