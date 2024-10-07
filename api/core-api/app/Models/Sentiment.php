@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Sentiment extends Model
 {
     use HasFactory;
+
+    protected $table = 'sentiments';
 }

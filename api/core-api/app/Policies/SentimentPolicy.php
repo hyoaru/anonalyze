@@ -4,16 +4,18 @@ namespace App\Policies;
 
 use App\Models\Sentiment;
 use App\Models\User;
+use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Auth\Access\Response;
 
 class SentimentPolicy
 {
+    use HandlesAuthorization;
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -21,7 +23,7 @@ class SentimentPolicy
      */
     public function view(User $user, Sentiment $sentiment): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -29,7 +31,7 @@ class SentimentPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return false;
     }
 
     /**
@@ -37,7 +39,7 @@ class SentimentPolicy
      */
     public function update(User $user, Sentiment $sentiment): bool
     {
-        //
+        return false;
     }
 
     /**
@@ -45,7 +47,7 @@ class SentimentPolicy
      */
     public function delete(User $user, Sentiment $sentiment): bool
     {
-        //
+        return false;
     }
 
     /**
@@ -53,7 +55,7 @@ class SentimentPolicy
      */
     public function restore(User $user, Sentiment $sentiment): bool
     {
-        //
+        return false;
     }
 
     /**
@@ -61,6 +63,6 @@ class SentimentPolicy
      */
     public function forceDelete(User $user, Sentiment $sentiment): bool
     {
-        //
+        return false;
     }
 }
