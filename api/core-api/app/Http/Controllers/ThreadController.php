@@ -18,7 +18,8 @@ class ThreadController extends Controller implements HasMiddleware
     {
         return [
             new Middleware('auth:sanctum', except: [
-                'index', 'show'
+                'index',
+                'show'
             ])
         ];
     }
@@ -28,9 +29,7 @@ class ThreadController extends Controller implements HasMiddleware
      */
     public function index()
     {
-        $response = [
-            'data' => Thread::all()
-        ];
+        $response = ['data' => Thread::with('threadSummary')->get()];
 
         return $response;
     }
@@ -80,6 +79,5 @@ class ThreadController extends Controller implements HasMiddleware
         $response = ['data' => $thread];
 
         return $response;
-
     }
 }

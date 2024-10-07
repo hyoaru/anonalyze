@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ThreadController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\ThreadSummaryController;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/user', function (Request $request) {
@@ -17,3 +17,4 @@ Route::prefix('/auth')->group(function () {
 
 
 Route::apiResource('threads', ThreadController::class);
+Route::apiResource('thread-summaries', ThreadSummaryController::class);
