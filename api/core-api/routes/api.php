@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\ThreadController;
 use App\Http\Controllers\ThreadSummaryController;
 use Illuminate\Support\Facades\Route;
@@ -18,3 +19,4 @@ Route::prefix('/auth')->group(function () {
 
 Route::apiResource('threads', ThreadController::class);
 Route::apiResource('thread-summaries', ThreadSummaryController::class);
+Route::apiResource('posts', PostController::class);
