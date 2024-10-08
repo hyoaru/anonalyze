@@ -4,12 +4,14 @@ namespace App\Providers;
 
 use App\Models\Emotion;
 use App\Models\Post;
+use App\Models\PostPredictedEmotion;
 use App\Models\PostPredictedSentiment;
 use App\Models\Sentiment;
 use App\Models\Thread;
 use App\Models\ThreadSummary;
 use App\Policies\EmotionPolicy;
 use App\Policies\PostPolicy;
+use App\Policies\PostPredictedEmotionPolicy;
 use App\Policies\PostPredictedSentimentPolicy;
 use App\Policies\SentimentPolicy;
 use App\Policies\ThreadPolicy;
@@ -25,6 +27,7 @@ class AuthServiceProvider extends ServiceProvider
         Emotion::class => EmotionPolicy::class,
         Sentiment::class => SentimentPolicy::class,
         PostPredictedSentiment::class => PostPredictedSentimentPolicy::class,
+        PostPredictedEmotion::class => PostPredictedEmotionPolicy::class,
     ];
 
     /**
