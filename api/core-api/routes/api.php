@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EmotionController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\PostPredictedSentimentController;
 use App\Http\Controllers\SentimentController;
 use App\Http\Controllers\ThreadController;
 use App\Http\Controllers\ThreadSummaryController;
@@ -24,3 +25,4 @@ Route::apiResource('thread-summaries', ThreadSummaryController::class);
 Route::apiResource('posts', PostController::class);
 Route::apiResource('emotions', EmotionController::class);
 Route::apiResource('sentiments', SentimentController::class);
+Route::apiResource('post-predicted-sentiments', PostPredictedSentimentController::class);

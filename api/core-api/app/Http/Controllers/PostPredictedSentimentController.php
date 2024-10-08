@@ -37,7 +37,10 @@ class PostPredictedSentimentController extends Controller implements HasMiddlewa
      */
     public function store(StorePostPredictedSentimentRequest $request)
     {
-        //   
+        $validatedData = $request->validated();
+        $postPredictedSentiment = PostPredictedSentiment::create($validatedData);
+        $response = ['data' => $postPredictedSentiment];
+        return $response;
     }
 
     /**
@@ -54,7 +57,12 @@ class PostPredictedSentimentController extends Controller implements HasMiddlewa
      */
     public function update(UpdatePostPredictedSentimentRequest $request, PostPredictedSentiment $postPredictedSentiment)
     {
-        //
+        $this->authorize('update', $postPredictedSentiment);
+
+        $validatedData = $request->validated();
+        $postPredictedSentiment->update($validatedData);
+        $response = ['data' => $postPredictedSentiment];
+        return $response;
     }
 
     /**
@@ -62,6 +70,10 @@ class PostPredictedSentimentController extends Controller implements HasMiddlewa
      */
     public function destroy(PostPredictedSentiment $postPredictedSentiment)
     {
-        //
+        $this->authorize('delete', $postPredictedSentiment);
+
+        $postPredictedSentiment->delete();
+        $response = ['data' => $postPredictedSentiment];
+        return $response;
     }
 }

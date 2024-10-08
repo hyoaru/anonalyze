@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class PostPredictedSentiment extends Model
@@ -19,5 +20,9 @@ class PostPredictedSentiment extends Model
 
     public function sentiment(): HasOne {
         return $this->hasOne(Sentiment::class);
+    }
+
+    public function postAnalytic(): BelongsTo {
+        return $this->belongsTo(PostAnalytic::class);
     }
 }
