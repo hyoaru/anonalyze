@@ -9,6 +9,7 @@ use App\Models\PostPredictedEmotion;
 use App\Models\PostPredictedSentiment;
 use App\Models\Sentiment;
 use App\Models\Thread;
+use App\Models\ThreadAnalytic;
 use App\Models\ThreadExtractedConcept;
 use App\Models\ThreadExtractedConceptGroup;
 use App\Models\ThreadSummary;
@@ -18,6 +19,7 @@ use App\Policies\PostPolicy;
 use App\Policies\PostPredictedEmotionPolicy;
 use App\Policies\PostPredictedSentimentPolicy;
 use App\Policies\SentimentPolicy;
+use App\Policies\ThreadAnalyticPolicy;
 use App\Policies\ThreadExtractedConceptGroupPolicy;
 use App\Policies\ThreadExtractedConceptPolicy;
 use App\Policies\ThreadPolicy;
@@ -37,6 +39,7 @@ class AuthServiceProvider extends ServiceProvider
         PostAnalytic::class => PostAnalyticPolicy::class,
         ThreadExtractedConceptGroup::class => ThreadExtractedConceptGroupPolicy::class,
         ThreadExtractedConcept::class => ThreadExtractedConceptPolicy::class,
+        ThreadAnalytic::class => ThreadAnalyticPolicy::class,
     ];
 
     /**
