@@ -19,7 +19,15 @@ class PredictEmotion(Resource):
         preprocessed_text = Preprocessor.process_text(text)
         predicted_value = ModelEmotion.predict(preprocessed_text)
 
-        return {"data": {"text": text, "predicted_value": predicted_value}}
+        return {
+            "data": {
+                "text": text,
+                "predicted_value": {
+                    "class": predicted_value[0],
+                    "probability": predicted_value[1],
+                },
+            }
+        }
 
 
 @ns.route("/model-info")

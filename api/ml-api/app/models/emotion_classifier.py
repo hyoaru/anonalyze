@@ -39,8 +39,13 @@ class ModelEmotion:
     ModelEmotion._initialize()
     vector = ModelEmotion._vectorize(text)
     vector = ModelEmotion._select_best_features(vector)
-    
-    return (
-      ModelEmotion
-      .emotion_label_description_map
-      .get(ModelEmotion.model_emotion.predict(vector)[0]))
+    target_classes = ModelEmotion.model_emotion.classes_
+
+    predicted_probabilities_map = dict(zip(
+      ModelEmotion.emotion_label_description_map.values(),
+      ModelEmotion.model_emotion.predict_proba(vector)[0]
+    ))
+
+    predicted_emotion = max(predicted_probabilities_map.items(), key=lambda x: x[1])
+
+    return predicted_emotion

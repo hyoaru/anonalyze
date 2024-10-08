@@ -36,8 +36,13 @@ class ModelSentiment:
 		ModelSentiment._initialize()
 		vector = ModelSentiment._vectorize(text)
 		vector = ModelSentiment._select_best_features(vector)
-		
-		return (
-			ModelSentiment
-			.sentiment_label_description_map
-			.get(ModelSentiment.model_sentiment.predict(vector)[0]))
+		target_classes = ModelSentiment.model_sentiment.classes_
+
+		predicted_probabilities_map = dict(zip(
+			ModelSentiment.sentiment_label_description_map.values(),
+			ModelSentiment.model_sentiment.predict_proba(vector)[0]
+		))
+
+		predicted_sentiment = max(predicted_probabilities_map.items(), key=lambda x: x[1])
+
+		return predicted_sentiment
