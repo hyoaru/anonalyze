@@ -5,9 +5,23 @@ namespace App\Http\Controllers;
 use App\Http\Requests\PostPredictedEmotions\StorePostPredictedEmotionRequest;
 use App\Http\Requests\PostPredictedEmotions\UpdatePostPredictedEmotionRequest;
 use App\Models\PostPredictedEmotion;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class PostPredictedEmotionController extends Controller
+class PostPredictedEmotionController extends Controller implements HasMiddleware
 {
+    use AuthorizesRequests;
+
+    public static function middleware()
+    {
+        return [
+            new Middleware('auth:sanctum', except: [
+                'index',
+                'show'
+            ])
+        ];
+    }
     /**
      * Display a listing of the resource.
      */
@@ -22,7 +36,10 @@ class PostPredictedEmotionController extends Controller
      */
     public function store(StorePostPredictedEmotionRequest $request)
     {
-        //
+        $validatedData = $request->validated();
+        $postPredictedEmotion = PostPredictedEmotion::create($validatedData);
+        $response = ['data' => $postPredictedEmotion];
+        return $response;
     }
 
     /**
@@ -39,7 +56,11 @@ class PostPredictedEmotionController extends Controller
      */
     public function update(UpdatePostPredictedEmotionRequest $request, PostPredictedEmotion $postPredictedEmotion)
     {
-        //
+        $this->authorize('update', $postPredictedEmotion);
+        $validatedData = $request->validated();
+        $postPredictedEmotion->update($validatedData);
+        $response = ['data' => $postPredictedEmotion];
+        return $response;
     }
 
     /**
@@ -47,6 +68,9 @@ class PostPredictedEmotionController extends Controller
      */
     public function destroy(PostPredictedEmotion $postPredictedEmotion)
     {
-        //
+        $this->authorize('delete', $postPredictedEmotion);
+        $postPredictedEmotion->delete();
+        $response = ['data' => $postPredictedEmotion];
+        return $response;
     }
 }
