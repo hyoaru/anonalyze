@@ -27,7 +27,7 @@ class ThreadExtractedConceptGroupController extends Controller implements HasMid
      */
     public function index()
     {
-        $response = ['data' => ThreadExtractedConceptGroup::all()];
+        $response = ['data' => ThreadExtractedConceptGroup::with('threadExtractedConcepts')->get()];
         return $response;
     }
 
