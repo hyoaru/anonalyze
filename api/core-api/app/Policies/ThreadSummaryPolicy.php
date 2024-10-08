@@ -40,7 +40,7 @@ class ThreadSummaryPolicy
      */
     public function update(User $user, ThreadSummary $threadSummary): bool
     {
-        return $threadSummary->thread->user === $user->id;
+        return true;
     }
 
     /**
@@ -48,7 +48,7 @@ class ThreadSummaryPolicy
      */
     public function delete(User $user, ThreadSummary $threadSummary): bool
     {
-        return $threadSummary->thread->user === $user->id;
+        return false;
     }
 
     /**
@@ -56,7 +56,7 @@ class ThreadSummaryPolicy
      */
     public function restore(User $user, ThreadSummary $threadSummary): bool
     {
-        return $threadSummary->thread->user === $user->id;
+        return false;
     }
 
     /**
@@ -64,6 +64,6 @@ class ThreadSummaryPolicy
      */
     public function forceDelete(User $user, ThreadSummary $threadSummary): bool
     {
-        return $threadSummary->thread->user === $user->id;
+        return false;
     }
 }

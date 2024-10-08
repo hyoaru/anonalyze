@@ -6,22 +6,10 @@ use App\Http\Requests\ThreadAnalytics\StoreThreadAnalyticRequest;
 use App\Http\Requests\ThreadAnalytics\UpdateThreadAnalyticRequest;
 use App\Models\ThreadAnalytic;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Routing\Controllers\Middleware;
 
-class ThreadAnalyticController extends Controller implements HasMiddleware
+class ThreadAnalyticController extends Controller
 {
     use AuthorizesRequests;
-
-    public static function middleware()
-    {
-        return [
-            new Middleware('auth:sanctum', except: [
-                'index',
-                'show'
-            ])
-        ];
-    }
 
     /**
      * Display a listing of the resource.

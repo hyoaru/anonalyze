@@ -6,22 +6,10 @@ use App\Http\Requests\ThreadSummaries\StoreThreadSummaryRequest;
 use App\Http\Requests\ThreadSummaries\UpdateThreadSummaryRequest;
 use App\Models\ThreadSummary;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Routing\Controllers\Middleware;
 
-class ThreadSummaryController extends Controller implements HasMiddleware
+class ThreadSummaryController extends Controller
 {
     use AuthorizesRequests;
-
-    public static function middleware()
-    {
-        return [
-            new Middleware('auth:sanctum', except: [
-                'index',
-                'show'
-            ])
-        ];
-    }
 
     /**
      * Display a listing of the resource.
@@ -38,12 +26,7 @@ class ThreadSummaryController extends Controller implements HasMiddleware
     public function store(StoreThreadSummaryRequest $request)
     {
         $validatedData = $request->validated();
-        $user = $request->user();
-        $thread = $user->threads()->findOrFail($validatedData['thread_id']);
-        $threadSummary = $thread->threadSummary()->create([
-            'summary' => $validatedData['summary']
-        ]);
-
+        $threadSummary = ThreadSummary::create($validatedData);
         $response = ['data' => $threadSummary];
         return $response;
     }

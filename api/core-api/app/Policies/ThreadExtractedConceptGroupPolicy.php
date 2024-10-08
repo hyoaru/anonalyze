@@ -39,7 +39,7 @@ class ThreadExtractedConceptGroupPolicy
      */
     public function update(User $user, ThreadExtractedConceptGroup $threadExtractedConceptGroup): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -47,7 +47,7 @@ class ThreadExtractedConceptGroupPolicy
      */
     public function delete(User $user, ThreadExtractedConceptGroup $threadExtractedConceptGroup): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -55,7 +55,7 @@ class ThreadExtractedConceptGroupPolicy
      */
     public function restore(User $user, ThreadExtractedConceptGroup $threadExtractedConceptGroup): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -63,6 +63,6 @@ class ThreadExtractedConceptGroupPolicy
      */
     public function forceDelete(User $user, ThreadExtractedConceptGroup $threadExtractedConceptGroup): bool
     {
-        return true;
+        return false;
     }
 }

@@ -6,22 +6,11 @@ use App\Http\Requests\ThreadExtractedConceptGroups\StoreThreadExtractedConceptGr
 use App\Http\Requests\ThreadExtractedConceptGroups\UpdateThreadExtractedConceptGroupRequest;
 use App\Models\ThreadExtractedConceptGroup;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Routing\Controllers\Middleware;
 
-class ThreadExtractedConceptGroupController extends Controller implements HasMiddleware
+class ThreadExtractedConceptGroupController extends Controller
 {
     use AuthorizesRequests;
 
-    public static function middleware()
-    {
-        return [
-            new Middleware('auth:sanctum', except: [
-                'index',
-                'show'
-            ])
-        ];
-    }
     /**
      * Display a listing of the resource.
      */
