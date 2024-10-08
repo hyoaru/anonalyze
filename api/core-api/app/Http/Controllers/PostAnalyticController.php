@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StorePostAnalyticRequest;
-use App\Http\Requests\UpdatePostAnalyticRequest;
+use App\Http\Requests\PostAnalytics\StorePostAnalyticRequest;
+use App\Http\Requests\PostAnalytics\UpdatePostAnalyticRequest;
 use App\Models\PostAnalytic;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Routing\Controllers\HasMiddleware;
@@ -13,14 +13,16 @@ class PostAnalyticController extends Controller implements HasMiddleware
 {
     use AuthorizesRequests;
 
-    public static function middleware() {
+    public static function middleware()
+    {
         return [
             new Middleware('auth:sanctum', except: [
-                'index', 'show'
+                'index',
+                'show'
             ])
         ];
     }
-    
+
     /**
      * Display a listing of the resource.
      */
@@ -35,7 +37,10 @@ class PostAnalyticController extends Controller implements HasMiddleware
      */
     public function store(StorePostAnalyticRequest $request)
     {
-        //
+        $validatedData = $request->validated();
+        $postAnalytic = PostAnalytic::create($validatedData);
+        $response = ['data' => $postAnalytic];
+        return $response;
     }
 
     /**
@@ -52,7 +57,11 @@ class PostAnalyticController extends Controller implements HasMiddleware
      */
     public function update(UpdatePostAnalyticRequest $request, PostAnalytic $postAnalytic)
     {
-        //
+        $this->authorize('update', $postAnalytic);
+        $validatedData = $request->validated();
+        $postAnalytic->update($validatedData);
+        $response = ['data' => $postAnalytic];
+        return $response;
     }
 
     /**
@@ -60,6 +69,9 @@ class PostAnalyticController extends Controller implements HasMiddleware
      */
     public function destroy(PostAnalytic $postAnalytic)
     {
-        //
+        $this->authorize('delete', $postAnalytic);
+        $postAnalytic->delete();
+        $response = ['data' => $postAnalytic];
+        return $response;
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\PostAnalytics;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -22,7 +22,9 @@ class StorePostAnalyticRequest extends FormRequest
     public function rules(): array
     {
         return [
-            
+            'post_id' => 'required:exists:posts,id',
+            'post_predicted_sentiment_id' => 'required|exists:post_predicted_sentiments,id',
+            'post_predicted_emotion_id' => 'required|exists:post_predicted_emotions,id',
         ];
     }
 }

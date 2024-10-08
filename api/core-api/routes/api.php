@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EmotionController;
+use App\Http\Controllers\PostAnalyticController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PostPredictedEmotionController;
 use App\Http\Controllers\PostPredictedSentimentController;
@@ -28,3 +29,4 @@ Route::apiResource('emotions', EmotionController::class);
 Route::apiResource('sentiments', SentimentController::class);
 Route::apiResource('post-predicted-sentiments', PostPredictedSentimentController::class);
 Route::apiResource('post-predicted-emotions', PostPredictedEmotionController::class);
+Route::apiResource('post-analytics', PostAnalyticController::class);
