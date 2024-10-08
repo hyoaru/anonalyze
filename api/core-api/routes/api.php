@@ -9,6 +9,7 @@ use App\Http\Controllers\PostPredictedSentimentController;
 use App\Http\Controllers\SentimentController;
 use App\Http\Controllers\ThreadController;
 use App\Http\Controllers\ThreadSummaryController;
+use App\Models\ThreadExtractedConceptGroup;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/user', function (Request $request) {
@@ -30,3 +31,4 @@ Route::apiResource('sentiments', SentimentController::class);
 Route::apiResource('post-predicted-sentiments', PostPredictedSentimentController::class);
 Route::apiResource('post-predicted-emotions', PostPredictedEmotionController::class);
 Route::apiResource('post-analytics', PostAnalyticController::class);
+Route::apiResource('thread-extracted-concept-group', ThreadExtractedConceptGroup::class);
