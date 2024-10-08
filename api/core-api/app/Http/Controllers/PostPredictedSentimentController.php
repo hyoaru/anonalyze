@@ -6,22 +6,10 @@ use App\Http\Requests\PostPredictedSentiments\StorePostPredictedSentimentRequest
 use App\Http\Requests\PostPredictedSentiments\UpdatePostPredictedSentimentRequest;
 use App\Models\PostPredictedSentiment;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Routing\Controllers\Middleware;
 
-class PostPredictedSentimentController extends Controller implements HasMiddleware
+class PostPredictedSentimentController extends Controller
 {
     use AuthorizesRequests;
-
-    public static function middleware()
-    {
-        return [
-            new Middleware('auth:sanctum', except: [
-                'index',
-                'show'
-            ])
-        ];
-    }
 
     /**
      * Display a listing of the resource.

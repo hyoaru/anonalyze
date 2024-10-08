@@ -39,7 +39,7 @@ class PostAnalyticPolicy
      */
     public function update(User $user, PostAnalytic $postAnalytic): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -47,7 +47,7 @@ class PostAnalyticPolicy
      */
     public function delete(User $user, PostAnalytic $postAnalytic): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -55,7 +55,7 @@ class PostAnalyticPolicy
      */
     public function restore(User $user, PostAnalytic $postAnalytic): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -63,6 +63,6 @@ class PostAnalyticPolicy
      */
     public function forceDelete(User $user, PostAnalytic $postAnalytic): bool
     {
-        return true;
+        return false;
     }
 }

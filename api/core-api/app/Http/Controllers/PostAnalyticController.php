@@ -6,22 +6,10 @@ use App\Http\Requests\PostAnalytics\StorePostAnalyticRequest;
 use App\Http\Requests\PostAnalytics\UpdatePostAnalyticRequest;
 use App\Models\PostAnalytic;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Routing\Controllers\Middleware;
 
-class PostAnalyticController extends Controller implements HasMiddleware
+class PostAnalyticController extends Controller
 {
     use AuthorizesRequests;
-
-    public static function middleware()
-    {
-        return [
-            new Middleware('auth:sanctum', except: [
-                'index',
-                'show'
-            ])
-        ];
-    }
 
     /**
      * Display a listing of the resource.
