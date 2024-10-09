@@ -15,31 +15,17 @@ class ThreadExtractedConceptGroupController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $response = ['data' => ThreadExtractedConceptGroup::with('threadExtractedConcepts')->get()];
-        return $response;
-    }
+    public function index() {}
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreThreadExtractedConceptGroupRequest $request)
-    {
-        $validatedData = $request->validated();
-        $threadExtractedConceptGroup = ThreadExtractedConceptGroup::created($validatedData);
-        $response = ['data' => $threadExtractedConceptGroup];
-        return $response;
-    }
+    public function store(StoreThreadExtractedConceptGroupRequest $request) {}
 
     /**
      * Display the specified resource.
      */
-    public function show(ThreadExtractedConceptGroup $threadExtractedConceptGroup)
-    {
-        $response = ['data' => $threadExtractedConceptGroup];
-        return $response;
-    }
+    public function show(ThreadExtractedConceptGroup $threadExtractedConceptGroup) {}
 
     /**
      * Update the specified resource in storage.
@@ -49,11 +35,5 @@ class ThreadExtractedConceptGroupController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ThreadExtractedConceptGroup $threadExtractedConceptGroup)
-    {
-        $this->authorize('delete', $threadExtractedConceptGroup);
-        $threadExtractedConceptGroup->delete();
-        $response = ['data' => $threadExtractedConceptGroup];
-        return $response;
-    }
+    public function destroy(ThreadExtractedConceptGroup $threadExtractedConceptGroup) {}
 }

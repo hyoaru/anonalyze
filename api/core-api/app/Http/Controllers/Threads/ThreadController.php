@@ -28,25 +28,12 @@ class ThreadController extends Controller implements HasMiddleware
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $response = ['data' => Thread::with('threadSummary')->get()];
-
-        return $response;
-    }
+    public function index() {}
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreThreadRequest $request)
-    {
-        $validatedData = $request->validated();
-        $user = $request->user();
-        $thread = $user->threads()->create($validatedData);
-        $response = ['data' => $thread];
-
-        return $response;
-    }
+    public function store(StoreThreadRequest $request) {}
 
     /**
      * Display the specified resource.

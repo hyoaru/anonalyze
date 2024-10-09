@@ -15,22 +15,12 @@ class ThreadSummaryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $response = ['data' => ThreadSummary::all()];
-        return $response;
-    }
+    public function index() {}
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreThreadSummaryRequest $request)
-    {
-        $validatedData = $request->validated();
-        $threadSummary = ThreadSummary::create($validatedData);
-        $response = ['data' => $threadSummary];
-        return $response;
-    }
+    public function store(StoreThreadSummaryRequest $request) {}
 
     /**
      * Display the specified resource.
@@ -44,24 +34,10 @@ class ThreadSummaryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateThreadSummaryRequest $request, ThreadSummary $threadSummary)
-    {
-        $this->authorize('update', $threadSummary);
-        $validatedData = $request->validated();
-        $threadSummary->update($validatedData);
-        $response = ['data' => $threadSummary];
-        return $response;
-    }
+    public function update(UpdateThreadSummaryRequest $request, ThreadSummary $threadSummary) {}
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ThreadSummary $threadSummary)
-    {
-        $this->authorize('delete', $threadSummary);
-        $threadSummary->delete();
-        $response = ['data' => $threadSummary];
-
-        return $response;
-    }
+    public function destroy(ThreadSummary $threadSummary) {}
 }

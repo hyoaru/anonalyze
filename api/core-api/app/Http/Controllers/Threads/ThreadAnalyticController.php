@@ -15,43 +15,30 @@ class ThreadAnalyticController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $response = ['data' => ThreadAnalytic::all()];
-        return $response;
-    }
+    public function index() {}
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreThreadAnalyticRequest $request)
-    {
-        $validatedData = $request->validated();
-        $threadAnalytic = ThreadAnalytic::create($validatedData);
-        $response = ['data' => $threadAnalytic];
-        return $response;
-    }
+    public function store(StoreThreadAnalyticRequest $request) {}
 
     /**
      * Display the specified resource.
      */
     public function show(ThreadAnalytic $threadAnalytic)
     {
-        $response = ['data' => $threadAnalytic];
+        $response = ['data' => $threadAnalytic->load([
+            'threadExtractedConceptGroup',
+            'threadExtractedConceptGroup.threadExtractedConcepts',
+        ])];
+
         return $response;
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateThreadAnalyticRequest $request, ThreadAnalytic $threadAnalytic)
-    {
-        $this->authorize('update', $threadAnalytic);
-        $validatedData = $request->validated();
-        $threadAnalytic->update($validatedData);
-        $response = ['data' => $threadAnalytic];
-        return $response;
-    }
+    public function update(UpdateThreadAnalyticRequest $request, ThreadAnalytic $threadAnalytic) {}
 
     /**
      * Remove the specified resource from storage.

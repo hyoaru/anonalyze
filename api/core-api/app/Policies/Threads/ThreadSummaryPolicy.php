@@ -48,7 +48,7 @@ class ThreadSummaryPolicy
      */
     public function delete(User $user, ThreadSummary $threadSummary): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -56,7 +56,7 @@ class ThreadSummaryPolicy
      */
     public function restore(User $user, ThreadSummary $threadSummary): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -64,6 +64,6 @@ class ThreadSummaryPolicy
      */
     public function forceDelete(User $user, ThreadSummary $threadSummary): bool
     {
-        return false;
+        return true;
     }
 }

@@ -39,7 +39,7 @@ class ThreadAnalyticPolicy
      */
     public function update(User $user, ThreadAnalytic $threadAnalytic): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -55,7 +55,7 @@ class ThreadAnalyticPolicy
      */
     public function restore(User $user, ThreadAnalytic $threadAnalytic): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -63,6 +63,6 @@ class ThreadAnalyticPolicy
      */
     public function forceDelete(User $user, ThreadAnalytic $threadAnalytic): bool
     {
-        return false;
+        return true;
     }
 }

@@ -15,55 +15,25 @@ class ThreadExtractedConceptController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $response = ['data' => ThreadExtractedConcept::all()];
-        return $response;
-    }
+    public function index() {}
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreThreadExtractedConceptRequest $request)
-    {
-        $validatedData = $request->validated();
-        $threadExtractedConcept = ThreadExtractedConcept::create($validatedData);
-        $response = ['data' => $threadExtractedConcept];
-
-        return $response;
-    }
+    public function store(StoreThreadExtractedConceptRequest $request) {}
 
     /**
      * Display the specified resource.
      */
-    public function show(ThreadExtractedConcept $threadExtractedConcept)
-    {
-        $response = ['data' => $threadExtractedConcept];
-        return $response;
-    }
+    public function show(ThreadExtractedConcept $threadExtractedConcept) {}
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateThreadExtractedConceptRequest $request, ThreadExtractedConcept $threadExtractedConcept)
-    {
-        $this->authorize('update', $threadExtractedConcept);
-        $validatedData = $request->validated();
-        $threadExtractedConcept->update($validatedData);
-        $response = ['data' => $threadExtractedConcept];
-
-        return $response;
-    }
+    public function update(UpdateThreadExtractedConceptRequest $request, ThreadExtractedConcept $threadExtractedConcept) {}
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ThreadExtractedConcept $threadExtractedConcept)
-    {
-        $this->authorize('delete', $threadExtractedConcept);
-        $threadExtractedConcept->delete();
-        $response = ['data' => $threadExtractedConcept];
-
-        return $response;
-    }
+    public function destroy(ThreadExtractedConcept $threadExtractedConcept) {}
 }
