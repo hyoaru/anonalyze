@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Threads;
 
-use App\Http\Requests\ThreadExtractedConcepts\StoreThreadExtractedConceptRequest;
-use App\Http\Requests\ThreadExtractedConcepts\UpdateThreadExtractedConceptRequest;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Threads\ThreadExtractedConcept\StoreThreadExtractedConceptRequest;
+use App\Http\Requests\Threads\ThreadExtractedConcept\UpdateThreadExtractedConceptRequest;
 use App\Models\ThreadExtractedConcept;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Routing\Controllers\HasMiddleware;

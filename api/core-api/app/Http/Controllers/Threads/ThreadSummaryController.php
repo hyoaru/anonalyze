@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Threads;
 
-use App\Http\Requests\ThreadSummaries\StoreThreadSummaryRequest;
-use App\Http\Requests\ThreadSummaries\UpdateThreadSummaryRequest;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Threads\ThreadSummary\StoreThreadSummaryRequest;
+use App\Http\Requests\Threads\ThreadSummary\UpdateThreadSummaryRequest;
 use App\Models\ThreadSummary;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 

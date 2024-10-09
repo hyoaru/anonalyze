@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Threads;
 
-use App\Http\Requests\ThreadExtractedConceptGroups\StoreThreadExtractedConceptGroupRequest;
-use App\Http\Requests\ThreadExtractedConceptGroups\UpdateThreadExtractedConceptGroupRequest;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Threads\ThreadExtractedConceptGroup\StoreThreadExtractedConceptGroupRequest;
+use App\Http\Requests\Threads\ThreadExtractedConceptGroup\UpdateThreadExtractedConceptGroupRequest;
 use App\Models\ThreadExtractedConceptGroup;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 

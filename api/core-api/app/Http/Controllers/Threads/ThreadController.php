@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Threads;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 
 use App\Models\Thread;
-use App\Http\Requests\Threads\StoreThreadRequest;
-use App\Http\Requests\Threads\UpdateThreadRequest;
+use App\Http\Requests\Threads\Thread\StoreThreadRequest;
+use App\Http\Requests\Threads\Thread\UpdateThreadRequest;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class ThreadController extends Controller implements HasMiddleware

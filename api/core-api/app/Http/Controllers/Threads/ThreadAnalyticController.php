@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Threads;
 
-use App\Http\Requests\ThreadAnalytics\StoreThreadAnalyticRequest;
-use App\Http\Requests\ThreadAnalytics\UpdateThreadAnalyticRequest;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Threads\ThreadAnalytic\StoreThreadAnalyticRequest;
+use App\Http\Requests\Threads\ThreadAnalytic\UpdateThreadAnalyticRequest;
 use App\Models\ThreadAnalytic;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
