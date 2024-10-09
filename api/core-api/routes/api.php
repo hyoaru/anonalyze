@@ -5,11 +5,8 @@ use App\Http\Controllers\EmotionController;
 use App\Http\Controllers\SentimentController;
 use App\Http\Controllers\Posts\PostAnalyticController;
 use App\Http\Controllers\Posts\PostController;
-use App\Http\Controllers\Posts\PostPredictedEmotionController;
-use App\Http\Controllers\Posts\PostPredictedSentimentController;
 use App\Http\Controllers\Threads\ThreadAnalyticController;
 use App\Http\Controllers\Threads\ThreadController;
-use App\Http\Controllers\Threads\ThreadExtractedConceptGroupController;
 use App\Http\Controllers\Threads\ThreadSummaryController;
 use Illuminate\Support\Facades\Route;
 
@@ -32,6 +29,4 @@ Route::apiResource('thread-summaries', ThreadSummaryController::class)->only(['s
 Route::apiResource('thread-analytics', ThreadAnalyticController::class)->only(['show']);
 
 Route::apiResource('posts', PostController::class)->only(['store', 'show', 'destroy']);
-Route::apiResource('post-predicted-sentiments', PostPredictedSentimentController::class);
-Route::apiResource('post-predicted-emotions', PostPredictedEmotionController::class);
-Route::apiResource('post-analytics', PostAnalyticController::class);
+Route::apiResource('post-analytics', PostAnalyticController::class)->only(['show']);
