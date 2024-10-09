@@ -19,7 +19,7 @@ class PostPredictedSentiment extends Model
     ];
 
     public function sentiment(): HasOne {
-        return $this->hasOne(Sentiment::class);
+        return $this->hasOne(Sentiment::class, 'id', 'sentiment_id');
     }
 
     public function postAnalytic(): BelongsTo {

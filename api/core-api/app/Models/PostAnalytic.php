@@ -24,10 +24,10 @@ class PostAnalytic extends Model
     }
 
     public function postPredictedSentiment(): HasOne {
-        return $this->hasOne(PostPredictedSentiment::class);
+        return $this->hasOne(PostPredictedSentiment::class, 'id', 'post_predicted_sentiment_id');
     }
 
     public function postPredictedEmotion(): HasOne {
-        return $this->hasOne(PostPredictedEmotion::class);
+        return $this->hasOne(PostPredictedEmotion::class, 'id', 'post_predicted_emotion_id');
     }
 }

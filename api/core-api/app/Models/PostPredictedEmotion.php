@@ -19,7 +19,7 @@ class PostPredictedEmotion extends Model
     ];
 
     public function emotion(): HasOne {
-        return $this->hasOne(Emotion::class);
+        return $this->hasOne(Emotion::class, 'id', 'emotion_id');
     }
 
     public function postAnalytic(): BelongsTo {
