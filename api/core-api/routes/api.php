@@ -7,7 +7,6 @@ use App\Http\Controllers\Posts\PostAnalyticController;
 use App\Http\Controllers\Posts\PostController;
 use App\Http\Controllers\Posts\PostPredictedEmotionController;
 use App\Http\Controllers\Posts\PostPredictedSentimentController;
-use App\Http\Controllers\Posts\PostTransactionController;
 use App\Http\Controllers\Threads\ThreadAnalyticController;
 use App\Http\Controllers\Threads\ThreadController;
 use App\Http\Controllers\Threads\ThreadExtractedConceptGroupController;
@@ -37,8 +36,3 @@ Route::apiResource('posts', PostController::class)->only(['store', 'show', 'dest
 Route::apiResource('post-predicted-sentiments', PostPredictedSentimentController::class);
 Route::apiResource('post-predicted-emotions', PostPredictedEmotionController::class);
 Route::apiResource('post-analytics', PostAnalyticController::class);
-
-
-Route::prefix('/post-transactions')->group(function () {
-    Route::post('/', [PostTransactionController::class, 'createPost']);
-});
