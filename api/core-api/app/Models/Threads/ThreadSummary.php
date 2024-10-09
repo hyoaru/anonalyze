@@ -1,30 +1,25 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Threads;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class ThreadAnalytic extends Model
+class ThreadSummary extends Model
 {
     use HasFactory;
 
-    protected $table = 'thread_analytics';
+    protected $table = 'thread_summaries';
 
     protected $fillable = [
         'thread_id',
-        'thread_extracted_concept_group_id',
+        'summary'
     ];
+
 
     public function thread(): BelongsTo
     {
         return $this->belongsTo(Thread::class);
-    }
-
-    public function threadExtractedConceptGroup(): HasOne
-    {
-        return $this->hasOne(ThreadExtractedConceptGroup::class);
     }
 }

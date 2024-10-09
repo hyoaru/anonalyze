@@ -5,10 +5,8 @@ namespace App\Http\Controllers\Threads;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Threads\ThreadExtractedConcept\StoreThreadExtractedConceptRequest;
 use App\Http\Requests\Threads\ThreadExtractedConcept\UpdateThreadExtractedConceptRequest;
-use App\Models\ThreadExtractedConcept;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Routing\Controllers\Middleware;
+use App\Models\Threads\ThreadExtractedConcept;
 
 class ThreadExtractedConceptController extends Controller
 {

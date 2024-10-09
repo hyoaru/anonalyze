@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Threads;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Threads\ThreadSummary\StoreThreadSummaryRequest;
 use App\Http\Requests\Threads\ThreadSummary\UpdateThreadSummaryRequest;
-use App\Models\ThreadSummary;
+use App\Models\Threads\ThreadSummary;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class ThreadSummaryController extends Controller

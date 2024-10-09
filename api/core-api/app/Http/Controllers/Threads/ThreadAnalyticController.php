@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Threads;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Threads\ThreadAnalytic\StoreThreadAnalyticRequest;
 use App\Http\Requests\Threads\ThreadAnalytic\UpdateThreadAnalyticRequest;
-use App\Models\ThreadAnalytic;
+use App\Models\Threads\ThreadAnalytic;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class ThreadAnalyticController extends Controller

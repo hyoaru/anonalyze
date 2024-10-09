@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 
-use App\Models\Thread;
+use App\Models\Threads\Thread;
 use App\Http\Requests\Threads\Thread\StoreThreadRequest;
 use App\Http\Requests\Threads\Thread\UpdateThreadRequest;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;

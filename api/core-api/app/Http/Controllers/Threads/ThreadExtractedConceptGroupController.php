@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Threads;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Threads\ThreadExtractedConceptGroup\StoreThreadExtractedConceptGroupRequest;
 use App\Http\Requests\Threads\ThreadExtractedConceptGroup\UpdateThreadExtractedConceptGroupRequest;
-use App\Models\ThreadExtractedConceptGroup;
+use App\Models\Threads\ThreadExtractedConceptGroup;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class ThreadExtractedConceptGroupController extends Controller

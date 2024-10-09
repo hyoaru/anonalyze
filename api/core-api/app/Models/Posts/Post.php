@@ -2,7 +2,7 @@
 
 namespace App\Models\Posts;
 
-use App\Models\Thread;
+use App\Models\Threads\Thread;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;

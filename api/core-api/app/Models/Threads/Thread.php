@@ -1,7 +1,9 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Threads;
 
+use App\Models\Posts\Post;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
