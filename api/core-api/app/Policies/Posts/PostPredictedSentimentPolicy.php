@@ -39,7 +39,7 @@ class PostPredictedSentimentPolicy
      */
     public function update(User $user, PostPredictedSentiment $postPredictedSentiment): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -47,7 +47,7 @@ class PostPredictedSentimentPolicy
      */
     public function delete(User $user, PostPredictedSentiment $postPredictedSentiment): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -55,7 +55,7 @@ class PostPredictedSentimentPolicy
      */
     public function restore(User $user, PostPredictedSentiment $postPredictedSentiment): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -63,6 +63,6 @@ class PostPredictedSentimentPolicy
      */
     public function forceDelete(User $user, PostPredictedSentiment $postPredictedSentiment): bool
     {
-        return false;
+        return true;
     }
 }

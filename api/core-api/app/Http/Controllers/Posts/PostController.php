@@ -8,32 +8,19 @@ use App\Http\Requests\Posts\Post\UpdatePostRequest;
 use App\Models\Posts\Post;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
-class PostController extends Controller 
+class PostController extends Controller
 {
     use AuthorizesRequests;
 
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $response = ['data' => Post::all()];
-        return $response;
-    }
+    public function index() {}
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StorePostRequest $request)
-    {
-        $validatedData = $request->validated();
-        $user = $request->user();
-        $thread = $user->threads()->findOrFail($validatedData['thread_id']);
-        $post = $thread->posts()->create($validatedData);
-
-        $response = ['data' => $post];
-        return $response;
-    }
+    public function store(StorePostRequest $request) {}
 
     /**
      * Display the specified resource.

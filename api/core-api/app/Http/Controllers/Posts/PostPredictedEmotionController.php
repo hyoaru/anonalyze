@@ -15,52 +15,25 @@ class PostPredictedEmotionController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $response = ['data' => PostPredictedEmotion::all()];
-        return $response;
-    }
+    public function index() {}
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StorePostPredictedEmotionRequest $request)
-    {
-        $validatedData = $request->validated();
-        $postPredictedEmotion = PostPredictedEmotion::create($validatedData);
-        $response = ['data' => $postPredictedEmotion];
-        return $response;
-    }
+    public function store(StorePostPredictedEmotionRequest $request) {}
 
     /**
      * Display the specified resource.
      */
-    public function show(PostPredictedEmotion $postPredictedEmotion)
-    {
-        $response = ['data' => $postPredictedEmotion];
-        return $response;
-    }
+    public function show(PostPredictedEmotion $postPredictedEmotion) {}
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatePostPredictedEmotionRequest $request, PostPredictedEmotion $postPredictedEmotion)
-    {
-        $this->authorize('update', $postPredictedEmotion);
-        $validatedData = $request->validated();
-        $postPredictedEmotion->update($validatedData);
-        $response = ['data' => $postPredictedEmotion];
-        return $response;
-    }
+    public function update(UpdatePostPredictedEmotionRequest $request, PostPredictedEmotion $postPredictedEmotion) {}
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(PostPredictedEmotion $postPredictedEmotion)
-    {
-        $this->authorize('delete', $postPredictedEmotion);
-        $postPredictedEmotion->delete();
-        $response = ['data' => $postPredictedEmotion];
-        return $response;
-    }
+    public function destroy(PostPredictedEmotion $postPredictedEmotion) {}
 }

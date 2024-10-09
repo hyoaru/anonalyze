@@ -37,7 +37,7 @@ class PostPredictedEmotionPolicy
      */
     public function update(User $user, PostPredictedEmotion $postPredictedEmotion): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -45,7 +45,7 @@ class PostPredictedEmotionPolicy
      */
     public function delete(User $user, PostPredictedEmotion $postPredictedEmotion): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -53,7 +53,7 @@ class PostPredictedEmotionPolicy
      */
     public function restore(User $user, PostPredictedEmotion $postPredictedEmotion): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -61,6 +61,6 @@ class PostPredictedEmotionPolicy
      */
     public function forceDelete(User $user, PostPredictedEmotion $postPredictedEmotion): bool
     {
-        return false;
+        return true;
     }
 }

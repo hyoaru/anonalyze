@@ -15,22 +15,12 @@ class PostAnalyticController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $response = ['data' => PostAnalytic::with(['postPredictedSentiment', 'postPredictedEmotion'])->get()];
-        return $response;
-    }
+    public function index() {}
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StorePostAnalyticRequest $request)
-    {
-        $validatedData = $request->validated();
-        $postAnalytic = PostAnalytic::create($validatedData);
-        $response = ['data' => $postAnalytic];
-        return $response;
-    }
+    public function store(StorePostAnalyticRequest $request) {}
 
     /**
      * Display the specified resource.
@@ -44,23 +34,10 @@ class PostAnalyticController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatePostAnalyticRequest $request, PostAnalytic $postAnalytic)
-    {
-        $this->authorize('update', $postAnalytic);
-        $validatedData = $request->validated();
-        $postAnalytic->update($validatedData);
-        $response = ['data' => $postAnalytic];
-        return $response;
-    }
+    public function update(UpdatePostAnalyticRequest $request, PostAnalytic $postAnalytic) {}
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(PostAnalytic $postAnalytic)
-    {
-        $this->authorize('delete', $postAnalytic);
-        $postAnalytic->delete();
-        $response = ['data' => $postAnalytic];
-        return $response;
-    }
+    public function destroy(PostAnalytic $postAnalytic) {}
 }
