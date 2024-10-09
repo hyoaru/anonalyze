@@ -6,11 +6,22 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\Authentication\SignInRequest;
 use App\Http\Requests\Authentication\SignUpRequest;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Hash;
 
-class AuthController extends Controller
+class AuthController extends Controller implements HasMiddleware
 {
-    public function sign_up(SignUpRequest $request)
+    public static function middleware()
+    {
+        return [
+            new Middleware('auth:sanctum', only: [
+                'signOut'
+            ])
+        ];
+    }
+
+    public function signUp(SignUpRequest $request)
     {
         $validatedData = $request->validated();
 
@@ -33,7 +44,7 @@ class AuthController extends Controller
         return $response;
     }
 
-    public function sign_in(SignInRequest $request)
+    public function signIn(SignInRequest $request)
     {
         $validatedData = $request->validated();
 
@@ -58,7 +69,7 @@ class AuthController extends Controller
         return $response;
     }
 
-    public function sign_out(Request $request)
+    public function signOut(Request $request)
     {
         $user = $request->user();
         $user->tokens()->delete();
