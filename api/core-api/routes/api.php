@@ -28,9 +28,8 @@ Route::apiResource('sentiments', SentimentController::class);
 Route::apiResource('emotions', EmotionController::class);
 
 Route::apiResource('threads', ThreadController::class)->except(['index']);
-Route::apiResource('thread-summaries', ThreadSummaryController::class);
-Route::apiResource('thread-extracted-concept-groups', ThreadExtractedConceptGroupController::class);
-Route::apiResource('thread-analytics', ThreadAnalyticController::class);
+Route::apiResource('thread-summaries', ThreadSummaryController::class)->only(['show']);
+Route::apiResource('thread-analytics', ThreadAnalyticController::class)->only(['show']);
 
 Route::apiResource('posts', PostController::class)->only(['store', 'show', 'destroy']);
 Route::apiResource('post-predicted-sentiments', PostPredictedSentimentController::class);
