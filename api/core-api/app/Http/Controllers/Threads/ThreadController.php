@@ -9,7 +9,9 @@ use Illuminate\Routing\Controllers\Middleware;
 use App\Models\Threads\Thread;
 use App\Http\Requests\Threads\Thread\StoreThreadRequest;
 use App\Http\Requests\Threads\Thread\UpdateThreadRequest;
+use App\Services\ThreadService;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\DB;
 
 class ThreadController extends Controller implements HasMiddleware
 {
@@ -18,9 +20,10 @@ class ThreadController extends Controller implements HasMiddleware
     public static function middleware()
     {
         return [
-            new Middleware('auth:sanctum', except: [
-                'index',
-                'show'
+            new Middleware('auth:sanctum', only: [
+                'create',
+                'update',
+                'destroy'
             ])
         ];
     }
@@ -33,15 +36,38 @@ class ThreadController extends Controller implements HasMiddleware
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreThreadRequest $request) {}
+    public function store(StoreThreadRequest $request)
+    {
+        $this->authorize('create');
+
+        DB::beginTransaction();
+
+        try {
+            $validatedData = $request->validated();
+            $thread = ThreadService::createThread($validatedData);
+            DB::commit();
+
+            $data = ['data' => $thread->load([
+                'threadSummary',
+                'threadAnalytic',
+                'threadAnalytic.threadExtractedConceptGroup',
+                'threadAnalytic.threadExtractedConceptGroup.threadExtractedConcepts',
+            ])];
+
+            return response()->json($data, 200);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            abort(400, "Failed to create thread. " . $th->getMessage());
+        }
+    }
 
     /**
      * Display the specified resource.
      */
     public function show(Thread $thread)
     {
-        $response = ['data' => $thread];
-        return $response;
+        $data = ['data' => $thread];
+        return response()->json($data, 200);
     }
 
     /**
@@ -51,10 +77,10 @@ class ThreadController extends Controller implements HasMiddleware
     {
         $this->authorize('update', $thread);
         $validatedData = $request->validated();
-        $thread->update($validatedData);
-        $response = ['data' => $thread];
+        $thread = ThreadService::updateThread($thread, $validatedData);
+        $data = ['data' => $thread];
 
-        return $response;
+        return response()->json($data, 200);
     }
 
     /**
@@ -64,8 +90,8 @@ class ThreadController extends Controller implements HasMiddleware
     {
         $this->authorize('delete', $thread);
         $thread->delete();
-        $response = ['data' => $thread];
+        $data = ['data' => $thread];
 
-        return $response;
+        return response()->json($data, 200);
     }
 }

@@ -55,7 +55,7 @@ class ThreadPolicy
      */
     public function restore(User $user, Thread $thread): bool
     {
-        return true;
+        return $user->id === $thread->user->id;
     }
 
     /**

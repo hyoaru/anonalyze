@@ -28,7 +28,7 @@ Route::prefix('/auth')->group(function () {
 Route::apiResource('sentiments', SentimentController::class);
 Route::apiResource('emotions', EmotionController::class);
 
-Route::apiResource('threads', ThreadController::class);
+Route::apiResource('threads', ThreadController::class)->except(['index']);
 Route::apiResource('thread-summaries', ThreadSummaryController::class);
 Route::apiResource('thread-extracted-concept-groups', ThreadExtractedConceptGroupController::class);
 Route::apiResource('thread-analytics', ThreadAnalyticController::class);
