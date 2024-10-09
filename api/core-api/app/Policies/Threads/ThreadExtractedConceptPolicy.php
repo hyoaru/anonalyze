@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Policies;
+namespace App\Policies\Threads;
 
-use App\Models\ThreadSummary;
+use App\Models\Threads\ThreadExtractedConcept;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Auth\Access\Response;
 
-class ThreadSummaryPolicy
+class ThreadExtractedConceptPolicy
 {
     use HandlesAuthorization;
 
@@ -22,7 +22,7 @@ class ThreadSummaryPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, ThreadSummary $threadSummary): bool
+    public function view(User $user, ThreadExtractedConcept $threadExtractedConcept): bool
     {
         return true;
     }
@@ -38,7 +38,7 @@ class ThreadSummaryPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, ThreadSummary $threadSummary): bool
+    public function update(User $user, ThreadExtractedConcept $threadExtractedConcept): bool
     {
         return true;
     }
@@ -46,24 +46,24 @@ class ThreadSummaryPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, ThreadSummary $threadSummary): bool
+    public function delete(User $user, ThreadExtractedConcept $threadExtractedConcept): bool
     {
-        return false;
+        return true;
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, ThreadSummary $threadSummary): bool
+    public function restore(User $user, ThreadExtractedConcept $threadExtractedConcept): bool
     {
-        return false;
+        return true;
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, ThreadSummary $threadSummary): bool
+    public function forceDelete(User $user, ThreadExtractedConcept $threadExtractedConcept): bool
     {
-        return false;
+        return true;
     }
 }

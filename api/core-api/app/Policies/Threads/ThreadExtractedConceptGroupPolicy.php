@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Policies;
+namespace App\Policies\Threads;
 
-use App\Models\Thread;
+use App\Models\Threads\ThreadExtractedConceptGroup;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Auth\Access\Response;
 
-class ThreadPolicy
+class ThreadExtractedConceptGroupPolicy
 {
     use HandlesAuthorization;
     /**
@@ -21,7 +21,7 @@ class ThreadPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Thread $thread): bool
+    public function view(User $user, ThreadExtractedConceptGroup $threadExtractedConceptGroup): bool
     {
         return true;
     }
@@ -37,32 +37,32 @@ class ThreadPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Thread $thread): bool
+    public function update(User $user, ThreadExtractedConceptGroup $threadExtractedConceptGroup): bool
     {
-        return $user->id === $thread->user->id;
+        return false;
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Thread $thread): bool
+    public function delete(User $user, ThreadExtractedConceptGroup $threadExtractedConceptGroup): bool
     {
-        return $user->id === $thread->user->id;
+        return false;
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Thread $thread): bool
+    public function restore(User $user, ThreadExtractedConceptGroup $threadExtractedConceptGroup): bool
     {
-        return $user->id === $thread->user->id;
+        return false;
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Thread $thread): bool
+    public function forceDelete(User $user, ThreadExtractedConceptGroup $threadExtractedConceptGroup): bool
     {
-        return $user->id === $thread->user->id;
+        return false;
     }
 }

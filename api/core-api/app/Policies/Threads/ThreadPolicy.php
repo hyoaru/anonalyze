@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Policies;
+namespace App\Policies\Threads;
 
-use App\Models\ThreadAnalytic;
+use App\Models\Threads\Thread;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Auth\Access\Response;
 
-class ThreadAnalyticPolicy
+class ThreadPolicy
 {
     use HandlesAuthorization;
     /**
@@ -21,7 +21,7 @@ class ThreadAnalyticPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, ThreadAnalytic $threadAnalytic): bool
+    public function view(User $user, Thread $thread): bool
     {
         return true;
     }
@@ -37,32 +37,32 @@ class ThreadAnalyticPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, ThreadAnalytic $threadAnalytic): bool
+    public function update(User $user, Thread $thread): bool
     {
-        return false;
+        return $user->id === $thread->user->id;
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, ThreadAnalytic $threadAnalytic): bool
+    public function delete(User $user, Thread $thread): bool
     {
-        return true;
+        return $user->id === $thread->user->id;
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, ThreadAnalytic $threadAnalytic): bool
+    public function restore(User $user, Thread $thread): bool
     {
-        return false;
+        return $user->id === $thread->user->id;
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, ThreadAnalytic $threadAnalytic): bool
+    public function forceDelete(User $user, Thread $thread): bool
     {
-        return false;
+        return $user->id === $thread->user->id;
     }
 }

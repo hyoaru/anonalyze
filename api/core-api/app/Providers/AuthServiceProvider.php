@@ -2,28 +2,30 @@
 
 namespace App\Providers;
 
-use App\Models\Emotion;
-use App\Models\Post;
-use App\Models\PostAnalytic;
-use App\Models\PostPredictedEmotion;
-use App\Models\PostPredictedSentiment;
 use App\Models\Sentiment;
-use App\Models\Thread;
-use App\Models\ThreadAnalytic;
-use App\Models\ThreadExtractedConcept;
-use App\Models\ThreadExtractedConceptGroup;
-use App\Models\ThreadSummary;
+use App\Models\Emotion;
+use App\Models\Posts\Post;
+use App\Models\Posts\PostAnalytic;
+use App\Models\Posts\PostPredictedEmotion;
+use App\Models\Posts\PostPredictedSentiment;
+use App\Models\Threads\Thread;
+use App\Models\Threads\ThreadAnalytic;
+use App\Models\Threads\ThreadExtractedConcept;
+use App\Models\Threads\ThreadExtractedConceptGroup;
+use App\Models\Threads\ThreadSummary;
+
 use App\Policies\EmotionPolicy;
-use App\Policies\PostAnalyticPolicy;
-use App\Policies\PostPolicy;
-use App\Policies\PostPredictedEmotionPolicy;
-use App\Policies\PostPredictedSentimentPolicy;
 use App\Policies\SentimentPolicy;
-use App\Policies\ThreadAnalyticPolicy;
-use App\Policies\ThreadExtractedConceptGroupPolicy;
-use App\Policies\ThreadExtractedConceptPolicy;
-use App\Policies\ThreadPolicy;
-use App\Policies\ThreadSummaryPolicy;
+use App\Policies\Posts\PostAnalyticPolicy;
+use App\Policies\Posts\PostPolicy;
+use App\Policies\Posts\PostPredictedEmotionPolicy;
+use App\Policies\Posts\PostPredictedSentimentPolicy;
+use App\Policies\Threads\ThreadAnalyticPolicy;
+use App\Policies\Threads\ThreadExtractedConceptGroupPolicy;
+use App\Policies\Threads\ThreadExtractedConceptPolicy;
+use App\Policies\Threads\ThreadPolicy;
+use App\Policies\Threads\ThreadSummaryPolicy;
+
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider

@@ -1,16 +1,15 @@
 <?php
 
-namespace App\Policies;
+namespace App\Policies\Threads;
 
-use App\Models\ThreadExtractedConcept;
+use App\Models\Threads\ThreadAnalytic;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Auth\Access\Response;
 
-class ThreadExtractedConceptPolicy
+class ThreadAnalyticPolicy
 {
     use HandlesAuthorization;
-
     /**
      * Determine whether the user can view any models.
      */
@@ -22,7 +21,7 @@ class ThreadExtractedConceptPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, ThreadExtractedConcept $threadExtractedConcept): bool
+    public function view(User $user, ThreadAnalytic $threadAnalytic): bool
     {
         return true;
     }
@@ -38,15 +37,15 @@ class ThreadExtractedConceptPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, ThreadExtractedConcept $threadExtractedConcept): bool
+    public function update(User $user, ThreadAnalytic $threadAnalytic): bool
     {
-        return true;
+        return false;
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, ThreadExtractedConcept $threadExtractedConcept): bool
+    public function delete(User $user, ThreadAnalytic $threadAnalytic): bool
     {
         return true;
     }
@@ -54,16 +53,16 @@ class ThreadExtractedConceptPolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, ThreadExtractedConcept $threadExtractedConcept): bool
+    public function restore(User $user, ThreadAnalytic $threadAnalytic): bool
     {
-        return true;
+        return false;
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, ThreadExtractedConcept $threadExtractedConcept): bool
+    public function forceDelete(User $user, ThreadAnalytic $threadAnalytic): bool
     {
-        return true;
+        return false;
     }
 }
