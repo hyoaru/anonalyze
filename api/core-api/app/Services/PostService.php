@@ -40,25 +40,6 @@ class PostService
             'post_predicted_emotion_id' => $postPredictedEmotion->id,
         ]);
 
-        $data = self::getPostWithRelations($post);
-
-        return $data;
-    }
-
-    public static function getPostWithRelations($post)
-    {
-        if (!$post instanceof Post) {
-            $post = Post::findOrFail($post);
-        }
-
-        $data = $post->load([
-            'postAnalytic',
-            'postAnalytic.postPredictedSentiment',
-            'postAnalytic.postPredictedSentiment.sentiment',
-            'postAnalytic.postPredictedEmotion',
-            'postAnalytic.postPredictedEmotion.emotion',
-        ]);
-
-        return $data;
+        return $post;
     }
 }

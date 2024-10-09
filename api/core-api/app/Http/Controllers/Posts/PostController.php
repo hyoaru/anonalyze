@@ -55,7 +55,13 @@ class PostController extends Controller implements HasMiddleware
      */
     public function show(Post $post)
     {
-        $data = ['data' => PostService::getPostWithRelations($post)];
+        $data = ['data' => $post->load([
+            'postAnalytic',
+            'postAnalytic.postPredictedSentiment',
+            'postAnalytic.postPredictedSentiment.sentiment',
+            'postAnalytic.postPredictedEmotion',
+            'postAnalytic.postPredictedEmotion.emotion',
+        ])];
         return response()->json($data, 200);
     }
 
@@ -72,7 +78,14 @@ class PostController extends Controller implements HasMiddleware
         $this->authorize('delete', $post);
         $post->delete();
 
-        $data = ['data' => PostService::getPostWithRelations($post)];
+        $data = ['data' => $post->load([
+            'postAnalytic',
+            'postAnalytic.postPredictedSentiment',
+            'postAnalytic.postPredictedSentiment.sentiment',
+            'postAnalytic.postPredictedEmotion',
+            'postAnalytic.postPredictedEmotion.emotion',
+        ])];
+        
         return response()->json($data, 200);
     }
 }
