@@ -21,8 +21,8 @@ Route::prefix('/auth')->group(function () {
 });
 
 
-Route::apiResource('sentiments', SentimentController::class);
-Route::apiResource('emotions', EmotionController::class);
+Route::apiResource('sentiments', SentimentController::class)->only(['index', 'show']);
+Route::apiResource('emotions', EmotionController::class)->only(['index', 'show']);
 
 Route::apiResource('threads', ThreadController::class)->except(['index']);
 Route::apiResource('thread-summaries', ThreadSummaryController::class)->only(['show']);

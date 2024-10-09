@@ -32,7 +32,7 @@ class EmotionPolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -40,7 +40,7 @@ class EmotionPolicy
      */
     public function update(User $user, Emotion $emotion): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -48,7 +48,7 @@ class EmotionPolicy
      */
     public function delete(User $user, Emotion $emotion): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -56,7 +56,7 @@ class EmotionPolicy
      */
     public function restore(User $user, Emotion $emotion): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -64,6 +64,6 @@ class EmotionPolicy
      */
     public function forceDelete(User $user, Emotion $emotion): bool
     {
-        return false;
+        return true;
     }
 }

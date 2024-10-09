@@ -2,33 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Emotions\StoreEmotionRequest;
-use App\Http\Requests\Emotions\UpdateEmotionRequest;
+use App\Http\Requests\Emotion\StoreEmotionRequest;
+use App\Http\Requests\Emotion\UpdateEmotionRequest;
 use App\Models\Emotion;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Routing\Controllers\Middleware;
 
-class EmotionController extends Controller implements HasMiddleware
+class EmotionController extends Controller
 {
-    use AuthorizesRequests;
-
-    public static function middleware()
-    {
-        return [
-            new Middleware('auth:sanctum', except: [
-                'index',
-                'show'
-            ])
-        ];
-    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $response = ['data' => Emotion::all()];
-        return $response;
+        $data = ['data' => Emotion::all()];
+        return response()->json($data, 200);
     }
 
     /**
@@ -41,8 +27,8 @@ class EmotionController extends Controller implements HasMiddleware
      */
     public function show(Emotion $emotion)
     {
-        $response = ['data' => $emotion];
-        return $response;
+        $data = ['data' => $emotion];
+        return response()->json($data, 200);
     }
 
     /**

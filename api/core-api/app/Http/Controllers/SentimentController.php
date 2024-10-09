@@ -2,33 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Sentiments\StoreSentimentRequest;
-use App\Http\Requests\Sentiments\UpdateSentimentRequest;
+use App\Http\Requests\Sentiment\StoreSentimentRequest;
+use App\Http\Requests\Sentiment\UpdateSentimentRequest;
 use App\Models\Sentiment;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Routing\Controllers\Middleware;
 
-class SentimentController extends Controller implements HasMiddleware
+class SentimentController extends Controller
 {
-    use AuthorizesRequests;
-
-    public static function middleware()
-    {
-        return [
-            new Middleware('auth:sanctum', except: [
-                'index',
-                'show'
-            ])
-        ];
-    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $response = ['data' => Sentiment::all()];
-        return $response;
+        $data = ['data' => Sentiment::all()];
+        return response()->json($data, 200);
     }
 
     /**
@@ -41,8 +27,8 @@ class SentimentController extends Controller implements HasMiddleware
      */
     public function show(Sentiment $sentiment)
     {
-        $response = ['data' => $sentiment];
-        return $response;
+        $data = ['data' => $sentiment];
+        return response()->json($data, 200);
     }
 
     /**
