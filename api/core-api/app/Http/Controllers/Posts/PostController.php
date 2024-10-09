@@ -42,8 +42,16 @@ class PostController extends Controller implements HasMiddleware
             $post = PostService::createPost($validatedData);
             DB::commit();
 
-            $data = ['data' => $post];
+            $data = ['data' => $post->load([
+                'postAnalytic',
+                'postAnalytic.postPredictedSentiment',
+                'postAnalytic.postPredictedSentiment.sentiment',
+                'postAnalytic.postPredictedEmotion',
+                'postAnalytic.postPredictedEmotion.emotion',
+            ])];
+
             return response()->json($data, 200);
+
         } catch (\Throwable $th) {
             DB::rollBack();
             abort(400, "Failed to create post. " . $th->getMessage());
@@ -62,6 +70,7 @@ class PostController extends Controller implements HasMiddleware
             'postAnalytic.postPredictedEmotion',
             'postAnalytic.postPredictedEmotion.emotion',
         ])];
+        
         return response()->json($data, 200);
     }
 
@@ -85,7 +94,7 @@ class PostController extends Controller implements HasMiddleware
             'postAnalytic.postPredictedEmotion',
             'postAnalytic.postPredictedEmotion.emotion',
         ])];
-        
+
         return response()->json($data, 200);
     }
 }
