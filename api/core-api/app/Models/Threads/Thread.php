@@ -32,7 +32,13 @@ class Thread extends Model
         return $this->hasOne(ThreadSummary::class);
     }
 
-    public function posts(): HasMany {
+    public function posts(): HasMany
+    {
         return $this->hasMany(Post::class);
+    }
+
+    public function threadAnalytic(): HasOne
+    {
+        return $this->hasOne(ThreadAnalytic::class, 'thread_id', 'id');
     }
 }

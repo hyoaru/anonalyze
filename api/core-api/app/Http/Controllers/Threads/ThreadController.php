@@ -21,7 +21,7 @@ class ThreadController extends Controller implements HasMiddleware
     {
         return [
             new Middleware('auth:sanctum', only: [
-                'create',
+                'store',
                 'update',
                 'destroy'
             ])
@@ -38,8 +38,6 @@ class ThreadController extends Controller implements HasMiddleware
      */
     public function store(StoreThreadRequest $request)
     {
-        $this->authorize('create');
-
         DB::beginTransaction();
 
         try {

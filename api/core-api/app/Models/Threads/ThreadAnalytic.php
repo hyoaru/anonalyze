@@ -25,6 +25,6 @@ class ThreadAnalytic extends Model
 
     public function threadExtractedConceptGroup(): HasOne
     {
-        return $this->hasOne(ThreadExtractedConceptGroup::class);
+        return $this->hasOne(ThreadExtractedConceptGroup::class, 'id', 'thread_extracted_concept_group_id');
     }
 }
