@@ -35,8 +35,6 @@ class PostController extends Controller implements HasMiddleware
      */
     public function store(StorePostRequest $request)
     {
-        $this->authorize('create');
-
         DB::beginTransaction();
 
         try {
