@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Posts;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\PostPredictedEmotions\StorePostPredictedEmotionRequest;
 use App\Http\Requests\PostPredictedEmotions\UpdatePostPredictedEmotionRequest;
-use App\Models\PostPredictedEmotion;
+use App\Models\Posts\PostPredictedEmotion;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class PostPredictedEmotionController extends Controller

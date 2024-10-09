@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Policies;
+namespace App\Policies\Posts;
 
-use App\Models\PostTransaction;
+use App\Models\Posts\PostTransaction;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 

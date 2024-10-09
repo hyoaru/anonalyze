@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Posts;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\PostTransactions\CreatePostTransactionRequest;
 use App\Services\PostService;
 use Illuminate\Support\Facades\DB;
@@ -16,7 +17,7 @@ class PostTransactionController extends Controller
             $validatedData = $request->validated();
             $response = PostService::createPost($validatedData);
 
-            DB::rollBack();
+            DB::commit();
             return $response;
 
         } catch (\Throwable $th) {

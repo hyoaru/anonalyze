@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Posts;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\PostPredictedSentiments\StorePostPredictedSentimentRequest;
 use App\Http\Requests\PostPredictedSentiments\UpdatePostPredictedSentimentRequest;
-use App\Models\PostPredictedSentiment;
+use App\Models\Posts\PostPredictedSentiment;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class PostPredictedSentimentController extends Controller

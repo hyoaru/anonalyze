@@ -3,9 +3,9 @@
 namespace App\Services;
 
 use App\Models\Emotion;
-use App\Models\Post;
-use App\Models\PostPredictedEmotion;
-use App\Models\PostPredictedSentiment;
+use App\Models\Posts\Post;
+use App\Models\Posts\PostPredictedEmotion;
+use App\Models\Posts\PostPredictedSentiment;
 use App\Models\Sentiment;
 use Exception;
 

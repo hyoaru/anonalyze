@@ -1,15 +1,13 @@
 <?php
 
-namespace App\Policies;
+namespace App\Policies\Posts;
 
-use App\Models\PostPredictedSentiment;
+use App\Models\Posts\PostPredictedEmotion;
 use App\Models\User;
-use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Auth\Access\Response;
 
-class PostPredictedSentimentPolicy
+class PostPredictedEmotionPolicy
 {
-    use HandlesAuthorization;
     /**
      * Determine whether the user can view any models.
      */
@@ -21,7 +19,7 @@ class PostPredictedSentimentPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, PostPredictedSentiment $postPredictedSentiment): bool
+    public function view(User $user, PostPredictedEmotion $postPredictedEmotion): bool
     {
         return true;
     }
@@ -37,7 +35,7 @@ class PostPredictedSentimentPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, PostPredictedSentiment $postPredictedSentiment): bool
+    public function update(User $user, PostPredictedEmotion $postPredictedEmotion): bool
     {
         return false;
     }
@@ -45,7 +43,7 @@ class PostPredictedSentimentPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, PostPredictedSentiment $postPredictedSentiment): bool
+    public function delete(User $user, PostPredictedEmotion $postPredictedEmotion): bool
     {
         return false;
     }
@@ -53,7 +51,7 @@ class PostPredictedSentimentPolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, PostPredictedSentiment $postPredictedSentiment): bool
+    public function restore(User $user, PostPredictedEmotion $postPredictedEmotion): bool
     {
         return false;
     }
@@ -61,7 +59,7 @@ class PostPredictedSentimentPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, PostPredictedSentiment $postPredictedSentiment): bool
+    public function forceDelete(User $user, PostPredictedEmotion $postPredictedEmotion): bool
     {
         return false;
     }

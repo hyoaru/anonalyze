@@ -2,18 +2,16 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EmotionController;
-use App\Http\Controllers\PostAnalyticController;
-use App\Http\Controllers\PostController;
-use App\Http\Controllers\PostPredictedEmotionController;
-use App\Http\Controllers\PostPredictedSentimentController;
-use App\Http\Controllers\PostTransactionController;
+use App\Http\Controllers\Posts\PostAnalyticController;
+use App\Http\Controllers\Posts\PostController;
+use App\Http\Controllers\Posts\PostPredictedEmotionController;
+use App\Http\Controllers\Posts\PostPredictedSentimentController;
+use App\Http\Controllers\Posts\PostTransactionController;
 use App\Http\Controllers\SentimentController;
 use App\Http\Controllers\ThreadAnalyticController;
 use App\Http\Controllers\ThreadController;
 use App\Http\Controllers\ThreadExtractedConceptGroupController;
 use App\Http\Controllers\ThreadSummaryController;
-use App\Models\ThreadAnalytic;
-use App\Models\ThreadExtractedConceptGroup;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/user', function (Request $request) {

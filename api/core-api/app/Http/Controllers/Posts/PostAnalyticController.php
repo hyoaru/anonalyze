@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Posts;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\PostAnalytics\StorePostAnalyticRequest;
 use App\Http\Requests\PostAnalytics\UpdatePostAnalyticRequest;
-use App\Models\PostAnalytic;
+use App\Models\Posts\PostAnalytic;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class PostAnalyticController extends Controller

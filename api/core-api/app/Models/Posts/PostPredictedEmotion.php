@@ -1,25 +1,26 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Posts;
 
+use App\Models\Emotion;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class PostPredictedSentiment extends Model
+class PostPredictedEmotion extends Model
 {
     use HasFactory;
 
-    protected $table = 'post_predicted_sentiments';
+    protected $table = 'post_predicted_emotions';
 
     protected $fillable = [
-        'sentiment_id',
+        'emotion_id',
         'probability'
     ];
 
-    public function sentiment(): HasOne {
-        return $this->hasOne(Sentiment::class, 'id', 'sentiment_id');
+    public function emotion(): HasOne {
+        return $this->hasOne(Emotion::class, 'id', 'emotion_id');
     }
 
     public function postAnalytic(): BelongsTo {

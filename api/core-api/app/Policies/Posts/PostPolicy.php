@@ -1,13 +1,16 @@
 <?php
 
-namespace App\Policies;
+namespace App\Policies\Posts;
 
-use App\Models\PostPredictedEmotion;
+use App\Models\Posts\Post;
 use App\Models\User;
+use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Auth\Access\Response;
 
-class PostPredictedEmotionPolicy
+class PostPolicy
 {
+    use HandlesAuthorization;
+
     /**
      * Determine whether the user can view any models.
      */
@@ -19,7 +22,7 @@ class PostPredictedEmotionPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, PostPredictedEmotion $postPredictedEmotion): bool
+    public function view(User $user, Post $post): bool
     {
         return true;
     }
@@ -35,7 +38,7 @@ class PostPredictedEmotionPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, PostPredictedEmotion $postPredictedEmotion): bool
+    public function update(User $user, Post $post): bool
     {
         return false;
     }
@@ -43,7 +46,7 @@ class PostPredictedEmotionPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, PostPredictedEmotion $postPredictedEmotion): bool
+    public function delete(User $user, Post $post): bool
     {
         return false;
     }
@@ -51,7 +54,7 @@ class PostPredictedEmotionPolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, PostPredictedEmotion $postPredictedEmotion): bool
+    public function restore(User $user, Post $post): bool
     {
         return false;
     }
@@ -59,7 +62,7 @@ class PostPredictedEmotionPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, PostPredictedEmotion $postPredictedEmotion): bool
+    public function forceDelete(User $user, Post $post): bool
     {
         return false;
     }
