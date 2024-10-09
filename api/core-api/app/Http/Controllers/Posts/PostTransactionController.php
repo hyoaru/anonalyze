@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Posts;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\PostTransactions\CreatePostTransactionRequest;
+use App\Http\Requests\Posts\PostTransaction\CreatePostTransactionRequest;
 use App\Services\PostService;
 use Illuminate\Support\Facades\DB;
 

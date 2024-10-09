@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Posts;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\PostPredictedEmotions\StorePostPredictedEmotionRequest;
-use App\Http\Requests\PostPredictedEmotions\UpdatePostPredictedEmotionRequest;
+use App\Http\Requests\Posts\PostPredictedEmotion\StorePostPredictedEmotionRequest;
+use App\Http\Requests\Posts\PostPredictedEmotion\UpdatePostPredictedEmotionRequest;
 use App\Models\Posts\PostPredictedEmotion;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 

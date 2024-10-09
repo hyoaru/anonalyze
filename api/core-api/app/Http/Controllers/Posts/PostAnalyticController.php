@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Posts;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\PostAnalytics\StorePostAnalyticRequest;
-use App\Http\Requests\PostAnalytics\UpdatePostAnalyticRequest;
+use App\Http\Requests\Posts\PostAnalytic\StorePostAnalyticRequest;
+use App\Http\Requests\Posts\PostAnalytic\UpdatePostAnalyticRequest;
 use App\Models\Posts\PostAnalytic;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 

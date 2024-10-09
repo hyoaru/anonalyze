@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Posts;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Posts\StorePostRequest;
-use App\Http\Requests\Posts\UpdatePostRequest;
+use App\Http\Requests\Posts\Post\StorePostRequest;
+use App\Http\Requests\Posts\Post\UpdatePostRequest;
 use App\Models\Posts\Post;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
