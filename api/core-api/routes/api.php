@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EmotionController;
 use App\Http\Controllers\SentimentController;
@@ -18,6 +19,12 @@ Route::prefix('/auth')->group(function () {
     Route::post('/sign-in', [AuthController::class, 'signIn']);
     Route::post('/sign-up', [AuthController::class, 'signUp']);
     Route::post('/sign-out', [AuthController::class, 'signOut']);
+});
+
+Route::prefix('/account')->group(function () {
+    Route::get('/', [AccountController::class, 'getAccountInformation']);
+    Route::post('/update-information', [AccountController::class, 'updateAccountInformation']);
+    Route::post('/update-password', [AccountController::class, 'updatePassword']);
 });
 
 

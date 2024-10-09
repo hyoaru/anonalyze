@@ -13,7 +13,8 @@ use App\Models\Threads\ThreadAnalytic;
 use App\Models\Threads\ThreadExtractedConcept;
 use App\Models\Threads\ThreadExtractedConceptGroup;
 use App\Models\Threads\ThreadSummary;
-
+use App\Models\User;
+use App\Policies\AccountPolicy;
 use App\Policies\EmotionPolicy;
 use App\Policies\SentimentPolicy;
 use App\Policies\Posts\PostAnalyticPolicy;
@@ -42,6 +43,7 @@ class AuthServiceProvider extends ServiceProvider
         ThreadExtractedConceptGroup::class => ThreadExtractedConceptGroupPolicy::class,
         ThreadExtractedConcept::class => ThreadExtractedConceptPolicy::class,
         ThreadAnalytic::class => ThreadAnalyticPolicy::class,
+        User::class => AccountPolicy::class,
     ];
 
     /**
