@@ -25,16 +25,19 @@ Route::prefix('/auth')->group(function () {
 });
 
 
+Route::apiResource('sentiments', SentimentController::class);
+Route::apiResource('emotions', EmotionController::class);
+
 Route::apiResource('threads', ThreadController::class);
 Route::apiResource('thread-summaries', ThreadSummaryController::class);
-Route::apiResource('posts', PostController::class);
-Route::apiResource('emotions', EmotionController::class);
-Route::apiResource('sentiments', SentimentController::class);
+Route::apiResource('thread-extracted-concept-groups', ThreadExtractedConceptGroupController::class);
+Route::apiResource('thread-analytics', ThreadAnalyticController::class);
+
+Route::apiResource('posts', PostController::class)->only(['store', 'show', 'destroy']);
 Route::apiResource('post-predicted-sentiments', PostPredictedSentimentController::class);
 Route::apiResource('post-predicted-emotions', PostPredictedEmotionController::class);
 Route::apiResource('post-analytics', PostAnalyticController::class);
-Route::apiResource('thread-extracted-concept-groups', ThreadExtractedConceptGroupController::class);
-Route::apiResource('thread-analytics', ThreadAnalyticController::class);
+
 
 Route::prefix('/post-transactions')->group(function () {
     Route::post('/', [PostTransactionController::class, 'createPost']);

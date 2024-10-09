@@ -30,7 +30,7 @@ class PostPolicy
     /**
      * Determine whether the user can create models.
      */
-    public function create(User $user): bool
+    public function create(): bool
     {
         return true;
     }
@@ -48,7 +48,7 @@ class PostPolicy
      */
     public function delete(User $user, Post $post): bool
     {
-        return true;
+        return $user->id === $post->thread->user->id;
     }
 
     /**
@@ -64,6 +64,6 @@ class PostPolicy
      */
     public function forceDelete(User $user, Post $post): bool
     {
-        return true;
+        return $user->id === $post->thread->user->id;
     }
 }
