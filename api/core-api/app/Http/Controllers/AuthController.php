@@ -6,7 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\Authentication\SignInRequest;
 use App\Http\Requests\Authentication\SignUpRequest;
-use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Auth\Events\Verified;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Hash;
@@ -19,7 +19,6 @@ class AuthController extends Controller implements HasMiddleware
             new Middleware('auth:sanctum', only: [
                 'signOut',
                 'sendEmailVerification',
-                'verifyEmail'
             ]),
             new Middleware('throttle:6,1', only: [
                 'sendEmailVerification'
@@ -35,8 +34,17 @@ class AuthController extends Controller implements HasMiddleware
         return response()->json(['message' => 'Verification email sent']);
     }
 
-    public function verifyEmail(EmailVerificationRequest $request) {
-        $request->fulfill();
+    public function verifyEmail(Request $request) {
+        $user = User::findOrFail($request->id);
+
+        if ($user->hasVerifiedEmail()) {
+            return ['data' => 'Email is already verified'];
+        }
+
+        if ($user->markEmailAsVerified()) {
+            event(new Verified($user));
+        }
+
         return response()->json(['message' => 'Email verified']);
     }
 
@@ -52,7 +60,6 @@ class AuthController extends Controller implements HasMiddleware
         ]);
 
         $token = $user->createToken($user->email);
-        $user->sendEmailVerificationNotification();
 
         $response = [
             'data' => [

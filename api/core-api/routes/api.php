@@ -15,8 +15,8 @@ Route::prefix('/auth')->group(function () {
     Route::post('/sign-in', [AuthController::class, 'signIn']);
     Route::post('/sign-up', [AuthController::class, 'signUp']);
     Route::post('/sign-out', [AuthController::class, 'signOut']);
-    Route::post('/email/verification-notification', [AuthController::class, 'sendEmailVerification']);
     Route::get('/email/verify/{id}/{hash}', [AuthController::class, 'verifyEmail'])->name('verification.verify');
+    Route::post('/email/verification-notification', [AuthController::class, 'sendEmailVerification'])->name('verification.send');   
 });
 
 Route::prefix('/account')->group(function () {
@@ -24,7 +24,6 @@ Route::prefix('/account')->group(function () {
     Route::post('/update-information', [AccountController::class, 'updateAccountInformation']);
     Route::post('/update-password', [AccountController::class, 'updatePassword']);
 });
-
 
 Route::apiResource('sentiments', SentimentController::class)->only(['index', 'show']);
 Route::apiResource('emotions', EmotionController::class)->only(['index', 'show']);
