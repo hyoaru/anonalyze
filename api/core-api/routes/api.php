@@ -11,14 +11,12 @@ use App\Http\Controllers\Threads\ThreadController;
 use App\Http\Controllers\Threads\ThreadSummaryController;
 use Illuminate\Support\Facades\Route;
 
-// Route::get('/user', function (Request $request) {
-//     return $request->user();
-// })->middleware('auth:sanctum');
-
 Route::prefix('/auth')->group(function () {
     Route::post('/sign-in', [AuthController::class, 'signIn']);
     Route::post('/sign-up', [AuthController::class, 'signUp']);
     Route::post('/sign-out', [AuthController::class, 'signOut']);
+    Route::post('/email/verification-notification', [AuthController::class, 'sendEmailVerification']);
+    Route::get('/email/verify/{id}/{hash}', [AuthController::class, 'verifyEmail'])->name('verification.verify');
 });
 
 Route::prefix('/account')->group(function () {
