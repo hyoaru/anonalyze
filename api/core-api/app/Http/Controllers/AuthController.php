@@ -31,21 +31,21 @@ class AuthController extends Controller implements HasMiddleware
 
     public function sendEmailVerification(Request $request) {
         $request->user()->sendEmailVerificationNotification();
-        return response()->json(['message' => 'Verification email sent']);
+        return response()->json(['data' => ['message' => 'Email verification sent']], 200);
     }
 
     public function verifyEmail(Request $request) {
         $user = User::findOrFail($request->id);
 
         if ($user->hasVerifiedEmail()) {
-            return ['data' => 'Email is already verified'];
+            return response()->json(['data' => ['message' => 'Email is already verified']], 200);
         }
 
         if ($user->markEmailAsVerified()) {
             event(new Verified($user));
         }
 
-        return response()->json(['message' => 'Email verified']);
+        return response()->json(['data' => ['message' => 'Email has been verified']], 200);
     }
 
     public function signUp(SignUpRequest $request)
@@ -61,7 +61,7 @@ class AuthController extends Controller implements HasMiddleware
 
         $token = $user->createToken($user->email);
 
-        $response = [
+        $data = [
             'data' => [
                 'message' => 'Registered successfully. Please check your email for verification.',
                 'user' => $user,
@@ -69,7 +69,7 @@ class AuthController extends Controller implements HasMiddleware
             ]
         ];
 
-        return $response;
+        return response()->json($data, 200);
     }
 
     public function signIn(SignInRequest $request)
@@ -87,14 +87,14 @@ class AuthController extends Controller implements HasMiddleware
 
         $token = $user->createToken($user->email);
 
-        $response = [
+        $data = [
             'data' => [
                 'user' => $user,
                 'token' => $token->plainTextToken,
             ]
         ];
 
-        return $response;
+        return response()->json($data, 200);
     }
 
     public function signOut(Request $request)
@@ -102,6 +102,8 @@ class AuthController extends Controller implements HasMiddleware
         $user = $request->user();
         $user->tokens()->delete();
 
-        return $user;
+        $data = ['data' => $user];
+
+        return response()->json($data, 200);
     }
 }
