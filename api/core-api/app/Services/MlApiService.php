@@ -30,4 +30,8 @@ class MlApiService {
     public static function predictEmotion(string $text) {
         return self::httpPost("/emotion/predict", ['text' => $text]);
     }
+
+    public static function extractConcepts(array $postContents) {
+        return self::httpPost('/concept/extract', ['texts' => $postContents]);
+    }
 }

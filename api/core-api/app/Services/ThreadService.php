@@ -7,6 +7,7 @@ use App\Models\Threads\ThreadExtractedConceptGroup;
 use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ThreadService
 {
@@ -37,6 +38,31 @@ class ThreadService
         }
 
         $thread->update($validatedData);
+        return $thread;
+    }
+
+    public static function updateThreadExtractedConcepts($thread) {
+        if (!$thread instanceof Thread) {
+            $thread = Thread::findOrFail($thread);
+        }
+
+        $posts = $thread->posts;
+        $postContents = $posts->pluck('content')->toArray();
+
+        $mlApiExtractedConceptsResponse = MlApiService::extractConcepts($postContents);
+        throw_if(!$mlApiExtractedConceptsResponse->successful(), new Exception("An error has occured"));
+        $mlApiExtractedConceptsResponseJson = $mlApiExtractedConceptsResponse->json();
+
+        $threadExtractedConceptGroup = $thread->threadAnalytic->threadExtractedConceptGroup;
+        $extractedConcepts = $mlApiExtractedConceptsResponseJson['data']['extracted_concepts'];
+
+        foreach ($extractedConcepts as $concept => $significanceScore) {
+            $threadExtractedConceptGroup->threadExtractedConcepts()->create([
+                'concept' => $concept,
+                'significance_score' => $significanceScore
+            ]);
+        }
+
         return $thread;
     }
 }

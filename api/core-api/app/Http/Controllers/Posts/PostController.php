@@ -7,6 +7,7 @@ use App\Http\Requests\Posts\Post\StorePostRequest;
 use App\Http\Requests\Posts\Post\UpdatePostRequest;
 use App\Models\Posts\Post;
 use App\Services\PostService;
+use App\Services\ThreadService;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
@@ -40,6 +41,10 @@ class PostController extends Controller implements HasMiddleware
         try {
             $validatedData = $request->validated();
             $post = PostService::createPost($validatedData);
+            
+            $thread = $post->thread;
+            ThreadService::updateThreadExtractedConcepts($thread);
+
             DB::commit();
 
             $data = ['data' => $post->load([
