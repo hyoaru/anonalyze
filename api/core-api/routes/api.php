@@ -16,13 +16,14 @@ Route::prefix('/auth')->group(function () {
     Route::post('/sign-up', [AuthController::class, 'signUp']);
     Route::post('/sign-out', [AuthController::class, 'signOut']);
     Route::get('/email/verify/{id}/{hash}', [AuthController::class, 'verifyEmail'])->name('verification.verify');
-    Route::post('/email/verification-notification', [AuthController::class, 'sendEmailVerification'])->name('verification.send');   
+    Route::post('/email/resend-verification', [AuthController::class, 'sendEmailVerification'])->name('verification.send');   
 });
 
 Route::prefix('/account')->group(function () {
     Route::get('/', [AccountController::class, 'getAccountInformation']);
     Route::post('/update-information', [AccountController::class, 'updateAccountInformation']);
     Route::post('/update-password', [AccountController::class, 'updatePassword']);
+    Route::post('/update-email', [AccountController::class, 'updateEmail']);
 });
 
 Route::apiResource('sentiments', SentimentController::class)->only(['index', 'show']);

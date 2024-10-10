@@ -22,7 +22,13 @@ class AccountPolicy
     }
 
 
-    public function updatePassword(User $user): bool {
+    public function updatePassword(User $user): bool
+    {
+        return Auth::user()->id === $user->id;
+    }
+
+    public function updateEmail(User $user): bool
+    {
         return Auth::user()->id === $user->id;
     }
 }
