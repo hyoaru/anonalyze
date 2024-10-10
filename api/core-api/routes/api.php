@@ -29,7 +29,7 @@ Route::prefix('/account')->group(function () {
 Route::apiResource('sentiments', SentimentController::class)->only(['index', 'show']);
 Route::apiResource('emotions', EmotionController::class)->only(['index', 'show']);
 
-Route::apiResource('threads', ThreadController::class)->except(['index']);
+Route::apiResource('threads', ThreadController::class);
 Route::apiResource('thread-summaries', ThreadSummaryController::class)->only(['show']);
 Route::apiResource('thread-analytics', ThreadAnalyticController::class)->only(['show']);
 

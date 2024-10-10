@@ -11,6 +11,7 @@ use App\Http\Requests\Threads\Thread\StoreThreadRequest;
 use App\Http\Requests\Threads\Thread\UpdateThreadRequest;
 use App\Services\ThreadService;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class ThreadController extends Controller implements HasMiddleware
@@ -20,10 +21,8 @@ class ThreadController extends Controller implements HasMiddleware
     public static function middleware()
     {
         return [
-            new Middleware('auth:sanctum', only: [
-                'store',
-                'update',
-                'destroy'
+            new Middleware('auth:sanctum', except: [
+                'show'
             ])
         ];
     }
@@ -31,7 +30,20 @@ class ThreadController extends Controller implements HasMiddleware
     /**
      * Display a listing of the resource.
      */
-    public function index() {}
+    public function index(Request $request)
+    {
+        $user = $request->user();
+        $threads = $user->threads->load([
+            'threadSummary',
+            'threadAnalytic',
+            'threadAnalytic.threadExtractedConceptGroup',
+            'threadAnalytic.threadExtractedConceptGroup.threadExtractedConcepts',
+        ]);
+
+        $data = ['data' => $threads];
+
+        return response()->json($data, 200);
+    }
 
     /**
      * Store a newly created resource in storage.
