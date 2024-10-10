@@ -60,6 +60,7 @@ class AuthController extends Controller implements HasMiddleware
         ]);
 
         $token = $user->createToken($user->email);
+        $user->sendEmailVerificationNotification();
 
         $data = [
             'data' => [
