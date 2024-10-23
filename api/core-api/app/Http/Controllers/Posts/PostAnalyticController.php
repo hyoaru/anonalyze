@@ -12,18 +12,38 @@ class PostAnalyticController extends Controller
 {
     use AuthorizesRequests;
 
-    /**
-     * Display a listing of the resource.
-     */
-    public function index() {}
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    public function index() {}
+  
     public function store(StorePostAnalyticRequest $request) {}
 
     /**
-     * Display the specified resource.
+     * @OA\Get(
+     *     path="/api/post-analytics/{id}",
+     *     tags={"Posts"},
+     *     summary="Retrieve a post analytic by its ID",
+     *     description="Get a post analytic along with its sentiment and emotion data",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID of the post analytic to retrieve",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful retrieval of the post analytic",
+     *         @OA\JsonContent(ref="#/components/schemas/ShowPostAnalyticResponse")
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Post not found"
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Server error"
+     *     )
+     * )
      */
     public function show(PostAnalytic $postAnalytic)
     {
@@ -31,13 +51,7 @@ class PostAnalyticController extends Controller
         return $response;
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdatePostAnalyticRequest $request, PostAnalytic $postAnalytic) {}
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(PostAnalytic $postAnalytic) {}
 }

@@ -176,6 +176,45 @@
                 ]
             }
         },
+        "/api/post-analytics/{id}": {
+            "get": {
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "Retrieve a post analytic by its ID",
+                "description": "Get a post analytic along with its sentiment and emotion data",
+                "operationId": "3e3482e3fc8d9ee1b754d3fc8155742e",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the post analytic to retrieve",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful retrieval of the post analytic",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ShowPostAnalyticResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Post not found"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                }
+            }
+        },
         "/api/posts": {
             "post": {
                 "tags": [
@@ -593,6 +632,20 @@
                     },
                     "sentiment": {
                         "$ref": "#/components/schemas/Sentiment"
+                    }
+                },
+                "type": "object"
+            },
+            "ShowPostAnalyticResponse": {
+                "title": "Show Post Analytic Response",
+                "properties": {
+                    "data": {
+                        "properties": {
+                            "post": {
+                                "$ref": "#/components/schemas/PostAnalytic"
+                            }
+                        },
+                        "type": "object"
                     }
                 },
                 "type": "object"
