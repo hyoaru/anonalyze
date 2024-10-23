@@ -1,0 +1,20 @@
+<?php
+
+namespace App\OpenApi\Schemas;
+
+use OpenApi\Annotations as OA;
+
+/**
+ * @OA\Schema(
+ *     schema="Emotion",
+ *     type="object",
+ *     title="Emotion",
+ *     @OA\Property(property="id", type="integer", format="int64"),
+ *     @OA\Property(property="class", type="string"),
+ *     @OA\Property(property="description", type="string"),
+ *     @OA\Property(property="created_at", type="string", format="date-time"),
+ *     @OA\Property(property="updated_at", type="string", format="date-time"),
+ * )
+ */
+
+class Emotion {}

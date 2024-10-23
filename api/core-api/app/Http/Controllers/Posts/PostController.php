@@ -30,7 +30,7 @@ class PostController extends Controller implements HasMiddleware
 
     /**
      * @OA\Post(
-     *     path="/posts",
+     *     path="/api/posts",
      *     tags={"Posts"},
      *     summary="Create a new post",
      *     description="Stores a newly created post",
@@ -41,7 +41,7 @@ class PostController extends Controller implements HasMiddleware
      *     @OA\Response(
      *         response=201,
      *         description="Post created successfully",
-     *         @OA\JsonContent(ref="#/components/schemas/Post")
+     *         @OA\JsonContent(ref="#/components/schemas/StorePostResponse")
      *     ),
      *     @OA\Response(
      *         response=400,
@@ -60,7 +60,7 @@ class PostController extends Controller implements HasMiddleware
         try {
             $validatedData = $request->validated();
             $post = PostService::createPost($validatedData);
-            
+
             $thread = $post->thread;
             ThreadService::updateThreadExtractedConcepts($thread);
 
@@ -75,34 +75,38 @@ class PostController extends Controller implements HasMiddleware
             ])];
 
             return response()->json($data, 200);
-
         } catch (\Throwable $th) {
             DB::rollBack();
             abort(400, "Failed to create post. " . $th->getMessage());
         }
     }
 
+
     /**
      * @OA\Get(
-     *     path="/posts/{id}",
+     *     path="/api/posts/{id}",
      *     tags={"Posts"},
-     *     summary="Get a specific post",
-     *     description="Returns the details of a specific post",
+     *     summary="Retrieve a post by its ID",
+     *     description="Get a post along with its analytics, sentiment, and emotion data",
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
-     *         description="Post ID",
      *         required=true,
+     *         description="ID of the post to retrieve",
      *         @OA\Schema(type="integer")
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Post retrieved successfully",
-     *         @OA\JsonContent(ref="#/components/schemas/Post")
+     *         description="Successful retrieval of the post and its analytics",
+     *         @OA\JsonContent(ref="#/components/schemas/ShowPostResponse")
      *     ),
      *     @OA\Response(
      *         response=404,
      *         description="Post not found"
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Server error"
      *     )
      * )
      */
@@ -115,38 +119,44 @@ class PostController extends Controller implements HasMiddleware
             'postAnalytic.postPredictedEmotion',
             'postAnalytic.postPredictedEmotion.emotion',
         ])];
-        
+
         return response()->json($data, 200);
     }
 
     public function update(UpdatePostRequest $request, Post $post) {}
 
+
     /**
      * @OA\Delete(
-     *     path="/posts/{id}",
+     *     path="/api/posts/{id}",
      *     tags={"Posts"},
-     *     summary="Delete a specific post",
-     *     description="Removes a post from storage",
+     *     summary="Delete a post by its ID",
+     *     description="Deletes a post and returns its analytics before deletion",
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
-     *         description="Post ID",
      *         required=true,
+     *         description="ID of the post to delete",
      *         @OA\Schema(type="integer")
      *     ),
      *     @OA\Response(
      *         response=200,
      *         description="Post deleted successfully",
-     *         @OA\JsonContent(ref="#/components/schemas/Post")
+     *         @OA\JsonContent(ref="#/components/schemas/DestroyPostResponse")
      *     ),
      *     @OA\Response(
      *         response=403,
-     *         description="Unauthorized"
+     *         description="Unauthorized action"
      *     ),
      *     @OA\Response(
      *         response=404,
      *         description="Post not found"
-     *     )
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Server error"
+     *     ),
+     *     security={{"Bearer": {}}}
      * )
      */
     public function destroy(Post $post)

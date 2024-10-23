@@ -1,30 +1,31 @@
 <?php
 
-namespace App\OpenApi\Schemas\Posts;
+namespace App\OpenApi\Schemas\Threads;
 
 use OpenApi\Annotations as OA;
 
 /**
  * @OA\Schema(
- *     schema="Post",
+ *     schema="ThreadAnalytic",
  *     type="object",
- *     title="Post",
+ *     title="Thread Analytic",
  *     @OA\Property(property="id", type="integer", format="int64"),
  *     @OA\Property(property="thread_id", type="integer", format="int64"),
- *     @OA\Property(property="content", type="string"),
+ *     @OA\Property(property="thread_extracted_concept_group_id", type="integer", format="int64"),
  *     @OA\Property(property="created_at", type="string", format="date-time"),
  *     @OA\Property(property="updated_at", type="string", format="date-time"),
  *     @OA\Property(
  *         property="thread",
  *         ref="#/components/schemas/Thread",
- *         description="The thread this post belongs to"
+ *         description="The thread this analytic belongs to"
  *     ),
  *     @OA\Property(
- *         property="post_analytic",
- *         ref="#/components/schemas/PostAnalytic",
- *         description="The analytic data for the post"
+ *         property="thread_extracted_concept_group",
+ *         ref="#/components/schemas/ThreadExtractedConceptGroup",
+ *         description="The extracted concept group for the thread"
  *     )
  * )
  */
 
-class Post {}
+
+class ThreadAnalytic {}

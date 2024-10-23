@@ -176,14 +176,14 @@
                 ]
             }
         },
-        "/posts": {
+        "/api/posts": {
             "post": {
                 "tags": [
                     "Posts"
                 ],
                 "summary": "Create a new post",
                 "description": "Stores a newly created post",
-                "operationId": "929d0b37ce97ffab0f526648d528c3e6",
+                "operationId": "7a929de584eeb58f61028284e29b6db0",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -200,7 +200,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Post"
+                                    "$ref": "#/components/schemas/StorePostResponse"
                                 }
                             }
                         }
@@ -214,19 +214,19 @@
                 }
             }
         },
-        "/posts/{id}": {
+        "/api/posts/{id}": {
             "get": {
                 "tags": [
                     "Posts"
                 ],
-                "summary": "Get a specific post",
-                "description": "Returns the details of a specific post",
-                "operationId": "31e405c4f89c369b00e0d488e2393e44",
+                "summary": "Retrieve a post by its ID",
+                "description": "Get a post along with its analytics, sentiment, and emotion data",
+                "operationId": "a20e68b2cffe1d2b08b731b2b8b757e4",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "Post ID",
+                        "description": "ID of the post to retrieve",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -235,17 +235,20 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Post retrieved successfully",
+                        "description": "Successful retrieval of the post and its analytics",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Post"
+                                    "$ref": "#/components/schemas/ShowPostResponse"
                                 }
                             }
                         }
                     },
                     "404": {
                         "description": "Post not found"
+                    },
+                    "500": {
+                        "description": "Server error"
                     }
                 }
             },
@@ -253,14 +256,14 @@
                 "tags": [
                     "Posts"
                 ],
-                "summary": "Delete a specific post",
-                "description": "Removes a post from storage",
-                "operationId": "37a4075b07009df098aadf338f210e36",
+                "summary": "Delete a post by its ID",
+                "description": "Deletes a post and returns its analytics before deletion",
+                "operationId": "73d72b038667e11235a42feffa036338",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "Post ID",
+                        "description": "ID of the post to delete",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -273,18 +276,26 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Post"
+                                    "$ref": "#/components/schemas/DestroyPostResponse"
                                 }
                             }
                         }
                     },
                     "403": {
-                        "description": "Unauthorized"
+                        "description": "Unauthorized action"
                     },
                     "404": {
                         "description": "Post not found"
+                    },
+                    "500": {
+                        "description": "Server error"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             }
         }
     },
@@ -420,35 +431,182 @@
                 },
                 "type": "object"
             },
-            "Post": {
-                "required": [
-                    "thread_id",
-                    "content"
-                ],
+            "Emotion": {
+                "title": "Emotion",
                 "properties": {
                     "id": {
-                        "description": "The unique identifier of the post",
                         "type": "integer",
                         "format": "int64"
                     },
-                    "thread_id": {
-                        "description": "The unique identifier of the associated thread",
-                        "type": "integer",
-                        "format": "int64"
+                    "class": {
+                        "type": "string"
                     },
-                    "content": {
-                        "description": "The content of the post",
+                    "description": {
                         "type": "string"
                     },
                     "created_at": {
-                        "description": "The date when the post was created",
                         "type": "string",
                         "format": "date-time"
                     },
                     "updated_at": {
-                        "description": "The date when the post was last updated",
                         "type": "string",
                         "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "DestroyPostResponse": {
+                "title": "Post Response",
+                "properties": {
+                    "data": {
+                        "properties": {
+                            "post": {
+                                "$ref": "#/components/schemas/Post"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "Post": {
+                "title": "Post",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "thread_id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "content": {
+                        "type": "string"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "thread": {
+                        "$ref": "#/components/schemas/Thread"
+                    },
+                    "post_analytic": {
+                        "$ref": "#/components/schemas/PostAnalytic"
+                    }
+                },
+                "type": "object"
+            },
+            "PostAnalytic": {
+                "title": "Post Analytic",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "post_id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "post_predicted_sentiment_id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "post_predicted_emotion_id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "post": {
+                        "$ref": "#/components/schemas/Post"
+                    },
+                    "post_predicted_sentiment": {
+                        "$ref": "#/components/schemas/PostPredictedSentiment"
+                    },
+                    "post_predicted_emotion": {
+                        "$ref": "#/components/schemas/PostPredictedEmotion"
+                    }
+                },
+                "type": "object"
+            },
+            "PostPredictedEmotion": {
+                "title": "Post Predicted Emotion",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "emotion_id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "probability": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "emotion": {
+                        "$ref": "#/components/schemas/Emotion"
+                    }
+                },
+                "type": "object"
+            },
+            "PostPredictedSentiment": {
+                "title": "Post Predicted Sentiment",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "sentiment_id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "probability": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "sentiment": {
+                        "$ref": "#/components/schemas/Sentiment"
+                    }
+                },
+                "type": "object"
+            },
+            "ShowPostResponse": {
+                "title": "Post Response",
+                "properties": {
+                    "data": {
+                        "properties": {
+                            "post": {
+                                "$ref": "#/components/schemas/Post"
+                            }
+                        },
+                        "type": "object"
                     }
                 },
                 "type": "object"
@@ -466,6 +624,193 @@
                     "content": {
                         "description": "The content of the post",
                         "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "StorePostResponse": {
+                "title": "Post Response",
+                "properties": {
+                    "data": {
+                        "properties": {
+                            "post": {
+                                "$ref": "#/components/schemas/Post"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "Sentiment": {
+                "title": "Sentiment",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "class": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "Thread": {
+                "title": "Thread",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "user_id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "question": {
+                        "type": "string"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "posts": {
+                        "description": "A list of posts in the thread",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Post"
+                        }
+                    },
+                    "thread_analytic": {
+                        "$ref": "#/components/schemas/ThreadAnalytic"
+                    }
+                },
+                "type": "object"
+            },
+            "ThreadAnalytic": {
+                "title": "Thread Analytic",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "thread_id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "thread_extracted_concept_group_id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "thread": {
+                        "$ref": "#/components/schemas/Thread"
+                    },
+                    "thread_extracted_concept_group": {
+                        "$ref": "#/components/schemas/ThreadExtractedConceptGroup"
+                    }
+                },
+                "type": "object"
+            },
+            "ThreadExtractedConcept": {
+                "title": "Thread Extracted Concept",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "thread_extracted_concept_group_id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "concept": {
+                        "type": "string"
+                    },
+                    "significance_score": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "ThreadExtractedConceptGroup": {
+                "title": "Thread Extracted Concept Group",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "thread_extracted_concepts": {
+                        "description": "A list of extracted concepts for this group",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ThreadExtractedConcept"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "ThreadSummary": {
+                "title": "Thread Summary",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "thread_id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "summary": {
+                        "type": "string"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "thread": {
+                        "$ref": "#/components/schemas/Thread"
                     }
                 },
                 "type": "object"
