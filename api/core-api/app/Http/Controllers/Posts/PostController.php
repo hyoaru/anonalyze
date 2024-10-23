@@ -26,13 +26,32 @@ class PostController extends Controller implements HasMiddleware
         ];
     }
 
-    /**
-     * Display a listing of the resource.
-     */
     public function index() {}
 
     /**
-     * Store a newly created resource in storage.
+     * @OA\Post(
+     *     path="/posts",
+     *     tags={"Posts"},
+     *     summary="Create a new post",
+     *     description="Stores a newly created post",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(ref="#/components/schemas/StorePostRequest")
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Post created successfully",
+     *         @OA\JsonContent(ref="#/components/schemas/Post")
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Failed to create post"
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Server error"
+     *     )
+     * )
      */
     public function store(StorePostRequest $request)
     {
@@ -64,7 +83,28 @@ class PostController extends Controller implements HasMiddleware
     }
 
     /**
-     * Display the specified resource.
+     * @OA\Get(
+     *     path="/posts/{id}",
+     *     tags={"Posts"},
+     *     summary="Get a specific post",
+     *     description="Returns the details of a specific post",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="Post ID",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Post retrieved successfully",
+     *         @OA\JsonContent(ref="#/components/schemas/Post")
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Post not found"
+     *     )
+     * )
      */
     public function show(Post $post)
     {
@@ -79,13 +119,35 @@ class PostController extends Controller implements HasMiddleware
         return response()->json($data, 200);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdatePostRequest $request, Post $post) {}
 
     /**
-     * Remove the specified resource from storage.
+     * @OA\Delete(
+     *     path="/posts/{id}",
+     *     tags={"Posts"},
+     *     summary="Delete a specific post",
+     *     description="Removes a post from storage",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="Post ID",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Post deleted successfully",
+     *         @OA\JsonContent(ref="#/components/schemas/Post")
+     *     ),
+     *     @OA\Response(
+     *         response=403,
+     *         description="Unauthorized"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Post not found"
+     *     )
+     * )
      */
     public function destroy(Post $post)
     {

@@ -1,0 +1,532 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Your API Title",
+        "description": "API Description",
+        "contact": {
+            "name": "Your Name",
+            "email": "your.email@example.com"
+        },
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        },
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/auth/email/resend-verification": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "User resend email verification",
+                "description": "Send user an email verification",
+                "operationId": "4f8ba7cc827f60c15406fea460ab605f",
+                "responses": {
+                    "200": {
+                        "description": "User signed up successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "message": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Validation errors"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/auth/sign-up": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "User sign-up",
+                "description": "Sign up a new user",
+                "operationId": "a9a9772f77ea214ed228f499a12b0011",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SignUpRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User signed up successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SignUpResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Validation errors"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                }
+            }
+        },
+        "/api/auth/sign-in": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "User sign-in",
+                "description": "Sign in a user",
+                "operationId": "dc69729f6544b97e7dbd4464e60872f8",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SignInRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User signed in successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SignInResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Validation errors"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                }
+            }
+        },
+        "/api/auth/sign-out": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Sign out a user",
+                "description": "Signs out the authenticated user by invalidating their token.",
+                "operationId": "82d9e7e245409adfbfa784a3c59bbc4f",
+                "responses": {
+                    "200": {
+                        "description": "User signed out successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SignOutResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/posts": {
+            "post": {
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "Create a new post",
+                "description": "Stores a newly created post",
+                "operationId": "929d0b37ce97ffab0f526648d528c3e6",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StorePostRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Post created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Post"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Failed to create post"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                }
+            }
+        },
+        "/posts/{id}": {
+            "get": {
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "Get a specific post",
+                "description": "Returns the details of a specific post",
+                "operationId": "31e405c4f89c369b00e0d488e2393e44",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Post ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Post retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Post"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Post not found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "Delete a specific post",
+                "description": "Removes a post from storage",
+                "operationId": "37a4075b07009df098aadf338f210e36",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Post ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Post deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Post"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Post not found"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "SignInRequest": {
+                "required": [
+                    "email",
+                    "password"
+                ],
+                "properties": {
+                    "email": {
+                        "description": "The email of the user",
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "password": {
+                        "description": "The password of the user",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "SignInResponse": {
+                "properties": {
+                    "data": {
+                        "properties": {
+                            "message": {
+                                "description": "Success message",
+                                "type": "string"
+                            },
+                            "user": {
+                                "$ref": "#/components/schemas/User"
+                            },
+                            "token": {
+                                "description": "The authentication token for the user",
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "SignOutResponse": {
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/User"
+                    }
+                },
+                "type": "object"
+            },
+            "SignUpRequest": {
+                "required": [
+                    "first_name",
+                    "last_name",
+                    "email",
+                    "password",
+                    "password_confirmation"
+                ],
+                "properties": {
+                    "first_name": {
+                        "description": "The first name of the user",
+                        "type": "string"
+                    },
+                    "last_name": {
+                        "description": "The last name of the user",
+                        "type": "string"
+                    },
+                    "email": {
+                        "description": "The email of the user",
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "password": {
+                        "description": "The password of the user",
+                        "type": "string"
+                    },
+                    "password_confirmation": {
+                        "description": "Confirmation of the user's password",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "SignUpResponse": {
+                "properties": {
+                    "data": {
+                        "properties": {
+                            "message": {
+                                "description": "Success message",
+                                "type": "string"
+                            },
+                            "user": {
+                                "properties": {
+                                    "first_name": {
+                                        "description": "The first name of the user",
+                                        "type": "string"
+                                    },
+                                    "last_name": {
+                                        "description": "The last name of the user",
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "description": "The email of the user",
+                                        "type": "string",
+                                        "format": "email"
+                                    },
+                                    "updated_at": {
+                                        "description": "The timestamp when the user was last updated",
+                                        "type": "string",
+                                        "format": "date-time"
+                                    },
+                                    "created_at": {
+                                        "description": "The timestamp when the user was created",
+                                        "type": "string",
+                                        "format": "date-time"
+                                    },
+                                    "id": {
+                                        "description": "The unique identifier of the user",
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            },
+                            "token": {
+                                "description": "The authentication token for the user",
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "Post": {
+                "required": [
+                    "thread_id",
+                    "content"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "The unique identifier of the post",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "thread_id": {
+                        "description": "The unique identifier of the associated thread",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "content": {
+                        "description": "The content of the post",
+                        "type": "string"
+                    },
+                    "created_at": {
+                        "description": "The date when the post was created",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "description": "The date when the post was last updated",
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "StorePostRequest": {
+                "required": [
+                    "thread_id",
+                    "content"
+                ],
+                "properties": {
+                    "thread_id": {
+                        "description": "The unique identifier of the associated thread",
+                        "type": "integer"
+                    },
+                    "content": {
+                        "description": "The content of the post",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "User": {
+                "properties": {
+                    "first_name": {
+                        "description": "The first name of the user",
+                        "type": "string"
+                    },
+                    "last_name": {
+                        "description": "The last name of the user",
+                        "type": "string"
+                    },
+                    "email": {
+                        "description": "The email of the user",
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "updated_at": {
+                        "description": "The timestamp when the user was last updated",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "created_at": {
+                        "description": "The timestamp when the user was created",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "email_verified_at": {
+                        "description": "The timestamp when the user's email was verified",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "id": {
+                        "description": "The unique identifier of the user",
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "securitySchemes": {
+            "Bearer": {
+                "type": "http",
+                "description": "Enter your Bearer token in the format **Bearer <token>**",
+                "name": "Bearer",
+                "in": "header",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Authentication",
+            "description": "Authentication"
+        },
+        {
+            "name": "Posts",
+            "description": "Posts"
+        }
+    ]
+}

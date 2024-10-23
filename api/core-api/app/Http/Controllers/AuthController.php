@@ -29,12 +29,52 @@ class AuthController extends Controller implements HasMiddleware
         ];
     }
 
-    public function sendEmailVerification(Request $request) {
-        $request->user()->sendEmailVerificationNotification();
+    /**
+     * @OA\Post(
+     *     path="/api/auth/email/resend-verification",
+     *     tags={"Authentication"},
+     *     summary="User resend email verification",
+     *     description="Send user an email verification",
+     *     @OA\Response(
+     *         response=200,
+     *         description="User signed up successfully",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                  property="data", 
+     *                  type="object", 
+     *                  @OA\Property(
+     *                      property="message",
+     *                      type="string",
+     *                  ),                
+     *             ),
+     *         ),
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Validation errors"
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Server error"
+     *     ),
+     *     security={{ "Bearer":{} }}
+     *      
+     * )
+     */
+    public function sendEmailVerification(Request $request)
+    {
+        $user = $request->user();
+
+        if ($user->hasVerifiedEmail()) {
+            return response()->json(['data' => ['message' => 'Email is already verified']], 200);
+        }
+
+        $user->sendEmailVerificationNotification();
         return response()->json(['data' => ['message' => 'Email verification sent']], 200);
     }
 
-    public function verifyEmail(Request $request) {
+    public function verifyEmail(Request $request)
+    {
         $user = User::findOrFail($request->id);
 
         if ($user->hasVerifiedEmail()) {
@@ -48,6 +88,32 @@ class AuthController extends Controller implements HasMiddleware
         return response()->json(['data' => ['message' => 'Email has been verified']], 200);
     }
 
+
+    /**
+     * @OA\Post(
+     *     path="/api/auth/sign-up",
+     *     tags={"Authentication"},
+     *     summary="User sign-up",
+     *     description="Sign up a new user",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(ref="#/components/schemas/SignUpRequest")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="User signed up successfully",
+     *         @OA\JsonContent(ref="#/components/schemas/SignUpResponse")
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Validation errors"
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Server error"
+     *     )
+     * )
+     */
     public function signUp(SignUpRequest $request)
     {
         $validatedData = $request->validated();
@@ -73,6 +139,32 @@ class AuthController extends Controller implements HasMiddleware
         return response()->json($data, 200);
     }
 
+
+    /**
+     * @OA\Post(
+     *     path="/api/auth/sign-in",
+     *     tags={"Authentication"},
+     *     summary="User sign-in",
+     *     description="Sign in a user",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(ref="#/components/schemas/SignInRequest")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="User signed in successfully",
+     *         @OA\JsonContent(ref="#/components/schemas/SignInResponse")
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Validation errors"
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Server error"
+     *     )
+     * )
+     */
     public function signIn(SignInRequest $request)
     {
         $validatedData = $request->validated();
@@ -98,6 +190,27 @@ class AuthController extends Controller implements HasMiddleware
         return response()->json($data, 200);
     }
 
+    /**
+     * @OA\Post(
+     *     path="/api/auth/sign-out",
+     *     tags={"Authentication"},
+     *     summary="Sign out a user",
+     *     description="Signs out the authenticated user by invalidating their token.",
+     *     @OA\Response(
+     *         response=200,
+     *         description="User signed out successfully",
+     *         @OA\JsonContent(ref="#/components/schemas/SignOutResponse")
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Unauthenticated.")
+     *         )
+     *     ),
+     *     security={{"Bearer": {}}},
+     * )
+     */
     public function signOut(Request $request)
     {
         $user = $request->user();
