@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Account\UpdateAccountInformationRequest;
 use App\Http\Requests\Account\UpdatePasswordRequest;
-use App\Http\Requests\UpdateEmailRequest;
+use App\Http\Requests\Account\UpdateEmailRequest;
 use App\Models\User;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Routing\Controllers\HasMiddleware;
