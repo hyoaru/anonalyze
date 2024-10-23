@@ -9,7 +9,21 @@ use App\Models\Sentiment;
 class SentimentController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * @OA\Get(
+     *     path="/api/sentiments",
+     *     tags={"Sentiments"},
+     *     summary="Get a list of sentiments",
+     *     description="Returns a list of all sentiments",
+     *     @OA\Response(
+     *         response=200,
+     *         description="A list of sentiments",
+     *         @OA\JsonContent(ref="#/components/schemas/IndexSentimentResponse")
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Server error"
+     *     )
+     * )
      */
     public function index()
     {
@@ -23,7 +37,32 @@ class SentimentController extends Controller
     public function store(StoreSentimentRequest $request) {}
 
     /**
-     * Display the specified resource.
+     * @OA\Get(
+     *     path="/api/sentiments/{id}",
+     *     tags={"Sentiments"},
+     *     summary="Retrieve a sentiment by its ID",
+     *     description="Get a sentiment data",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID of the sentiment to retrieve",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful retrieval of the sentiment",
+     *         @OA\JsonContent(ref="#/components/schemas/ShowSentimentResponse")
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Sentiment not found"
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Server error"
+     *     )
+     * )
      */
     public function show(Sentiment $sentiment)
     {

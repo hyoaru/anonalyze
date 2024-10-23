@@ -336,6 +336,70 @@
                     }
                 ]
             }
+        },
+        "/api/sentiments": {
+            "get": {
+                "tags": [
+                    "Sentiments"
+                ],
+                "summary": "Get a list of sentiments",
+                "description": "Returns a list of all sentiments",
+                "operationId": "aeed5bf24e5d1eed01ba5131fd41c5f4",
+                "responses": {
+                    "200": {
+                        "description": "A list of sentiments",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/IndexSentimentResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                }
+            }
+        },
+        "/api/sentiments/{id}": {
+            "get": {
+                "tags": [
+                    "Sentiments"
+                ],
+                "summary": "Retrieve a sentiment by its ID",
+                "description": "Get a sentiment data",
+                "operationId": "84b61ed01a3ab798429918a64fe8c23a",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the sentiment to retrieve",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful retrieval of the sentiment",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ShowSentimentResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Sentiment not found"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -695,6 +759,18 @@
                 },
                 "type": "object"
             },
+            "IndexSentimentResponse": {
+                "title": "Sentiment Response",
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Sentiment"
+                        }
+                    }
+                },
+                "type": "object"
+            },
             "Sentiment": {
                 "title": "Sentiment",
                 "properties": {
@@ -715,6 +791,20 @@
                     "updated_at": {
                         "type": "string",
                         "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "ShowSentimentResponse": {
+                "title": "Show Sentiment Response",
+                "properties": {
+                    "data": {
+                        "properties": {
+                            "sentiment": {
+                                "$ref": "#/components/schemas/Sentiment"
+                            }
+                        },
+                        "type": "object"
                     }
                 },
                 "type": "object"
@@ -925,6 +1015,10 @@
         {
             "name": "Posts",
             "description": "Posts"
+        },
+        {
+            "name": "Sentiments",
+            "description": "Sentiments"
         }
     ]
 }
