@@ -7,12 +7,19 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        custom: ["Fira Mono", 'sans-serif']
+      },
       borderRadius: {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)'
       },
       colors: {
+        "main-accent": {
+          DEFAULT: 'hsl(var(--main-accent))',
+          foreground: 'hsl(var(--main-accent-foreground))',
+        },
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {
