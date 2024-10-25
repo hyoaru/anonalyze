@@ -6,10 +6,8 @@ export default function CenteredLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className={"h-[80vh] px-2"}>
       <div className="flex items-start justify-center md:items-center">
         {children}
       </div>
-    </div>
   );
 }
