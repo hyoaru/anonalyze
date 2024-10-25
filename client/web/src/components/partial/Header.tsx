@@ -7,7 +7,7 @@ import BaseContainer from "./BaseContainer";
 
 export default function Header() {
   return (
-    <header className="pt-6 backdrop-blur-sm">
+    <header className="pt-6 pb-2 sticky top-0 z-40 bg-white/80 backdrop-blur-sm">
       <BaseContainer className="flex items-center ">
         <div id="header-start" className="flex items-center gap-4">
           <Brackets strokeWidth={2.6} size={38} className="text-main-accent" />
