@@ -12,11 +12,11 @@ export const Route = createFileRoute("/authentication/sign-in")({
 
 export default function SignIn() {
   return (
-    <CenteredLayout className="flex">
-      <div className="mx-auto w-full rounded-lg bg-white p-10 shadow lg:w-8/12 xl:w-6/12">
+    <CenteredLayout>
+      <div className="w-full rounded-lg bg-transparent py-10 backdrop-blur-[1px] md:p-10 md:shadow lg:w-8/12 xl:w-6/12">
         <div className="text-start">
-          <p className="text-2xl font-bold md:text-3xl">Sign In</p>
-          <p className="text-sm text-primary/80 md:text-base">
+          <p className="text-3xl font-bold">Sign In</p>
+          <p className="text-base text-primary/80">
             Enter your credentials to access your account
           </p>
         </div>

@@ -1,17 +1,15 @@
 import React from "react";
 
-import { cn } from "@/lib/utils";
-
 export default function CenteredLayout({
   children,
-  className,
 }: {
   children: React.ReactNode;
-  className?: string;
 }) {
   return (
-    <div className={cn("h-[55vh] items-center lg:h-[70vh]", className)}>
-      {children}
+    <div className={"h-[80vh] px-2"}>
+      <div className="flex h-full items-start justify-center md:items-center">
+        {children}
+      </div>
     </div>
   );
 }
