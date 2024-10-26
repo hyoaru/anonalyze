@@ -15,7 +15,7 @@ export default function ForgotPassword() {
     <CenteredLayout>
       <div className="w-full rounded-lg bg-transparent py-10 backdrop-blur-[1px] md:p-10 md:shadow lg:w-8/12 xl:w-6/12">
         <div className="text-start">
-          <p className="text-3xl font-bold">Forgot password</p>
+          <p className="text-3xl font-bold">Forgot Password</p>
           <p className="text-base text-primary/80">
             Enter your credentials to reset password
           </p>
