@@ -14,6 +14,7 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
 import { Route as AuthenticationSignUpImport } from './routes/authentication/sign-up'
 import { Route as AuthenticationSignInImport } from './routes/authentication/sign-in'
+import { Route as AuthenticationForgotPasswordImport } from './routes/authentication/forgot-password'
 
 // Create/Update Routes
 
@@ -35,6 +36,13 @@ const AuthenticationSignInRoute = AuthenticationSignInImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const AuthenticationForgotPasswordRoute =
+  AuthenticationForgotPasswordImport.update({
+    id: '/authentication/forgot-password',
+    path: '/authentication/forgot-password',
+    getParentRoute: () => rootRoute,
+  } as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -44,6 +52,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/authentication/forgot-password': {
+      id: '/authentication/forgot-password'
+      path: '/authentication/forgot-password'
+      fullPath: '/authentication/forgot-password'
+      preLoaderRoute: typeof AuthenticationForgotPasswordImport
       parentRoute: typeof rootRoute
     }
     '/authentication/sign-in': {
@@ -67,12 +82,14 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/authentication/forgot-password': typeof AuthenticationForgotPasswordRoute
   '/authentication/sign-in': typeof AuthenticationSignInRoute
   '/authentication/sign-up': typeof AuthenticationSignUpRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/authentication/forgot-password': typeof AuthenticationForgotPasswordRoute
   '/authentication/sign-in': typeof AuthenticationSignInRoute
   '/authentication/sign-up': typeof AuthenticationSignUpRoute
 }
@@ -80,27 +97,43 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/authentication/forgot-password': typeof AuthenticationForgotPasswordRoute
   '/authentication/sign-in': typeof AuthenticationSignInRoute
   '/authentication/sign-up': typeof AuthenticationSignUpRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/authentication/sign-in' | '/authentication/sign-up'
+  fullPaths:
+    | '/'
+    | '/authentication/forgot-password'
+    | '/authentication/sign-in'
+    | '/authentication/sign-up'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/authentication/sign-in' | '/authentication/sign-up'
-  id: '__root__' | '/' | '/authentication/sign-in' | '/authentication/sign-up'
+  to:
+    | '/'
+    | '/authentication/forgot-password'
+    | '/authentication/sign-in'
+    | '/authentication/sign-up'
+  id:
+    | '__root__'
+    | '/'
+    | '/authentication/forgot-password'
+    | '/authentication/sign-in'
+    | '/authentication/sign-up'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticationForgotPasswordRoute: typeof AuthenticationForgotPasswordRoute
   AuthenticationSignInRoute: typeof AuthenticationSignInRoute
   AuthenticationSignUpRoute: typeof AuthenticationSignUpRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticationForgotPasswordRoute: AuthenticationForgotPasswordRoute,
   AuthenticationSignInRoute: AuthenticationSignInRoute,
   AuthenticationSignUpRoute: AuthenticationSignUpRoute,
 }
@@ -118,12 +151,16 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/authentication/forgot-password",
         "/authentication/sign-in",
         "/authentication/sign-up"
       ]
     },
     "/": {
       "filePath": "index.tsx"
+    },
+    "/authentication/forgot-password": {
+      "filePath": "authentication/forgot-password.tsx"
     },
     "/authentication/sign-in": {
       "filePath": "authentication/sign-in.tsx"

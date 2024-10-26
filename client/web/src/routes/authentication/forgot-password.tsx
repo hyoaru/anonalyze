@@ -6,18 +6,18 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import CenteredLayout from "@/components/layout/CenteredLayout";
 
-export const Route = createFileRoute("/authentication/sign-in")({
-  component: SignIn,
+export const Route = createFileRoute("/authentication/forgot-password")({
+  component: ForgotPassword,
 });
 
-export default function SignIn() {
+export default function ForgotPassword() {
   return (
     <CenteredLayout>
       <div className="w-full rounded-lg bg-transparent py-10 backdrop-blur-[1px] md:p-10 md:shadow lg:w-8/12 xl:w-6/12">
         <div className="text-start">
-          <p className="text-3xl font-bold">Sign In</p>
+          <p className="text-3xl font-bold">Forgot password</p>
           <p className="text-base text-primary/80">
-            Enter your credentials to access your account
+            Enter your credentials to reset password
           </p>
         </div>
 
@@ -27,40 +27,25 @@ export default function SignIn() {
               <Label>Email</Label>
               <Input />
             </div>
-            <div className="grid gap-2">
-              <Label>Password</Label>
-              <Input />
-            </div>
           </div>
           <Button
             variant={"default"}
             size={"lg"}
             className="font-bold uppercase"
           >
-            Sign in
+            Reset password
           </Button>
         </form>
 
         <div className="flex flex-col items-center justify-center pt-4 lg:flex-row">
-          <Button
-            variant="link"
-            asChild
-            className="px-0 text-sm font-bold text-primary"
-          >
-            <Link href="/authentication/forgot-password">Forgot password?</Link>
-          </Button>
-
-          <hr className="mx-1 hidden w-4 border-black lg:block" />
-
           <p className="text-sm text-gray-600">
             Don't have an account yet?{" "}
-            <Button
-              variant={"link"}
-              asChild
-              className="px-0 text-sm font-bold text-primary"
+            <Link
+              to="/authentication/sign-up"
+              className="font-bold text-primary hover:underline"
             >
-              <Link to="/authentication/sign-up">Sign up</Link>
-            </Button>
+              Sign up
+            </Link>
           </p>
         </div>
       </div>

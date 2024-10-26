@@ -13,7 +13,7 @@ export const Route = createFileRoute("/authentication/sign-up")({
 export default function SignUp() {
   return (
     <CenteredLayout>
-      <div className="w-full rounded-lg bg-transparent backdrop-blur-[1px] py-10 md:p-10 md:shadow lg:w-8/12 xl:w-6/12">
+      <div className="w-full rounded-lg bg-transparent py-10 backdrop-blur-[1px] md:p-10 md:shadow lg:w-8/12 xl:w-6/12">
         <div className="text-start">
           <p className="text-3xl font-bold">Sign Up</p>
           <p className="text-base text-primary/80">
@@ -59,19 +59,20 @@ export default function SignUp() {
             asChild
             className="px-0 text-sm font-bold text-primary"
           >
-            <Link href="/forgot-password">Forgot password?</Link>
+            <Link href="/authentication/forgot-password">Forgot password?</Link>
           </Button>
 
           <hr className="mx-1 hidden w-4 border-black lg:block" />
 
           <p className="text-sm text-gray-600">
             Already have an account?{" "}
-            <Link
-              to="/authentication/sign-in"
-              className="font-bold text-primary hover:underline"
+            <Button
+              variant={"link"}
+              asChild
+              className="px-0 text-sm font-bold text-primary"
             >
-              Sign in
-            </Link>
+              <Link to="/authentication/sign-in">Sign in</Link>
+            </Button>
           </p>
         </div>
       </div>
