@@ -20,7 +20,7 @@ class PostAnalyticController extends Controller
     /**
      * @OA\Get(
      *     path="/api/post-analytics/{id}",
-     *     tags={"Posts"},
+     *     tags={"Post analytics"},
      *     summary="Retrieve a post analytic by its ID",
      *     description="Get a post analytic along with its sentiment and emotion data",
      *     @OA\Parameter(

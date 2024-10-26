@@ -19,7 +19,7 @@ class ThreadAnalyticController extends Controller
     /**
      * @OA\Get(
      *     path="/api/thread-analytics/{id}",
-     *     tags={"Thread-analytics"},
+     *     tags={"Thread analytics"},
      *     summary="Retrieve a thread analytic by its ID",
      *     description="Get a thread analytic along with its analytics, sentiment, and emotion data",
      *     @OA\Parameter(

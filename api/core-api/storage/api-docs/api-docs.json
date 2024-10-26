@@ -421,7 +421,7 @@
         "/api/post-analytics/{id}": {
             "get": {
                 "tags": [
-                    "Posts"
+                    "Post analytics"
                 ],
                 "summary": "Retrieve a post analytic by its ID",
                 "description": "Get a post analytic along with its sentiment and emotion data",
@@ -649,7 +649,7 @@
         "/api/thread-analytics/{id}": {
             "get": {
                 "tags": [
-                    "Thread-analytics"
+                    "Thread analytics"
                 ],
                 "summary": "Retrieve a thread analytic by its ID",
                 "description": "Get a thread analytic along with its analytics, sentiment, and emotion data",
@@ -1639,16 +1639,16 @@
             "description": "Emotions"
         },
         {
+            "name": "Post analytics",
+            "description": "Post analytics"
+        },
+        {
             "name": "Posts",
             "description": "Posts"
         },
         {
             "name": "Sentiments",
             "description": "Sentiments"
-        },
-        {
-            "name": "Thread-analytics",
-            "description": "Thread-analytics"
         },
         {
             "name": "Thread analytics",
