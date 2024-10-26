@@ -9,6 +9,7 @@ use OpenApi\Annotations as OA;
  *     schema="PostPredictedEmotion",
  *     type="object",
  *     title="Post Predicted Emotion",
+ *     required={"id", "emotion_id", "probability", "created_at", "updated_at"},
  *     @OA\Property(property="id", type="integer", format="int64"),
  *     @OA\Property(property="emotion_id", type="integer", format="int64"),
  *     @OA\Property(property="probability", type="number", format="float"),

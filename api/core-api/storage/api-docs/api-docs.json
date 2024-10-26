@@ -678,6 +678,13 @@
             },
             "PostPredictedEmotion": {
                 "title": "Post Predicted Emotion",
+                "required": [
+                    "id",
+                    "emotion_id",
+                    "probability",
+                    "created_at",
+                    "updated_at"
+                ],
                 "properties": {
                     "id": {
                         "type": "integer",
@@ -707,6 +714,13 @@
             },
             "PostPredictedSentiment": {
                 "title": "Post Predicted Sentiment",
+                "required": [
+                    "id",
+                    "sentiment_id",
+                    "probability",
+                    "created_at",
+                    "updated_at"
+                ],
                 "properties": {
                     "id": {
                         "type": "integer",
