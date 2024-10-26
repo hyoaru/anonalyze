@@ -1,22 +1,41 @@
 import { Brackets } from "lucide-react";
 import BaseContainer from "./BaseContainer";
+import { Button } from "@/components/ui/button";
 
 export default function Footer() {
   return (
     <footer className="pb-6 backdrop-blur-sm">
-      <BaseContainer className="flex flex-col md:flex-row items-center">
+      <BaseContainer className="flex flex-col items-center md:flex-row">
         <div className="flex items-center gap-2 font-custom font-medium uppercase">
           <Brackets strokeWidth={2.6} size={24} className="text-main-accent" />
           <p>
-            <span className="font-sans font-bold">©</span> 2024 hyoaru
+            <span className="font-sans font-bold">©</span>
+            <span>{" 2024 "}</span>
+            <Button
+              variant={"link"}
+              asChild
+              className="p-0 text-base font-medium"
+            >
+              <a href="https://github.com/hyoaru">
+                <p>hyoaru</p>
+              </a>
+            </Button>
           </p>
-          <hr className="mx-1 w-8 border-black/20" />
+          <hr className="w-8 border-black/20" />
           <p>made with tears</p>
         </div>
-        <div className="md:ms-auto flex items-center font-custom font-medium uppercase">
+        <div className="flex items-center gap-2 font-custom font-medium uppercase md:ms-auto">
           <p>about</p>
-          <hr className="mx-1 w-8 border-black/20" />
-          <p>github</p>
+          <hr className="w-8 border-black/20" />
+          <Button
+            variant={"link"}
+            asChild
+            className="px-0 text-base font-medium"
+          >
+            <a href="https://github.com/hyoaru/anonalyze">
+              <p>github</p>
+            </a>
+          </Button>
         </div>
       </BaseContainer>
     </footer>
