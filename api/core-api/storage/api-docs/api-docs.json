@@ -14,6 +14,186 @@
         "version": "1.0.0"
     },
     "paths": {
+        "/api/account": {
+            "get": {
+                "tags": [
+                    "Account"
+                ],
+                "summary": "Get account information",
+                "description": "Retrieve the logged-in user's account information",
+                "operationId": "d334e9598af008f9fe0254101aefedbf",
+                "responses": {
+                    "200": {
+                        "description": "Successful retrieval of account information",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized account"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/account/update-information": {
+            "post": {
+                "tags": [
+                    "Account"
+                ],
+                "summary": "Update account information",
+                "description": "Update the user's account information",
+                "operationId": "b38a24b1c687615ca12ece70d3e22112",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateInformationRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Account information updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Validation error"
+                    },
+                    "401": {
+                        "description": "Unauthorized action"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/account/update-password": {
+            "post": {
+                "tags": [
+                    "Account"
+                ],
+                "summary": "Update user password",
+                "description": "Update the user's password",
+                "operationId": "09834cfd0537024793a8bc776c30c1dc",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdatePasswordRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Password updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Current password is incorrect or validation error"
+                    },
+                    "401": {
+                        "description": "Unauthorized action"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/account/update-email": {
+            "post": {
+                "tags": [
+                    "Account"
+                ],
+                "summary": "Update user email",
+                "description": "Update the user's email address",
+                "operationId": "a10632a3ed23c713b7488c28f913d461",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateEmailRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Email updated successfully, verification sent",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Check your email for verification"
+                                        },
+                                        "user": {
+                                            "$ref": "#/components/schemas/User"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Password is incorrect or validation error"
+                    },
+                    "401": {
+                        "description": "Unauthorized action"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
         "/api/auth/email/resend-verification": {
             "post": {
                 "tags": [
@@ -803,6 +983,57 @@
     },
     "components": {
         "schemas": {
+            "UpdateEmailRequest": {
+                "required": [
+                    "new_email",
+                    "password"
+                ],
+                "properties": {
+                    "new_email": {
+                        "description": "The new email of the user",
+                        "type": "string"
+                    },
+                    "password": {
+                        "description": "The password of the user",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "UpdateInformationRequest": {
+                "required": [
+                    "first_name",
+                    "last_name"
+                ],
+                "properties": {
+                    "first_name": {
+                        "description": "The first name of the user",
+                        "type": "string"
+                    },
+                    "last_name": {
+                        "description": "The last name of the user",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "UpdatePasswordRequest": {
+                "required": [
+                    "current_password",
+                    "new_password"
+                ],
+                "properties": {
+                    "current_password": {
+                        "description": "The current password of the user",
+                        "type": "string"
+                    },
+                    "new_password": {
+                        "description": "The new password of the user",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
             "SignInRequest": {
                 "required": [
                     "email",
@@ -1395,6 +1626,10 @@
         }
     },
     "tags": [
+        {
+            "name": "Account",
+            "description": "Account"
+        },
         {
             "name": "Authentication",
             "description": "Authentication"

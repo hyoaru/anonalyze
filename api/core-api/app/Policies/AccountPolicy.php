@@ -16,7 +16,7 @@ class AccountPolicy
         return Auth::user()->id == $user->id;
     }
 
-    public function updateAccountInformation(User $user): bool
+    public function updateInformation(User $user): bool
     {
         return Auth::user()->id === $user->id;
     }
