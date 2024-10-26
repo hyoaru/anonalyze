@@ -12,42 +12,88 @@ class ThreadAnalyticController extends Controller
 {
     use AuthorizesRequests;
 
-    /**
-     * Display a listing of the resource.
-     */
     public function index() {}
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreThreadAnalyticRequest $request) {}
 
     /**
-     * Display the specified resource.
+     * @OA\Get(
+     *     path="/api/thread-analytics/{id}",
+     *     tags={"Thread-analytics"},
+     *     summary="Retrieve a thread analytic by its ID",
+     *     description="Get a thread analytic along with its analytics, sentiment, and emotion data",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID of the thread analytic to retrieve",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful retrieval of the thread analytic and its analytics",
+     *         @OA\JsonContent(ref="#/components/schemas/ThreadAnalytic")
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Thread analytic not found"
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Server error"
+     *     )
+     * )
      */
     public function show(ThreadAnalytic $threadAnalytic)
     {
-        $response = ['data' => $threadAnalytic->load([
+        $response = $threadAnalytic->load([
             'threadExtractedConceptGroup',
             'threadExtractedConceptGroup.threadExtractedConcepts',
-        ])];
+        ]);
 
         return $response;
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdateThreadAnalyticRequest $request, ThreadAnalytic $threadAnalytic) {}
 
     /**
-     * Remove the specified resource from storage.
+     * @OA\Delete(
+     *     path="/api/thread-analytics/{id}",
+     *     tags={"Thread analytics"},
+     *     summary="Delete a thread analytic by its ID",
+     *     description="Deletes a thread analytic and returns its analytics before deletion",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID of the thread analytic to delete",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Thread analytic deleted successfully",
+     *         @OA\JsonContent(ref="#/components/schemas/ThreadAnalytic")
+     *     ),
+     *     @OA\Response(
+     *         response=403,
+     *         description="Unauthorized action"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Thread analytic not found"
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Server error"
+     *     ),
+     *     security={{"Bearer": {}}}
+     * )
      */
     public function destroy(ThreadAnalytic $threadAnalytic)
     {
         $this->authorize('delete', $threadAnalytic);
         $threadAnalytic->delete();
-        $response = ['data' => $threadAnalytic];
+        $response = $threadAnalytic;
         return $response;
     }
 }

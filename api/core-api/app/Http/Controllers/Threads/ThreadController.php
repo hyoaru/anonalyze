@@ -28,7 +28,24 @@ class ThreadController extends Controller implements HasMiddleware
     }
 
     /**
-     * Display a listing of the resource.
+     * @OA\Get(
+     *     path="/api/threads",
+     *     tags={"Threads"},
+     *     summary="Get a list of threads",
+     *     description="Returns a list of all threads",
+     *     @OA\Response(
+     *         response=200,
+     *         description="A list of threads",
+     *         @OA\JsonContent(
+     *              type="array",
+     *              @OA\Items(ref="#/components/schemas/Thread"),
+     *         ),
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Server error"
+     *     )
+     * )
      */
     public function index(Request $request)
     {
@@ -40,13 +57,37 @@ class ThreadController extends Controller implements HasMiddleware
             'threadAnalytic.threadExtractedConceptGroup.threadExtractedConcepts',
         ]);
 
-        $data = ['data' => $threads];
+        $data = $threads;
 
         return response()->json($data, 200);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * @OA\Post(
+     *     path="/api/threads",
+     *     tags={"Threads"},
+     *     summary="Create a new thread",
+     *     description="Stores a newly created thread",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(ref="#/components/schemas/StoreThreadRequest")
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Thread created successfully",
+     *         @OA\JsonContent(ref="#/components/schemas/Thread")
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Failed to create thread"
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Server error"
+     *     ),
+    *      security={{"Bearer": {}}}
+     * 
+     * )
      */
     public function store(StoreThreadRequest $request)
     {
@@ -57,12 +98,12 @@ class ThreadController extends Controller implements HasMiddleware
             $thread = ThreadService::createThread($validatedData);
             DB::commit();
 
-            $data = ['data' => $thread->load([
+            $data = $thread->load([
                 'threadSummary',
                 'threadAnalytic',
                 'threadAnalytic.threadExtractedConceptGroup',
                 'threadAnalytic.threadExtractedConceptGroup.threadExtractedConcepts',
-            ])];
+            ]);
 
             return response()->json($data, 200);
         } catch (\Throwable $th) {
@@ -72,35 +113,128 @@ class ThreadController extends Controller implements HasMiddleware
     }
 
     /**
-     * Display the specified resource.
+     * @OA\Get(
+     *     path="/api/threads/{id}",
+     *     tags={"Threads"},
+     *     summary="Retrieve a thread by its ID",
+     *     description="Get a thread along with its analytics",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID of the thread to retrieve",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful retrieval of the thread and its analytics",
+     *         @OA\JsonContent(ref="#/components/schemas/Thread")
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Thread not found"
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Server error"
+     *     )
+     * )
      */
     public function show(Thread $thread)
     {
-        $data = ['data' => $thread];
+        $data = $thread;
         return response()->json($data, 200);
     }
 
     /**
-     * Update the specified resource in storage.
+     * @OA\Put(
+     *     path="/api/threads/{id}",
+     *     tags={"Threads"},
+     *     summary="Update a thread by its ID",
+     *     description="Updates the specified thread with new data",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID of the thread to update",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(ref="#/components/schemas/UpdateThreadRequest")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Thread updated successfully",
+     *         @OA\JsonContent(ref="#/components/schemas/Thread")
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Validation error or update failed"
+     *     ),
+     *     @OA\Response(
+     *         response=403,
+     *         description="Unauthorized action"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Thread not found"
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Server error"
+     *     ),
+     *     security={{"Bearer": {}}}
+     * )
      */
     public function update(UpdateThreadRequest $request, Thread $thread)
     {
         $this->authorize('update', $thread);
         $validatedData = $request->validated();
         $thread = ThreadService::updateThread($thread, $validatedData);
-        $data = ['data' => $thread];
+        $data = $thread;
 
         return response()->json($data, 200);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * @OA\Delete(
+     *     path="/api/threads/{id}",
+     *     tags={"Threads"},
+     *     summary="Delete a thread by its ID",
+     *     description="Deletes a thread and returns its data before deletion",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID of the thread to delete",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Thread deleted successfully",
+     *         @OA\JsonContent(ref="#/components/schemas/Thread")
+     *     ),
+     *     @OA\Response(
+     *         response=403,
+     *         description="Unauthorized action"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Thread not found"
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Server error"
+     *     ),
+     *     security={{"Bearer": {}}}
+     * )
      */
     public function destroy(Thread $thread)
     {
         $this->authorize('delete', $thread);
         $thread->delete();
-        $data = ['data' => $thread];
+        $data = $thread;
 
         return response()->json($data, 200);
     }

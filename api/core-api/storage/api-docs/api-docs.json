@@ -465,6 +465,340 @@
                     }
                 }
             }
+        },
+        "/api/thread-analytics/{id}": {
+            "get": {
+                "tags": [
+                    "Thread-analytics"
+                ],
+                "summary": "Retrieve a thread analytic by its ID",
+                "description": "Get a thread analytic along with its analytics, sentiment, and emotion data",
+                "operationId": "c0e8b082b5dd700a463c4e979fa31f8c",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the thread analytic to retrieve",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful retrieval of the thread analytic and its analytics",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ThreadAnalytic"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Thread analytic not found"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Thread analytics"
+                ],
+                "summary": "Delete a thread analytic by its ID",
+                "description": "Deletes a thread analytic and returns its analytics before deletion",
+                "operationId": "7761efe5000198622314b9d5dc0e08fd",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the thread analytic to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Thread analytic deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ThreadAnalytic"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Unauthorized action"
+                    },
+                    "404": {
+                        "description": "Thread analytic not found"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/threads": {
+            "get": {
+                "tags": [
+                    "Threads"
+                ],
+                "summary": "Get a list of threads",
+                "description": "Returns a list of all threads",
+                "operationId": "87dfdfff587b74f22cfa8d2019c3683e",
+                "responses": {
+                    "200": {
+                        "description": "A list of threads",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Thread"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Threads"
+                ],
+                "summary": "Create a new thread",
+                "description": "Stores a newly created thread",
+                "operationId": "7419cf3a50e91cc39aa363cc1c92ad06",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StoreThreadRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Thread created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Thread"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Failed to create thread"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/threads/{id}": {
+            "get": {
+                "tags": [
+                    "Threads"
+                ],
+                "summary": "Retrieve a thread by its ID",
+                "description": "Get a thread along with its analytics",
+                "operationId": "b4cfc426c8d8cd9670e69045d4e8ece1",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the thread to retrieve",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful retrieval of the thread and its analytics",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Thread"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Thread not found"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Threads"
+                ],
+                "summary": "Update a thread by its ID",
+                "description": "Updates the specified thread with new data",
+                "operationId": "2a03bbf5f007bf160a7d44a03dcdb0f5",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the thread to update",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateThreadRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Thread updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Thread"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Validation error or update failed"
+                    },
+                    "403": {
+                        "description": "Unauthorized action"
+                    },
+                    "404": {
+                        "description": "Thread not found"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Threads"
+                ],
+                "summary": "Delete a thread by its ID",
+                "description": "Deletes a thread and returns its data before deletion",
+                "operationId": "3fec24393d77b4cb096805ee59316707",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the thread to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Thread deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Thread"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Unauthorized action"
+                    },
+                    "404": {
+                        "description": "Thread not found"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/thread-summaries/{id}": {
+            "get": {
+                "tags": [
+                    "Thread summaries"
+                ],
+                "summary": "Retrieve a thread summary by its ID",
+                "description": "Get a thread summary along with its analytics, sentiment, and emotion data",
+                "operationId": "b0f5c4623507bfb0ece21ec67711b0e6",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the thread summary to retrieve",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful retrieval of the thread summary and its analytics",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ThreadSummary"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Thread summary not found"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -796,8 +1130,27 @@
                 },
                 "type": "object"
             },
+            "StoreThreadRequest": {
+                "required": [
+                    "question"
+                ],
+                "properties": {
+                    "question": {
+                        "description": "The question of the thread",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
             "Thread": {
                 "title": "Thread",
+                "required": [
+                    "id",
+                    "user_id",
+                    "question",
+                    "created_at",
+                    "updated_at"
+                ],
                 "properties": {
                     "id": {
                         "type": "integer",
@@ -833,6 +1186,13 @@
             },
             "ThreadAnalytic": {
                 "title": "Thread Analytic",
+                "required": [
+                    "id",
+                    "thread_id",
+                    "thread_extracted_concept_group_id",
+                    "created_at",
+                    "updated_at"
+                ],
                 "properties": {
                     "id": {
                         "type": "integer",
@@ -865,6 +1225,14 @@
             },
             "ThreadExtractedConcept": {
                 "title": "Thread Extracted Concept",
+                "required": [
+                    "id",
+                    "thread_extracted_concept_group_id",
+                    "concept",
+                    "significance_score",
+                    "created_at",
+                    "updated_at"
+                ],
                 "properties": {
                     "id": {
                         "type": "integer",
@@ -894,6 +1262,11 @@
             },
             "ThreadExtractedConceptGroup": {
                 "title": "Thread Extracted Concept Group",
+                "required": [
+                    "id",
+                    "created_at",
+                    "updated_at"
+                ],
                 "properties": {
                     "id": {
                         "type": "integer",
@@ -919,6 +1292,13 @@
             },
             "ThreadSummary": {
                 "title": "Thread Summary",
+                "required": [
+                    "id",
+                    "thread_id",
+                    "summary",
+                    "created_at",
+                    "updated_at"
+                ],
                 "properties": {
                     "id": {
                         "type": "integer",
@@ -941,6 +1321,18 @@
                     },
                     "thread": {
                         "$ref": "#/components/schemas/Thread"
+                    }
+                },
+                "type": "object"
+            },
+            "UpdateThreadRequest": {
+                "required": [
+                    "question"
+                ],
+                "properties": {
+                    "question": {
+                        "description": "The question of the thread",
+                        "type": "string"
                     }
                 },
                 "type": "object"
@@ -1018,6 +1410,22 @@
         {
             "name": "Sentiments",
             "description": "Sentiments"
+        },
+        {
+            "name": "Thread-analytics",
+            "description": "Thread-analytics"
+        },
+        {
+            "name": "Thread analytics",
+            "description": "Thread analytics"
+        },
+        {
+            "name": "Threads",
+            "description": "Threads"
+        },
+        {
+            "name": "Thread summaries",
+            "description": "Thread summaries"
         }
     ]
 }
