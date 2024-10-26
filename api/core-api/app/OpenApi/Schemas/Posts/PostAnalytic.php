@@ -9,6 +9,7 @@ use OpenApi\Annotations as OA;
  *     schema="PostAnalytic",
  *     type="object",
  *     title="Post Analytic",
+ *     required={"id", "post_id", "post_predicted_sentiment_id", "post_predicted_emotion_id", "created_at", "updated_at"},
  *     @OA\Property(property="id", type="integer", format="int64"),
  *     @OA\Property(property="post_id", type="integer", format="int64"),
  *     @OA\Property(property="post_predicted_sentiment_id", type="integer", format="int64"),

@@ -41,7 +41,7 @@ class PostController extends Controller implements HasMiddleware
      *     @OA\Response(
      *         response=201,
      *         description="Post created successfully",
-     *         @OA\JsonContent(ref="#/components/schemas/StorePostResponse")
+     *         @OA\JsonContent(ref="#/components/schemas/Post")
      *     ),
      *     @OA\Response(
      *         response=400,
@@ -66,13 +66,13 @@ class PostController extends Controller implements HasMiddleware
 
             DB::commit();
 
-            $data = ['data' => $post->load([
+            $data = $post->load([
                 'postAnalytic',
                 'postAnalytic.postPredictedSentiment',
                 'postAnalytic.postPredictedSentiment.sentiment',
                 'postAnalytic.postPredictedEmotion',
                 'postAnalytic.postPredictedEmotion.emotion',
-            ])];
+            ]);
 
             return response()->json($data, 200);
         } catch (\Throwable $th) {
@@ -98,7 +98,7 @@ class PostController extends Controller implements HasMiddleware
      *     @OA\Response(
      *         response=200,
      *         description="Successful retrieval of the post and its analytics",
-     *         @OA\JsonContent(ref="#/components/schemas/ShowPostResponse")
+     *         @OA\JsonContent(ref="#/components/schemas/Post")
      *     ),
      *     @OA\Response(
      *         response=404,
@@ -112,13 +112,13 @@ class PostController extends Controller implements HasMiddleware
      */
     public function show(Post $post)
     {
-        $data = ['data' => $post->load([
+        $data = $post->load([
             'postAnalytic',
             'postAnalytic.postPredictedSentiment',
             'postAnalytic.postPredictedSentiment.sentiment',
             'postAnalytic.postPredictedEmotion',
             'postAnalytic.postPredictedEmotion.emotion',
-        ])];
+        ]);
 
         return response()->json($data, 200);
     }
@@ -142,7 +142,7 @@ class PostController extends Controller implements HasMiddleware
      *     @OA\Response(
      *         response=200,
      *         description="Post deleted successfully",
-     *         @OA\JsonContent(ref="#/components/schemas/DestroyPostResponse")
+     *         @OA\JsonContent(ref="#/components/schemas/Post")
      *     ),
      *     @OA\Response(
      *         response=403,
@@ -164,13 +164,13 @@ class PostController extends Controller implements HasMiddleware
         $this->authorize('delete', $post);
         $post->delete();
 
-        $data = ['data' => $post->load([
+        $data = $post->load([
             'postAnalytic',
             'postAnalytic.postPredictedSentiment',
             'postAnalytic.postPredictedSentiment.sentiment',
             'postAnalytic.postPredictedEmotion',
             'postAnalytic.postPredictedEmotion.emotion',
-        ])];
+        ]);
 
         return response()->json($data, 200);
     }

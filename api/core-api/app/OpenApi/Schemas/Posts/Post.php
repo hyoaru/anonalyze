@@ -9,6 +9,7 @@ use OpenApi\Annotations as OA;
  *     schema="Post",
  *     type="object",
  *     title="Post",
+ *     required={"id", "thread_id", "content", "created_at", "updated_at"},
  *     @OA\Property(property="id", type="integer", format="int64"),
  *     @OA\Property(property="thread_id", type="integer", format="int64"),
  *     @OA\Property(property="content", type="string"),

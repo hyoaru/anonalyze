@@ -265,7 +265,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/ShowPostAnalyticResponse"
+                                    "$ref": "#/components/schemas/PostAnalytic"
                                 }
                             }
                         }
@@ -303,7 +303,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/StorePostResponse"
+                                    "$ref": "#/components/schemas/Post"
                                 }
                             }
                         }
@@ -342,7 +342,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/ShowPostResponse"
+                                    "$ref": "#/components/schemas/Post"
                                 }
                             }
                         }
@@ -379,7 +379,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/DestroyPostResponse"
+                                    "$ref": "#/components/schemas/Post"
                                 }
                             }
                         }
@@ -648,22 +648,15 @@
                 },
                 "type": "object"
             },
-            "DestroyPostResponse": {
-                "title": "Post Response",
-                "properties": {
-                    "data": {
-                        "properties": {
-                            "post": {
-                                "$ref": "#/components/schemas/Post"
-                            }
-                        },
-                        "type": "object"
-                    }
-                },
-                "type": "object"
-            },
             "Post": {
                 "title": "Post",
+                "required": [
+                    "id",
+                    "thread_id",
+                    "content",
+                    "created_at",
+                    "updated_at"
+                ],
                 "properties": {
                     "id": {
                         "type": "integer",
@@ -695,6 +688,14 @@
             },
             "PostAnalytic": {
                 "title": "Post Analytic",
+                "required": [
+                    "id",
+                    "post_id",
+                    "post_predicted_sentiment_id",
+                    "post_predicted_emotion_id",
+                    "created_at",
+                    "updated_at"
+                ],
                 "properties": {
                     "id": {
                         "type": "integer",
@@ -790,34 +791,6 @@
                 },
                 "type": "object"
             },
-            "ShowPostAnalyticResponse": {
-                "title": "Show Post Analytic Response",
-                "properties": {
-                    "data": {
-                        "properties": {
-                            "post": {
-                                "$ref": "#/components/schemas/PostAnalytic"
-                            }
-                        },
-                        "type": "object"
-                    }
-                },
-                "type": "object"
-            },
-            "ShowPostResponse": {
-                "title": "Post Response",
-                "properties": {
-                    "data": {
-                        "properties": {
-                            "post": {
-                                "$ref": "#/components/schemas/Post"
-                            }
-                        },
-                        "type": "object"
-                    }
-                },
-                "type": "object"
-            },
             "StorePostRequest": {
                 "required": [
                     "thread_id",
@@ -831,20 +804,6 @@
                     "content": {
                         "description": "The content of the post",
                         "type": "string"
-                    }
-                },
-                "type": "object"
-            },
-            "StorePostResponse": {
-                "title": "Post Response",
-                "properties": {
-                    "data": {
-                        "properties": {
-                            "post": {
-                                "$ref": "#/components/schemas/Post"
-                            }
-                        },
-                        "type": "object"
                     }
                 },
                 "type": "object"

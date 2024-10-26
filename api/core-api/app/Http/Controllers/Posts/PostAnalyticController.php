@@ -33,7 +33,7 @@ class PostAnalyticController extends Controller
      *     @OA\Response(
      *         response=200,
      *         description="Successful retrieval of the post analytic",
-     *         @OA\JsonContent(ref="#/components/schemas/ShowPostAnalyticResponse")
+     *         @OA\JsonContent(ref="#/components/schemas/PostAnalytic")
      *     ),
      *     @OA\Response(
      *         response=404,
@@ -47,8 +47,8 @@ class PostAnalyticController extends Controller
      */
     public function show(PostAnalytic $postAnalytic)
     {
-        $response = ['data' => $postAnalytic->load(['postPredictedSentiment', 'postPredictedEmotion'])];
-        return $response;
+        $data = $postAnalytic->load(['postPredictedSentiment', 'postPredictedEmotion']);
+        return response()->json(200, $data);
     }
 
     public function update(UpdatePostAnalyticRequest $request, PostAnalytic $postAnalytic) {}
