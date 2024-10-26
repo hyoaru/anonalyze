@@ -29,13 +29,8 @@
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "data": {
-                                            "properties": {
-                                                "message": {
-                                                    "type": "string"
-                                                }
-                                            },
-                                            "type": "object"
+                                        "message": {
+                                            "type": "string"
                                         }
                                     },
                                     "type": "object"
@@ -488,28 +483,23 @@
             },
             "SignInResponse": {
                 "properties": {
-                    "data": {
-                        "properties": {
-                            "message": {
-                                "description": "Success message",
-                                "type": "string"
-                            },
-                            "user": {
-                                "$ref": "#/components/schemas/User"
-                            },
-                            "token": {
-                                "description": "The authentication token for the user",
-                                "type": "string"
-                            }
-                        },
-                        "type": "object"
+                    "message": {
+                        "description": "Success message",
+                        "type": "string"
+                    },
+                    "user": {
+                        "$ref": "#/components/schemas/User"
+                    },
+                    "token": {
+                        "description": "The authentication token for the user",
+                        "type": "string"
                     }
                 },
                 "type": "object"
             },
             "SignOutResponse": {
                 "properties": {
-                    "data": {
+                    "user": {
                         "$ref": "#/components/schemas/User"
                     }
                 },
@@ -550,50 +540,16 @@
             },
             "SignUpResponse": {
                 "properties": {
-                    "data": {
-                        "properties": {
-                            "message": {
-                                "description": "Success message",
-                                "type": "string"
-                            },
-                            "user": {
-                                "properties": {
-                                    "first_name": {
-                                        "description": "The first name of the user",
-                                        "type": "string"
-                                    },
-                                    "last_name": {
-                                        "description": "The last name of the user",
-                                        "type": "string"
-                                    },
-                                    "email": {
-                                        "description": "The email of the user",
-                                        "type": "string",
-                                        "format": "email"
-                                    },
-                                    "updated_at": {
-                                        "description": "The timestamp when the user was last updated",
-                                        "type": "string",
-                                        "format": "date-time"
-                                    },
-                                    "created_at": {
-                                        "description": "The timestamp when the user was created",
-                                        "type": "string",
-                                        "format": "date-time"
-                                    },
-                                    "id": {
-                                        "description": "The unique identifier of the user",
-                                        "type": "integer"
-                                    }
-                                },
-                                "type": "object"
-                            },
-                            "token": {
-                                "description": "The authentication token for the user",
-                                "type": "string"
-                            }
-                        },
-                        "type": "object"
+                    "message": {
+                        "description": "Success message",
+                        "type": "string"
+                    },
+                    "user": {
+                        "$ref": "#/components/schemas/User"
+                    },
+                    "token": {
+                        "description": "The authentication token for the user",
+                        "type": "string"
                     }
                 },
                 "type": "object"
@@ -1008,7 +964,19 @@
                 "type": "object"
             },
             "User": {
+                "required": [
+                    "id",
+                    "first_name",
+                    "last_name",
+                    "email",
+                    "updated_at",
+                    "created_at"
+                ],
                 "properties": {
+                    "id": {
+                        "description": "The unique identifier of the user",
+                        "type": "integer"
+                    },
                     "first_name": {
                         "description": "The first name of the user",
                         "type": "string"
@@ -1036,10 +1004,6 @@
                         "description": "The timestamp when the user's email was verified",
                         "type": "string",
                         "format": "date-time"
-                    },
-                    "id": {
-                        "description": "The unique identifier of the user",
-                        "type": "integer"
                     }
                 },
                 "type": "object"

@@ -9,7 +9,7 @@ use OpenApi\Annotations as OA;
  *     schema="SignOutResponse",
  *     type="object",
  *     @OA\Property(
- *         property="data",
+ *         property="user",
  *         ref="#/components/schemas/User"
  *     )
  * )

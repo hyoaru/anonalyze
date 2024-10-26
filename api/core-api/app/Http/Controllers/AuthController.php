@@ -39,14 +39,10 @@ class AuthController extends Controller implements HasMiddleware
      *         response=200,
      *         description="User signed up successfully",
      *         @OA\JsonContent(
-     *             @OA\Property(
-     *                  property="data", 
-     *                  type="object", 
-     *                  @OA\Property(
-     *                      property="message",
-     *                      type="string",
-     *                  ),                
-     *             ),
+     *              @OA\Property(
+     *                  property="message",
+     *                  type="string",
+     *              ),                
      *         ),
      *     ),
      *     @OA\Response(
@@ -66,11 +62,11 @@ class AuthController extends Controller implements HasMiddleware
         $user = $request->user();
 
         if ($user->hasVerifiedEmail()) {
-            return response()->json(['data' => ['message' => 'Email is already verified']], 200);
+            abort(400, 'Email is already verified');
         }
 
         $user->sendEmailVerificationNotification();
-        return response()->json(['data' => ['message' => 'Email verification sent']], 200);
+        return response()->json(['message' => 'Email verification sent'], 200);
     }
 
     public function verifyEmail(Request $request)
@@ -78,14 +74,14 @@ class AuthController extends Controller implements HasMiddleware
         $user = User::findOrFail($request->id);
 
         if ($user->hasVerifiedEmail()) {
-            return response()->json(['data' => ['message' => 'Email is already verified']], 200);
+            abort(400, 'Email is already verified');
         }
 
         if ($user->markEmailAsVerified()) {
             event(new Verified($user));
         }
 
-        return response()->json(['data' => ['message' => 'Email has been verified']], 200);
+        return response()->json(['message' => 'Email has been verified'], 200);
     }
 
 
@@ -129,11 +125,9 @@ class AuthController extends Controller implements HasMiddleware
         $user->sendEmailVerificationNotification();
 
         $data = [
-            'data' => [
-                'message' => 'Registered successfully. Please check your email for verification.',
-                'user' => $user,
-                'token' => $token->plainTextToken,
-            ]
+            'message' => 'Registered successfully. Please check your email for verification.',
+            'user' => $user,
+            'token' => $token->plainTextToken,
         ];
 
         return response()->json($data, 200);
@@ -172,19 +166,14 @@ class AuthController extends Controller implements HasMiddleware
         $user = User::where('email', $validatedData['email'])->first();
 
         if (!$user || !Hash::check($validatedData['password'], $user->password)) {
-            return [
-                'message' => 'The provided credentials are incorrect',
-                'errors' => []
-            ];
+            abort(400, 'The provided credentials are incorrect');
         }
 
         $token = $user->createToken($user->email);
 
         $data = [
-            'data' => [
-                'user' => $user,
-                'token' => $token->plainTextToken,
-            ]
+            'user' => $user,
+            'token' => $token->plainTextToken,
         ];
 
         return response()->json($data, 200);
@@ -216,7 +205,7 @@ class AuthController extends Controller implements HasMiddleware
         $user = $request->user();
         $user->tokens()->delete();
 
-        $data = ['data' => $user];
+        $data = $user;
 
         return response()->json($data, 200);
     }
