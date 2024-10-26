@@ -9,6 +9,7 @@ use OpenApi\Annotations as OA;
  *     schema="ThreadSummary",
  *     type="object",
  *     title="Thread Summary",
+ *     required={"id", "thread_id", "summary", "created_at", "updated_at"},
  *     @OA\Property(property="id", type="integer", format="int64"),
  *     @OA\Property(property="thread_id", type="integer", format="int64"),
  *     @OA\Property(property="summary", type="string"),

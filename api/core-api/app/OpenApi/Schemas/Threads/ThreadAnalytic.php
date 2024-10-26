@@ -9,6 +9,7 @@ use OpenApi\Annotations as OA;
  *     schema="ThreadAnalytic",
  *     type="object",
  *     title="Thread Analytic",
+ *     required={"id", "thread_id", "thread_extracted_concept_group_id", "created_at", "updated_at"},
  *     @OA\Property(property="id", type="integer", format="int64"),
  *     @OA\Property(property="thread_id", type="integer", format="int64"),
  *     @OA\Property(property="thread_extracted_concept_group_id", type="integer", format="int64"),

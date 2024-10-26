@@ -9,6 +9,7 @@ use OpenApi\Annotations as OA;
  *     schema="ThreadExtractedConcept",
  *     type="object",
  *     title="Thread Extracted Concept",
+ *     required={"id", "thread_extracted_concept_group_id", "concept", "significance_score", "created_at", "updated_at"},
  *     @OA\Property(property="id", type="integer", format="int64"),
  *     @OA\Property(property="thread_extracted_concept_group_id", type="integer", format="int64"),
  *     @OA\Property(property="concept", type="string"),
