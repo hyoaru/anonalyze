@@ -413,7 +413,10 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/IndexSentimentResponse"
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Sentiment"
+                                    }
                                 }
                             }
                         }
@@ -449,7 +452,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/ShowSentimentResponse"
+                                    "$ref": "#/components/schemas/Sentiment"
                                 }
                             }
                         }
@@ -748,20 +751,15 @@
                 },
                 "type": "object"
             },
-            "IndexSentimentResponse": {
-                "title": "Sentiment Response",
-                "properties": {
-                    "data": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/Sentiment"
-                        }
-                    }
-                },
-                "type": "object"
-            },
             "Sentiment": {
                 "title": "Sentiment",
+                "required": [
+                    "id",
+                    "class",
+                    "description",
+                    "created_at",
+                    "updated_at"
+                ],
                 "properties": {
                     "id": {
                         "type": "integer",
@@ -780,20 +778,6 @@
                     "updated_at": {
                         "type": "string",
                         "format": "date-time"
-                    }
-                },
-                "type": "object"
-            },
-            "ShowSentimentResponse": {
-                "title": "Show Sentiment Response",
-                "properties": {
-                    "data": {
-                        "properties": {
-                            "sentiment": {
-                                "$ref": "#/components/schemas/Sentiment"
-                            }
-                        },
-                        "type": "object"
                     }
                 },
                 "type": "object"

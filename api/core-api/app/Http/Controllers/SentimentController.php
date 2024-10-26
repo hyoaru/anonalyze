@@ -17,17 +17,20 @@ class SentimentController extends Controller
      *     @OA\Response(
      *         response=200,
      *         description="A list of sentiments",
-     *         @OA\JsonContent(ref="#/components/schemas/IndexSentimentResponse")
+     *         @OA\JsonContent(
+     *              type="array",
+     *              @OA\Items(ref="#/components/schemas/Sentiment"),
+     *         ),
      *     ),
      *     @OA\Response(
      *         response=500,
-     *         description="Server error"
-     *     )
+     *         description="Server error",
+     *     ),
      * )
      */
     public function index()
     {
-        $data = ['data' => Sentiment::all()];
+        $data = Sentiment::all();
         return response()->json($data, 200);
     }
 
@@ -52,7 +55,7 @@ class SentimentController extends Controller
      *     @OA\Response(
      *         response=200,
      *         description="Successful retrieval of the sentiment",
-     *         @OA\JsonContent(ref="#/components/schemas/ShowSentimentResponse")
+     *         @OA\JsonContent(ref="#/components/schemas/Sentiment"),
      *     ),
      *     @OA\Response(
      *         response=404,
@@ -66,7 +69,7 @@ class SentimentController extends Controller
      */
     public function show(Sentiment $sentiment)
     {
-        $data = ['data' => $sentiment];
+        $data = $sentiment;
         return response()->json($data, 200);
     }
 
