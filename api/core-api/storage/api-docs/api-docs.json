@@ -185,7 +185,10 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/IndexEmotionResponse"
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Emotion"
+                                    }
                                 }
                             }
                         }
@@ -221,7 +224,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/ShowEmotionResponse"
+                                    "$ref": "#/components/schemas/Emotion"
                                 }
                             }
                         }
@@ -556,6 +559,13 @@
             },
             "Emotion": {
                 "title": "Emotion",
+                "required": [
+                    "id",
+                    "class",
+                    "description",
+                    "created_at",
+                    "updated_at"
+                ],
                 "properties": {
                     "id": {
                         "type": "integer",
@@ -574,32 +584,6 @@
                     "updated_at": {
                         "type": "string",
                         "format": "date-time"
-                    }
-                },
-                "type": "object"
-            },
-            "IndexEmotionResponse": {
-                "title": "Emotion Response",
-                "properties": {
-                    "data": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/Emotion"
-                        }
-                    }
-                },
-                "type": "object"
-            },
-            "ShowEmotionResponse": {
-                "title": "Show Emotion Response",
-                "properties": {
-                    "data": {
-                        "properties": {
-                            "emotion": {
-                                "$ref": "#/components/schemas/Emotion"
-                            }
-                        },
-                        "type": "object"
                     }
                 },
                 "type": "object"

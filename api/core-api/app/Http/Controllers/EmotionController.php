@@ -17,7 +17,10 @@ class EmotionController extends Controller
      *     @OA\Response(
      *         response=200,
      *         description="A list of emotions",
-     *         @OA\JsonContent(ref="#/components/schemas/IndexEmotionResponse")
+     *         @OA\JsonContent(
+     *              type="array",
+     *              @OA\Items(ref="#/components/schemas/Emotion"),
+     *         ),
      *     ),
      *     @OA\Response(
      *         response=500,
@@ -27,7 +30,7 @@ class EmotionController extends Controller
      */
     public function index()
     {
-        $data = ['data' => Emotion::all()];
+        $data = Emotion::all();
         return response()->json($data, 200);
     }
 
@@ -52,7 +55,7 @@ class EmotionController extends Controller
      *     @OA\Response(
      *         response=200,
      *         description="Successful retrieval of the emotion",
-     *         @OA\JsonContent(ref="#/components/schemas/ShowEmotionResponse")
+     *         @OA\JsonContent(ref="#/components/schemas/Emotion")
      *     ),
      *     @OA\Response(
      *         response=404,
@@ -66,7 +69,7 @@ class EmotionController extends Controller
      */
     public function show(Emotion $emotion)
     {
-        $data = ['data' => $emotion];
+        $data = $emotion;
         return response()->json($data, 200);
     }
 
