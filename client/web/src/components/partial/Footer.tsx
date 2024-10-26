@@ -1,6 +1,7 @@
 import { Brackets } from "lucide-react";
 import BaseContainer from "./BaseContainer";
 import { Button } from "@/components/ui/button";
+import { Link } from "@tanstack/react-router";
 
 export default function Footer() {
   return (
@@ -25,7 +26,15 @@ export default function Footer() {
           <p>made with tears</p>
         </div>
         <div className="flex items-center gap-2 font-custom font-medium uppercase md:ms-auto">
-          <p>about</p>
+          <Button
+            variant={"link"}
+            asChild
+            className="px-0 text-base font-medium"
+          >
+            <Link to="/about">
+              <p>about</p>
+            </Link>
+          </Button>
           <hr className="w-8 border-black/20" />
           <Button
             variant={"link"}
