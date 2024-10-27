@@ -8,8 +8,13 @@ import Footer from "@/components/partial/Footer";
 import BaseContainer from "@/components/partial/BaseContainer";
 import { Toaster } from "@/components/ui/sonner";
 import { useThemeContext } from "@/context/ThemeContext";
+import { QueryClient } from "@tanstack/react-query";
+import { User } from "@/types/core-types";
 
-interface RouterContext {}
+interface RouterContext {
+  queryClient: QueryClient;
+  authenticatedUser: User | null
+}
 
 export const Route = createRootRouteWithContext<RouterContext>()({
   component: Root,

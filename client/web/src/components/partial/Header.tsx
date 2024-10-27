@@ -33,15 +33,25 @@ export default function Header() {
       .catch(() => {
         toast.error("An error has occured");
       });
+      
+      router.invalidate()
   }
 
   return (
     <header className="sticky top-0 z-40 bg-background/80 pb-2 pt-6 backdrop-blur-sm">
       <BaseContainer className="flex items-center">
-        <div id="header-start" className="flex items-center gap-4">
-          <Brackets strokeWidth={2.6} size={38} className="text-main-accent" />
-          <p className="font-custom text-xl font-medium uppercase">Anonalyze</p>
-        </div>
+        <Link to="/">
+          <div id="header-start" className="flex items-center gap-4">
+            <Brackets
+              strokeWidth={2.6}
+              size={38}
+              className="text-main-accent"
+            />
+            <p className="font-custom text-xl font-medium uppercase">
+              Anonalyze
+            </p>
+          </div>
+        </Link>
         <div id="header-en" className="ms-auto flex items-center gap-2">
           {authenticatedUser ? (
             <>
@@ -52,7 +62,9 @@ export default function Header() {
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" side="bottom">
-                  <DropdownMenuItem>Dashboard</DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Link to="/dashboard">Dashboard</Link>
+                  </DropdownMenuItem>
                   <DropdownMenuItem>Account</DropdownMenuItem>
                   <DropdownMenuItem onClick={onSignOut}>
                     Sign Out

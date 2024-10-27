@@ -1,15 +1,21 @@
+import { useState } from "react";
 import { RouterProvider } from "@tanstack/react-router";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+import {
+  QueryClient,
+  QueryClientProvider,
+  useQueryClient,
+} from "@tanstack/react-query";
 
 // App imports
+import "@/global.css";
 import createRouter from "@/router";
 import { ThemeProvider } from "./context/ThemeContext";
-import "@/global.css";
+
 import {
   AuthStateProvider,
   useAuthStateContext,
-} from "./context/AuthStateContext";
-import { useState } from "react";
+} from "@/context/AuthStateContext";
 
 const router = createRouter();
 
@@ -33,18 +39,24 @@ export default function App() {
       }),
   );
 
-  const { authenticatedUser } = useAuthStateContext();
-
   return (
     <ThemeProvider>
       <QueryClientProvider client={queryClient}>
         <AuthStateProvider>
-          <RouterProvider
-            router={router}
-            context={{ queryClient, authenticatedUser }}
-          />
+          <InnerApp />
         </AuthStateProvider>
       </QueryClientProvider>
     </ThemeProvider>
+  );
+}
+
+function InnerApp() {
+  const { authenticatedUser } = useAuthStateContext();
+  const queryClient = useQueryClient();
+  return (
+    <RouterProvider
+      router={router}
+      context={{ queryClient, authenticatedUser }}
+    />
   );
 }

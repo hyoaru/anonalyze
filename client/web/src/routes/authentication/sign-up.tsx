@@ -55,6 +55,8 @@ export default function SignUp() {
           );
           toast.error("An error has occured.");
         });
+
+      router.invalidate();
     },
   });
   return (

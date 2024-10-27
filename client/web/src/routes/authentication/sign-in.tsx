@@ -46,6 +46,8 @@ export default function SignIn() {
           );
           toast.error("An error has occured.");
         });
+
+      router.invalidate();
     },
   });
 
