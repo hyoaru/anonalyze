@@ -1,4 +1,9 @@
-import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
+import {
+  createFileRoute,
+  Link,
+  redirect,
+  useRouter,
+} from "@tanstack/react-router";
 import { zodValidator } from "@tanstack/zod-form-adapter";
 import { useForm } from "@tanstack/react-form";
 import * as z from "zod";
@@ -16,6 +21,14 @@ import useAuthentication from "@/hooks/core/useAuthentication";
 import { FormError } from "@/components/shared/FormError";
 
 export const Route = createFileRoute("/authentication/sign-in")({
+  beforeLoad: async ({ context }) => {
+    const authenticatedUser = await context.authState.refetch();
+    if (authenticatedUser) {
+      throw redirect({
+        to: "/dashboard",
+      });
+    }
+  },
   component: SignIn,
 });
 
