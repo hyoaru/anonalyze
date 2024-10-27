@@ -1051,6 +1051,11 @@
                 "type": "object"
             },
             "SignInResponse": {
+                "required": [
+                    "message",
+                    "user",
+                    "token"
+                ],
                 "properties": {
                     "message": {
                         "description": "Success message",
@@ -1068,7 +1073,7 @@
             },
             "SignOutResponse": {
                 "properties": {
-                    "user": {
+                    "": {
                         "$ref": "#/components/schemas/User"
                     }
                 },
@@ -1108,6 +1113,11 @@
                 "type": "object"
             },
             "SignUpResponse": {
+                "required": [
+                    "message",
+                    "user",
+                    "token"
+                ],
                 "properties": {
                     "message": {
                         "description": "Success message",

@@ -437,13 +437,13 @@ export interface components {
         };
         SignInResponse: {
             /** @description Success message */
-            message?: string;
-            user?: components["schemas"]["User"];
+            message: string;
+            user: components["schemas"]["User"];
             /** @description The authentication token for the user */
-            token?: string;
+            token: string;
         };
         SignOutResponse: {
-            user?: components["schemas"]["User"];
+            ""?: components["schemas"]["User"];
         };
         SignUpRequest: {
             /** @description The first name of the user */
@@ -462,10 +462,10 @@ export interface components {
         };
         SignUpResponse: {
             /** @description Success message */
-            message?: string;
-            user?: components["schemas"]["User"];
+            message: string;
+            user: components["schemas"]["User"];
             /** @description The authentication token for the user */
-            token?: string;
+            token: string;
         };
         /** Emotion */
         Emotion: {

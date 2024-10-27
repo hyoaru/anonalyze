@@ -8,10 +8,7 @@ use OpenApi\Annotations as OA;
  * @OA\Schema(
  *     schema="SignOutResponse",
  *     type="object",
- *     @OA\Property(
- *         property="user",
- *         ref="#/components/schemas/User"
- *     )
+ *     @OA\Property(ref="#/components/schemas/User")
  * )
  */
 class SignOutResponse {}

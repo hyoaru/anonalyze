@@ -8,6 +8,7 @@ use OpenApi\Annotations as OA;
  * @OA\Schema(
  *     schema="SignUpResponse",
  *     type="object",
+ *     required={"message", "user", "token"},
  *     @OA\Property(property="message", type="string", description="Success message"),
  *     @OA\Property(
  *         property="user",
