@@ -1,16 +1,35 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useForm } from "@tanstack/react-form";
+import * as z from "zod";
+import { zodValidator } from "@tanstack/zod-form-adapter";
 
 // App imports
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import CenteredLayout from "@/components/layout/CenteredLayout";
+import { signInFormSchema as formSchema } from "@/constants/form-schemas/authentication";
+import FieldInfo from "@/components/shared/FieldInfo";
 
 export const Route = createFileRoute("/authentication/sign-in")({
   component: SignIn,
 });
 
 export default function SignIn() {
+  const form = useForm({
+    defaultValues: {
+      email: "",
+      password: "",
+    } as z.infer<typeof formSchema>,
+    validatorAdapter: zodValidator(),
+    validators: {
+      onChange: formSchema,
+    },
+    onSubmit: async ({ value }) => {
+      console.log(value);
+    },
+  });
+
   return (
     <CenteredLayout>
       <div className="w-full rounded-lg bg-transparent py-10 backdrop-blur-[1px] md:p-10 md:shadow lg:w-8/12 xl:w-6/12">
@@ -21,24 +40,57 @@ export default function SignIn() {
           </p>
         </div>
 
-        <form className="grid">
+        <form
+          className="grid"
+          onSubmit={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            form.handleSubmit();
+          }}
+        >
           <div className="grid gap-4 py-8">
-            <div className="grid gap-2">
-              <Label>Email</Label>
-              <Input />
-            </div>
-            <div className="grid gap-2">
-              <Label>Password</Label>
-              <Input />
-            </div>
+            <form.Field
+              name="email"
+              children={(field) => (
+                <div className="grid gap-2">
+                  <Label htmlFor={field.name}>Email</Label>
+                  <Input
+                    id={field.name}
+                    name={field.name}
+                    value={field.state.value}
+                    onBlur={field.handleBlur}
+                    onChange={(e) => field.handleChange(e.target.value)}
+                  />
+                  <FieldInfo field={field} />
+                </div>
+              )}
+            />
+            <form.Field
+              name="password"
+              children={(field) => (
+                <div className="grid gap-2">
+                  <Label htmlFor={field.name}>Password</Label>
+                  <Input
+                    id={field.name}
+                    type="password"
+                    name={field.name}
+                    value={field.state.value}
+                    onBlur={field.handleBlur}
+                    onChange={(e) => field.handleChange(e.target.value)}
+                  />
+                  <FieldInfo field={field} />
+                </div>
+              )}
+            />
           </div>
-          <Button
-            variant={"default"}
-            size={"lg"}
-            className="font-bold uppercase"
-          >
-            Sign in
-          </Button>
+          <form.Subscribe
+            selector={(state) => [state.canSubmit, state.isSubmitting]}
+            children={([canSubmit, isSubmitting]) => (
+              <Button type="submit" disabled={!canSubmit}>
+                {isSubmitting ? "..." : "Submit"}
+              </Button>
+            )}
+          />
         </form>
 
         <div className="flex flex-col items-center justify-center pt-4 lg:flex-row">
