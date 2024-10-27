@@ -3,6 +3,7 @@ import { zodValidator } from "@tanstack/zod-form-adapter";
 import { useForm } from "@tanstack/react-form";
 import * as z from "zod";
 import { toast } from "sonner";
+import { useState } from "react";
 
 // App imports
 import { Input } from "@/components/ui/input";
@@ -12,6 +13,7 @@ import CenteredLayout from "@/components/layout/CenteredLayout";
 import { signInFormSchema as formSchema } from "@/constants/form-schemas/authentication";
 import FieldInfo from "@/components/shared/FieldInfo";
 import useAuthentication from "@/hooks/core/useAuthentication";
+import { FormError } from "@/components/shared/FormError";
 
 export const Route = createFileRoute("/authentication/sign-in")({
   component: SignIn,
@@ -20,6 +22,7 @@ export const Route = createFileRoute("/authentication/sign-in")({
 export default function SignIn() {
   const router = useRouter();
   const { signInMutation } = useAuthentication();
+  const [errorMap, setErrorMap] = useState<Record<string, string> | null>(null);
 
   const form = useForm({
     defaultValues: {
@@ -35,10 +38,13 @@ export default function SignIn() {
         .mutateAsync(value)
         .then(() => {
           toast.success("Successfully signed in");
-          router.navigate({ to: "/" })
+          router.navigate({ to: "/" });
         })
-        .catch(() => {
-          toast.error("An error has occured.")
+        .catch((error) => {
+          setErrorMap(
+            error["response"]["data"]["errors"] as Record<string, string>,
+          );
+          toast.error("An error has occured.");
         });
     },
   });
@@ -95,6 +101,7 @@ export default function SignIn() {
                 </div>
               )}
             />
+            <FormError errorMap={errorMap} />
           </div>
           <form.Subscribe
             selector={(state) => [state.canSubmit, state.isSubmitting]}
