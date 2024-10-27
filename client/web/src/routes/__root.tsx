@@ -1,4 +1,5 @@
 import { createRootRouteWithContext, Outlet } from "@tanstack/react-router";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 
 // App imports
@@ -23,8 +24,10 @@ export function Root() {
           </main>
         </BaseContainer>
         <Footer />
-        <TanStackRouterDevtools />
       </div>
+
+      <ReactQueryDevtools />
+      <TanStackRouterDevtools />
     </>
   );
 }

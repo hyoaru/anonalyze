@@ -1,4 +1,5 @@
 import { RouterProvider } from "@tanstack/react-router";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 // App imports
 import createRouter from "@/router";
@@ -19,17 +20,26 @@ declare module "@tanstack/react-router" {
 }
 
 export default function App() {
-  return (
-    <ThemeProvider>
-      <AuthStateProvider>
-        <InnerApp />
-      </AuthStateProvider>
-    </ThemeProvider>
-  );
-}
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        staleTime: 60 * 1000 
+      }
+    }
+  });
 
-function InnerApp() {
   const { authenticatedUser } = useAuthStateContext();
 
-  return <RouterProvider router={router} context={{ authenticatedUser }} />;
+  return (
+    <ThemeProvider>
+      <QueryClientProvider client={queryClient}>
+        <AuthStateProvider>
+          <RouterProvider
+            router={router}
+            context={{ queryClient, authenticatedUser }}
+          />
+        </AuthStateProvider>
+      </QueryClientProvider>
+    </ThemeProvider>
+  );
 }

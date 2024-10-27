@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 // App imports
 import { coreService } from "@/services/coreService";
@@ -19,9 +19,15 @@ export default function useAuthentication() {
     onSuccess: () => {},
   });
 
+  const authenticatedUserQuery = useQuery({
+    queryFn: coreService.authentication.getAuthenticatedUser,
+    queryKey: ['authenticated_user']
+  })
+
   return {
     signInMutation,
     signUpMutation,
     signOutMutation,
+    authenticatedUserQuery
   };
 }
