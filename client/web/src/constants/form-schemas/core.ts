@@ -16,3 +16,7 @@ export const USER_BASE_FORM_SCHEMA = {
     .regex(/[A-Z]/, { message: "Password must contain at least one uppercase letter" }),
   passwordConfirmation: z.string().trim()
 };
+
+export const THREAD_BASE_FORM_SCHEMA = {
+  question: z.string().trim().min(4).max(256),
+}

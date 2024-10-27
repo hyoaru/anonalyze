@@ -26,7 +26,7 @@ export function Root() {
     <>
       <div className="flex min-h-screen flex-col">
         <Header />
-        <BaseContainer className="grid w-full grow rounded-lg">
+        <BaseContainer className="grid w-full grow rounded-lg my-4">
           <main className="grid grow overflow-auto rounded-lg px-2">
             <Outlet />
           </main>

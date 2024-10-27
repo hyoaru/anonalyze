@@ -20,6 +20,28 @@ export type Authentication = {
 };
 
 /**
+ * Types related to threads requests and responses.
+ * These are organized by request and response for each endpoint.
+ */
+export type Threads = {
+  Request: {
+    GetAllByAuthenticatedUser: paths["/api/threads"]["get"]["requestBody"];
+    GetById: paths["/api/threads/{id}"]["get"]["parameters"]["path"];
+    Store: paths["/api/threads"]["post"]["requestBody"]["content"]["application/json"];
+    Update: paths["/api/threads/{id}"]["put"]["parameters"]["path"] &
+      paths["/api/threads/{id}"]["put"]["requestBody"]["content"]["application/json"];
+    Destroy: paths["/api/threads/{id}"]["delete"]["parameters"]["path"];
+  };
+  Response: {
+    GetAllByAuthenticatedUser: paths["/api/threads"]["get"]["responses"]['200']['content']['application/json'];
+    GetById: paths["/api/threads/{id}"]["get"]["responses"]["200"]['content']['application/json'];
+    Store: paths["/api/threads"]["post"]["responses"]['201']['content']['application/json']
+    Update: paths["/api/threads/{id}"]["put"]["responses"]["200"]['content']['application/json']
+    Destroy: paths["/api/threads/{id}"]["delete"]["responses"]["200"]['content']['application/json'];
+  }
+};
+
+/**
  * Core user schema type.
  * Represents a user in the system, with properties defined in the OpenAPI schema.
  */
