@@ -18,6 +18,7 @@ import {
 import { toast } from "sonner";
 
 export default function Header() {
+  const router = useRouter();
   const { toggleTheme } = useThemeContext();
   const { authenticatedUser } = useAuthStateContext();
   const { signOutMutation } = useAuthentication();
@@ -27,7 +28,7 @@ export default function Header() {
       .mutateAsync()
       .then(() => {
         toast.success("Sucessfully signed out");
-        location.href = "/"
+        router.navigate({ to: "/" });
       })
       .catch(() => {
         toast.error("An error has occured");

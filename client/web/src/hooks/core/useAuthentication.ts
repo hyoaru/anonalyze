@@ -9,21 +9,21 @@ export default function useAuthentication() {
   const signInMutation = useMutation({
     mutationFn: coreService.authentication.signIn,
     onSuccess: () => {
-      queryClient.invalidateQueries();
+      queryClient.resetQueries();
     },
   });
 
   const signUpMutation = useMutation({
     mutationFn: coreService.authentication.signUp,
     onSuccess: () => {
-      queryClient.invalidateQueries();
+      queryClient.resetQueries();
     },
   });
 
   const signOutMutation = useMutation({
     mutationFn: coreService.authentication.signOut,
     onSuccess: () => {
-      queryClient.invalidateQueries()
+      queryClient.resetQueries()
     },
   });
 

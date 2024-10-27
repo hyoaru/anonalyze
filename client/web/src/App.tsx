@@ -9,6 +9,7 @@ import {
   AuthStateProvider,
   useAuthStateContext,
 } from "./context/AuthStateContext";
+import { useState } from "react";
 
 const router = createRouter();
 
@@ -20,14 +21,17 @@ declare module "@tanstack/react-router" {
 }
 
 export default function App() {
-  const queryClient = new QueryClient({
-    defaultOptions: {
-      queries: {
-        staleTime: 60 * 1000,
-        refetchOnWindowFocus: true, 
-      },
-    }
-  });
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            staleTime: 60 * 1000,
+            refetchOnWindowFocus: true,
+          },
+        },
+      }),
+  );
 
   const { authenticatedUser } = useAuthStateContext();
 
