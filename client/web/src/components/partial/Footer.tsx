@@ -22,7 +22,7 @@ export default function Footer() {
               </a>
             </Button>
           </p>
-          <hr className="w-8 border-black/20" />
+          <hr className="w-8 border-foreground/20" />
           <p>made with tears</p>
         </div>
         <div className="flex items-center gap-2 font-custom font-medium uppercase md:ms-auto">
@@ -35,7 +35,7 @@ export default function Footer() {
               <p>about</p>
             </Link>
           </Button>
-          <hr className="w-8 border-black/20" />
+          <hr className="w-8 border-foreground/20" />
           <Button
             variant={"link"}
             asChild

@@ -1,4 +1,4 @@
-import { createRootRoute, Outlet } from "@tanstack/react-router";
+import { createRootRouteWithContext, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 
 // App imports
@@ -6,7 +6,9 @@ import Header from "@/components/partial/Header";
 import Footer from "@/components/partial/Footer";
 import BaseContainer from "@/components/partial/BaseContainer";
 
-export const Route = createRootRoute({
+interface RouterContext {}
+
+export const Route = createRootRouteWithContext<RouterContext>()({
   component: Root,
 });
 
@@ -15,8 +17,8 @@ export function Root() {
     <>
       <div className="flex min-h-screen flex-col">
         <Header />
-        <BaseContainer className="w-full grid grow rounded-lg">
-          <main className="grid px-2 grow rounded-lg overflow-auto">
+        <BaseContainer className="grid w-full grow rounded-lg">
+          <main className="grid grow overflow-auto rounded-lg px-2">
             <Outlet />
           </main>
         </BaseContainer>
