@@ -18,12 +18,12 @@ export default function Footer() {
               className="p-0 text-base font-medium"
             >
               <a href="https://github.com/hyoaru">
-                <p>hyoaru</p>
+                <span>hyoaru</span>
               </a>
             </Button>
           </p>
           <hr className="w-8 border-foreground/20" />
-          <p>made with tears</p>
+          <span>made with tears</span>
         </div>
         <div className="flex items-center gap-2 font-custom font-medium uppercase md:ms-auto">
           <Button
