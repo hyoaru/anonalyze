@@ -1,10 +1,11 @@
-import { Brackets } from "lucide-react";
+import { Brackets, SunDim } from "lucide-react";
 
 // App imports
 import { Button } from "@/components/ui/button";
 import { Link } from "@tanstack/react-router";
 import BaseContainer from "./BaseContainer";
 import { useThemeContext } from "@/context/ThemeContext";
+import { Toggle } from "@/components/ui/toggle";
 
 export default function Header() {
   const { toggleTheme } = useThemeContext();
@@ -17,12 +18,14 @@ export default function Header() {
           <p className="font-custom text-xl font-medium uppercase">anonalyze</p>
         </div>
         <div id="header-en" className="ms-auto flex items-center gap-2">
-          <Button onClick={toggleTheme}>Theme</Button>
           <Link to="/authentication/sign-in">
             <Button variant={"secondary"} className="font-custom">
               Sign in
             </Button>
           </Link>
+          <Toggle size={"sm"} onClick={toggleTheme}>
+            <SunDim />
+          </Toggle>
         </div>
       </BaseContainer>
     </header>
