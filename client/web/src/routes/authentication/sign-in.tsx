@@ -1,7 +1,8 @@
 import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
+import { zodValidator } from "@tanstack/zod-form-adapter";
 import { useForm } from "@tanstack/react-form";
 import * as z from "zod";
-import { zodValidator } from "@tanstack/zod-form-adapter";
+import { toast } from "sonner";
 
 // App imports
 import { Input } from "@/components/ui/input";
@@ -32,12 +33,12 @@ export default function SignIn() {
     onSubmit: async ({ value }) => {
       await signInMutation
         .mutateAsync(value)
-        .then((response) => {
-          console.log(response);
-          router.navigate({ to: "/" });
+        .then(() => {
+          toast.success("Successfully signed in");
+          router.navigate({ to: "/" })
         })
-        .catch((error) => {
-          console.log(`errored: ${error}`);
+        .catch(() => {
+          toast.error("An error has occured.")
         });
     },
   });

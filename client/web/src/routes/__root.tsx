@@ -6,6 +6,9 @@ import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 import Header from "@/components/partial/Header";
 import Footer from "@/components/partial/Footer";
 import BaseContainer from "@/components/partial/BaseContainer";
+import { Toaster } from "@/components/ui/sonner";
+import { toast } from "sonner";
+import { useThemeContext } from "@/context/ThemeContext";
 
 interface RouterContext {}
 
@@ -14,6 +17,7 @@ export const Route = createRootRouteWithContext<RouterContext>()({
 });
 
 export function Root() {
+  const { theme } = useThemeContext();
   return (
     <>
       <div className="flex min-h-screen flex-col">
@@ -24,8 +28,10 @@ export function Root() {
           </main>
         </BaseContainer>
         <Footer />
+        <button onClick={() => toast.success("putangina")}>puta</button>
       </div>
 
+      <Toaster richColors theme={theme} toastOptions={{}} />
       <ReactQueryDevtools />
       <TanStackRouterDevtools />
     </>
