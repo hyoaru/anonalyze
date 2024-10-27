@@ -20,7 +20,7 @@ import { toast } from "sonner";
 export default function Header() {
   const router = useRouter();
   const { toggleTheme } = useThemeContext();
-  const { authenticatedUser } = useAuthStateContext();
+  const authState = useAuthStateContext();
   const { signOutMutation } = useAuthentication();
 
   async function onSignOut() {
@@ -33,8 +33,8 @@ export default function Header() {
       .catch(() => {
         toast.error("An error has occured");
       });
-      
-      router.invalidate()
+
+    router.invalidate();
   }
 
   return (
@@ -53,12 +53,12 @@ export default function Header() {
           </div>
         </Link>
         <div id="header-en" className="ms-auto flex items-center gap-2">
-          {authenticatedUser ? (
+          {authState.authenticatedUser ? (
             <>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant={"secondary"}>
-                    {authenticatedUser.email}
+                    {authState.authenticatedUser.email}
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" side="bottom">

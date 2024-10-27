@@ -10,7 +10,7 @@ export default function createRouter() {
     defaultPreloadStaleTime: 0,
     context: {
       queryClient: undefined!,
-      authenticatedUser: undefined!,
+      authState: undefined!,
     },
   });
 }

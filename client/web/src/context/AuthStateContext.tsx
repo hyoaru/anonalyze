@@ -1,22 +1,33 @@
 import React, { createContext, useContext } from "react";
-import { User } from "@/types/core-types";
 import useAuthentication from "@/hooks/core/useAuthentication";
+import { AuthStateContextType } from "@/types/auth-state";
 
-export const AuthStateContext = createContext<{
-  authenticatedUser: User | undefined | null;
-}>({ authenticatedUser: undefined });
+export const AuthStateContext = createContext<AuthStateContextType | undefined>(
+  undefined,
+);
 
 export function AuthStateProvider({ children }: { children: React.ReactNode }) {
   const { authenticatedUserQuery } = useAuthentication();
-  const { data: user } = authenticatedUserQuery();
+  const { data: user, refetch: authenticatedUserQueryRefetch } =
+    authenticatedUserQuery();
+
+  const refetch = () => {
+    authenticatedUserQueryRefetch();
+  };
 
   return (
-    <AuthStateContext.Provider value={{ authenticatedUser: user }}>
+    <AuthStateContext.Provider
+      value={{ authenticatedUser: user, refetch: refetch }}
+    >
       {children}
     </AuthStateContext.Provider>
   );
 }
 
 export function useAuthStateContext() {
-  return useContext(AuthStateContext);
+  const context = useContext(AuthStateContext);
+  if (!context) {
+    throw new Error("useAuthStateContext must be used within a AuthStateProvider");
+  }
+  return context;
 }

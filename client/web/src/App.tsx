@@ -51,12 +51,9 @@ export default function App() {
 }
 
 function InnerApp() {
-  const { authenticatedUser } = useAuthStateContext();
+  const authState = useAuthStateContext();
   const queryClient = useQueryClient();
   return (
-    <RouterProvider
-      router={router}
-      context={{ queryClient, authenticatedUser }}
-    />
+    <RouterProvider router={router} context={{ queryClient, authState }} />
   );
 }

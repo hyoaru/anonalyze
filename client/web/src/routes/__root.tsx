@@ -9,11 +9,11 @@ import BaseContainer from "@/components/partial/BaseContainer";
 import { Toaster } from "@/components/ui/sonner";
 import { useThemeContext } from "@/context/ThemeContext";
 import { QueryClient } from "@tanstack/react-query";
-import { User } from "@/types/core-types";
+import { AuthStateContextType } from "@/types/auth-state";
 
 interface RouterContext {
   queryClient: QueryClient;
-  authenticatedUser: User | null
+  authState: AuthStateContextType
 }
 
 export const Route = createRootRouteWithContext<RouterContext>()({

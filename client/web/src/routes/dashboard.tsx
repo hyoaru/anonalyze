@@ -7,8 +7,10 @@ export const Route = createFileRoute("/dashboard")({
       queryFn: coreService.authentication.getAuthenticatedUser,
       queryKey: ["authenticated_user"],
     })
+    context.authState.refetch()
     console.log(context.queryClient.getQueryData(['authenticated_user']));
-    console.log(context.authenticatedUser)
+    console.log('first')  
+    console.log(context.authState.authenticatedUser)
   },
   component: () => <div>Hello /dashboard!</div>,
 });
