@@ -4,7 +4,7 @@ import axios from "axios";
 import { Authentication } from "@/types/core-types";
 import { paths } from "@/types/generated/core-api-schema";
 
-const CORE_API_URL = process.env.CORE_API_URL;
+const CORE_API_URL = import.meta.env.VITE_CORE_API_URL;
 
 const axiosInstance = axios.create({
   baseURL: CORE_API_URL,
@@ -21,7 +21,9 @@ axiosInstance.interceptors.request.use(
     }
     return config;
   },
-  () => {},
+  (e) => {
+    console.log(`error ${e}`);
+  },
 );
 
 export const coreService = {
@@ -31,7 +33,13 @@ export const coreService = {
     ): Promise<Authentication["Response"]["SignIn"]> => {
       const endPoint: keyof paths = "/api/auth/sign-in";
       const requestBody = params;
-      return (await axiosInstance.post(endPoint, requestBody)).data;
+      return await axiosInstance
+        .post<Authentication["Response"]["SignIn"]>(endPoint, requestBody)
+        .then((response) => {
+          const token = response.data.token;
+          localStorage.setItem("token", token);
+          return response.data;
+        });
     },
     signUp: async (
       params: Authentication["Request"]["SignUp"],
@@ -40,19 +48,19 @@ export const coreService = {
       const requestBody = params;
       return (await axiosInstance.post(endPoint, requestBody)).data;
     },
-    signOut: async (
-      params: Authentication["Request"]["SignOut"],
-    ): Promise<Authentication["Response"]["SignOut"]> => {
+    signOut: async (): Promise<Authentication["Response"]["SignOut"]> => {
       const endPoint: keyof paths = "/api/auth/sign-out";
-      const requestBody = params;
-      return (await axiosInstance.post(endPoint, requestBody)).data;
+      return (await axiosInstance.post(endPoint)).data;
     },
-    getAuthenticatedUser: async (
-      params: Authentication["Request"]["GetAuthenticatedUser"],
-    ): Promise<Authentication["Response"]["GetAuthenticatedUser"]> => {
+    getAuthenticatedUser: async (): Promise<
+      Authentication["Response"]["GetAuthenticatedUser"]
+    > => {
       const endPoint: keyof paths = "/api/account";
-      const requestBody = params;
-      return (await axiosInstance.get(endPoint, requestBody)).data;
+
+      const response = await axiosInstance.get(endPoint);
+      console.log("fetched");
+      console.log(response);
+      return response.data;
     },
   },
 };

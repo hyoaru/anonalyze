@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import { useForm } from "@tanstack/react-form";
 import * as z from "zod";
 import { zodValidator } from "@tanstack/zod-form-adapter";
@@ -10,12 +10,16 @@ import { Button } from "@/components/ui/button";
 import CenteredLayout from "@/components/layout/CenteredLayout";
 import { signInFormSchema as formSchema } from "@/constants/form-schemas/authentication";
 import FieldInfo from "@/components/shared/FieldInfo";
+import useAuthentication from "@/hooks/core/useAuthentication";
 
 export const Route = createFileRoute("/authentication/sign-in")({
   component: SignIn,
 });
 
 export default function SignIn() {
+  const router = useRouter();
+  const { signInMutation } = useAuthentication();
+
   const form = useForm({
     defaultValues: {
       email: "",
@@ -26,7 +30,15 @@ export default function SignIn() {
       onChange: formSchema,
     },
     onSubmit: async ({ value }) => {
-      console.log(value);
+      await signInMutation
+        .mutateAsync(value)
+        .then((response) => {
+          console.log(response);
+          router.navigate({ to: "/" });
+        })
+        .catch((error) => {
+          console.log(`errored: ${error}`);
+        });
     },
   });
 
