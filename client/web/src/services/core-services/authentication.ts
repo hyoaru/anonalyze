@@ -49,7 +49,12 @@ export const authentication = {
    */
   signOut: async (): Promise<Authentication["Response"]["SignOut"]> => {
     const endPoint: keyof paths = "/api/auth/sign-out";
-    return (await axiosInstance.post(endPoint)).data;
+    return await axiosInstance
+      .post<Authentication["Response"]["SignOut"]>(endPoint)
+      .then((response) => {
+        localStorage.removeItem("token"); 
+        return response.data;
+      });
   },
   /**
    * Get the authenticated user's information.

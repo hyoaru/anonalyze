@@ -7,7 +7,8 @@ export const AuthStateContext = createContext<{
 }>({ authenticatedUser: undefined });
 
 export function AuthStateProvider({ children }: { children: React.ReactNode }) {
-  const { data: user } = useAuthentication().authenticatedUserQuery;
+  const { authenticatedUserQuery } = useAuthentication();
+  const { data: user } = authenticatedUserQuery();
 
   return (
     <AuthStateContext.Provider value={{ authenticatedUser: user }}>
@@ -18,10 +19,4 @@ export function AuthStateProvider({ children }: { children: React.ReactNode }) {
 
 export function useAuthStateContext() {
   return useContext(AuthStateContext);
-  // if (!context) {
-  //   throw new Error(
-  //     "useAuthStateContext must be used within a AuthStateProvider",
-  //   );
-  // }
-  // return context;
 }

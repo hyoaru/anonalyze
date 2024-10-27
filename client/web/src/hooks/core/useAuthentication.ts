@@ -8,44 +8,30 @@ export default function useAuthentication() {
 
   const signInMutation = useMutation({
     mutationFn: coreService.authentication.signIn,
-    onSuccess: async () => {
-      ["authenticated_user", "users"].forEach((queryKey) => {
-        queryClient.invalidateQueries({
-          queryKey: [queryKey],
-          refetchType: "all",
-        });
-      });
+    onSuccess: () => {
+      queryClient.invalidateQueries();
     },
   });
 
   const signUpMutation = useMutation({
     mutationFn: coreService.authentication.signUp,
-    onSuccess: async () => {
-      ["authenticated_user", "users"].forEach((queryKey) => {
-        queryClient.invalidateQueries({
-          queryKey: [queryKey],
-          refetchType: "all",
-        });
-      });
+    onSuccess: () => {
+      queryClient.invalidateQueries();
     },
   });
 
   const signOutMutation = useMutation({
     mutationFn: coreService.authentication.signOut,
-    onSuccess: async () => {
-      ["authenticated_user", "users"].forEach((queryKey) => {
-        queryClient.invalidateQueries({
-          queryKey: [queryKey],
-          refetchType: "all",
-        });
-      });
+    onSuccess: () => {
+      queryClient.invalidateQueries()
     },
   });
 
-  const authenticatedUserQuery = useQuery({
-    queryFn: coreService.authentication.getAuthenticatedUser,
-    queryKey: ["authenticated_user"],
-  });
+  const authenticatedUserQuery = () =>
+    useQuery({
+      queryFn: coreService.authentication.getAuthenticatedUser,
+      queryKey: ["authenticated_user"],
+    });
 
   return {
     signInMutation,
