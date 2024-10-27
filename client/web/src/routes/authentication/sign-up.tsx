@@ -1,16 +1,62 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
+import { zodValidator } from "@tanstack/zod-form-adapter";
+import { useForm } from "@tanstack/react-form";
+import * as z from "zod";
+import { toast } from "sonner";
+import { useState } from "react";
 
 // App imports
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import CenteredLayout from "@/components/layout/CenteredLayout";
+import { signUpFormSchema as formSchema } from "@/constants/form-schemas/authentication";
+import FieldInfo from "@/components/shared/FieldInfo";
+import useAuthentication from "@/hooks/core/useAuthentication";
+import { FormError } from "@/components/shared/FormError";
 
 export const Route = createFileRoute("/authentication/sign-up")({
   component: SignUp,
 });
 
 export default function SignUp() {
+  const router = useRouter();
+  const { signUpMutation } = useAuthentication();
+  const [errorMap, setErrorMap] = useState<Record<string, string> | null>(null);
+
+  const form = useForm({
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      passwordConfirmation: "",
+    } as z.infer<typeof formSchema>,
+    validatorAdapter: zodValidator(),
+    validators: {
+      onChange: formSchema,
+    },
+    onSubmit: async ({ value }) => {
+      await signUpMutation
+        .mutateAsync({
+          first_name: value.firstName,
+          last_name: value.lastName,
+          email: value.email,
+          password: value.password,
+          password_confirmation: value.passwordConfirmation,
+        })
+        .then(() => {
+          toast.success("Successfully signed in");
+          router.navigate({ to: "/" });
+        })
+        .catch((error) => {
+          setErrorMap(
+            error["response"]["data"]["errors"] as Record<string, string>,
+          );
+          toast.error("An error has occured.");
+        });
+    },
+  });
   return (
     <CenteredLayout>
       <div className="w-full rounded-lg bg-transparent py-10 backdrop-blur-[1px] md:p-10 md:shadow lg:w-8/12 xl:w-6/12">
@@ -21,36 +67,107 @@ export default function SignUp() {
           </p>
         </div>
 
-        <form className="grid">
+        <form
+          className="grid"
+          onSubmit={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            form.handleSubmit();
+          }}
+        >
           <div className="grid gap-4 py-8">
-            <div className="grid gap-2">
-              <div className="grid gap-2">
-                <Label>First name</Label>
-                <Input />
-              </div>
-              <div className="grid gap-2">
-                <Label>Last name</Label>
-                <Input />
-              </div>
-              <Label>Email</Label>
-              <Input />
-              <div className="grid gap-2">
-                <Label>Password</Label>
-                <Input />
-              </div>
-            </div>
-            <div className="grid gap-2">
-              <Label>Confirm password</Label>
-              <Input />
-            </div>
+            <form.Field
+              name="firstName"
+              children={(field) => (
+                <div className="grid gap-2">
+                  <Label htmlFor={field.name}>First name</Label>
+                  <Input
+                    id={field.name}
+                    name={field.name}
+                    value={field.state.value}
+                    onBlur={field.handleBlur}
+                    onChange={(e) => field.handleChange(e.target.value)}
+                  />
+                  <FieldInfo field={field} />
+                </div>
+              )}
+            />
+            <form.Field
+              name="lastName"
+              children={(field) => (
+                <div className="grid gap-2">
+                  <Label htmlFor={field.name}>Last Name</Label>
+                  <Input
+                    id={field.name}
+                    name={field.name}
+                    value={field.state.value}
+                    onBlur={field.handleBlur}
+                    onChange={(e) => field.handleChange(e.target.value)}
+                  />
+                  <FieldInfo field={field} />
+                </div>
+              )}
+            />
+            <form.Field
+              name="email"
+              children={(field) => (
+                <div className="grid gap-2">
+                  <Label htmlFor={field.name}>Email</Label>
+                  <Input
+                    id={field.name}
+                    name={field.name}
+                    value={field.state.value}
+                    onBlur={field.handleBlur}
+                    onChange={(e) => field.handleChange(e.target.value)}
+                  />
+                  <FieldInfo field={field} />
+                </div>
+              )}
+            />
+            <form.Field
+              name="password"
+              children={(field) => (
+                <div className="grid gap-2">
+                  <Label htmlFor={field.name}>Password</Label>
+                  <Input
+                    id={field.name}
+                    type="password"
+                    name={field.name}
+                    value={field.state.value}
+                    onBlur={field.handleBlur}
+                    onChange={(e) => field.handleChange(e.target.value)}
+                  />
+                  <FieldInfo field={field} />
+                </div>
+              )}
+            />
+            <form.Field
+              name="passwordConfirmation"
+              children={(field) => (
+                <div className="grid gap-2">
+                  <Label htmlFor={field.name}>Password confirmation</Label>
+                  <Input
+                    id={field.name}
+                    type="password"
+                    name={field.name}
+                    value={field.state.value}
+                    onBlur={field.handleBlur}
+                    onChange={(e) => field.handleChange(e.target.value)}
+                  />
+                  <FieldInfo field={field} />
+                </div>
+              )}
+            />
+            <FormError errorMap={errorMap} />
           </div>
-          <Button
-            variant={"default"}
-            size={"lg"}
-            className="font-bold uppercase"
-          >
-            Sign up
-          </Button>
+          <form.Subscribe
+            selector={(state) => [state.canSubmit, state.isSubmitting]}
+            children={([canSubmit, isSubmitting]) => (
+              <Button type="submit" disabled={!canSubmit}>
+                {isSubmitting ? "..." : "Submit"}
+              </Button>
+            )}
+          />
         </form>
 
         <div className="flex flex-col items-center justify-center pt-4 lg:flex-row">

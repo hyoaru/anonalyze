@@ -35,7 +35,13 @@ export const authentication = {
   ): Promise<Authentication["Response"]["SignUp"]> => {
     const endPoint: keyof paths = "/api/auth/sign-up";
     const requestBody = params;
-    return (await axiosInstance.post(endPoint, requestBody)).data;
+    return await axiosInstance
+      .post<Authentication["Response"]["SignUp"]>(endPoint, requestBody)
+      .then((response) => {
+        const token = response.data.token;
+        localStorage.setItem("token", token);
+        return response.data;
+      });
   },
   /**
    * Sign out the authenticated user.
