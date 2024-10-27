@@ -31,6 +31,7 @@ export default function useAuthentication() {
     useQuery({
       queryFn: coreService.authentication.getAuthenticatedUser,
       queryKey: ["authenticated_user"],
+      retry: false
     });
 
   return {
