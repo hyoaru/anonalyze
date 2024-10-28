@@ -50,12 +50,15 @@ class ThreadController extends Controller implements HasMiddleware
     public function index(Request $request)
     {
         $user = $request->user();
-        $threads = $user->threads->load([
-            'threadSummary',
-            'threadAnalytic',
-            'threadAnalytic.threadExtractedConceptGroup',
-            'threadAnalytic.threadExtractedConceptGroup.threadExtractedConcepts',
-        ]);
+        $threads = $user->threads()
+            ->with([
+                'threadSummary',
+                'threadAnalytic',
+                'threadAnalytic.threadExtractedConceptGroup',
+                'threadAnalytic.threadExtractedConceptGroup.threadExtractedConcepts',
+            ])
+            ->orderBy('created_at', 'desc')
+            ->get();
 
         $data = $threads;
 
@@ -85,7 +88,7 @@ class ThreadController extends Controller implements HasMiddleware
      *         response=500,
      *         description="Server error"
      *     ),
-    *      security={{"Bearer": {}}}
+     *      security={{"Bearer": {}}}
      * 
      * )
      */
