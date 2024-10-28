@@ -56,6 +56,7 @@ class ThreadService
         $threadExtractedConceptGroup = $thread->threadAnalytic->threadExtractedConceptGroup;
         $extractedConcepts = $mlApiExtractedConceptsResponseJson['data']['extracted_concepts'];
 
+        $threadExtractedConceptGroup->threadExtractedConcepts()->delete();
         foreach ($extractedConcepts as $concept => $significanceScore) {
             $threadExtractedConceptGroup->threadExtractedConcepts()->create([
                 'concept' => $concept,
