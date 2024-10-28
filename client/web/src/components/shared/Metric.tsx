@@ -22,7 +22,7 @@ type MetricValueProps = {
 export const Metric = ({ children, className }: MetricProps) => (
   <div
     className={cn(
-      "h-30 flex w-full flex-col gap-2 rounded-lg border bg-secondary p-10",
+      "h-30 flex w-full flex-col gap-2 rounded-lg border bg-secondary dark:bg-secondary/60 p-10",
       className,
     )}
   >

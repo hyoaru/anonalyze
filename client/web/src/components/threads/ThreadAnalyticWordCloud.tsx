@@ -30,7 +30,7 @@ export default function ThreadAnalyticWordCloud({
       {data && (
         <WordCloudComponent
           words={extracted_concepts_formatted!}
-          className="w-full rounded-lg border bg-secondary"
+          className="w-full rounded-lg border bg-secondary dark:bg-secondary/60"
         />
       )}
     </>

@@ -60,11 +60,11 @@ export default function ThreadAnalyticMetricGroup({
               <Hash />
             </Metric.Header>
             <Metric.Value>
-              <span>{(data?.sentiment_ratio?.positive ?? 0) * 10}</span>
+              <span className="text-green-500">{(data?.sentiment_ratio?.positive ?? 0) * 10}</span>
               <span>:</span>
               <span>{(data?.sentiment_ratio?.neutral ?? 0) * 10}</span>
               <span>:</span>
-              <span>{(data?.sentiment_ratio?.negative ?? 0) * 10}</span>
+              <span className="text-red-500">{(data?.sentiment_ratio?.negative ?? 0) * 10}</span>
             </Metric.Value>
           </Metric>
         </>
