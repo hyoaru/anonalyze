@@ -10,14 +10,18 @@ import { Toaster } from "@/components/ui/sonner";
 import { useThemeContext } from "@/context/ThemeContext";
 import { QueryClient } from "@tanstack/react-query";
 import { AuthStateContextType } from "@/types/auth-state";
+import ErrorComponent from "@/components/shared/ErrorComponent";
 
 interface RouterContext {
   queryClient: QueryClient;
-  authState: AuthStateContextType
+  authState: AuthStateContextType;
 }
 
 export const Route = createRootRouteWithContext<RouterContext>()({
   component: Root,
+  errorComponent: ({ error }) => {
+    return <ErrorComponent error={error} />;
+  },
 });
 
 export function Root() {
@@ -26,7 +30,7 @@ export function Root() {
     <>
       <div className="flex min-h-screen flex-col">
         <Header />
-        <BaseContainer className="grid w-full grow rounded-lg my-4">
+        <BaseContainer className="my-4 grid w-full grow rounded-lg">
           <main className="grid grow overflow-auto rounded-lg px-2">
             <Outlet />
           </main>

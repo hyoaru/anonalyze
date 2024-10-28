@@ -4,8 +4,16 @@ import { useState } from "react";
 
 // App imports
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import NewThreadDialogContent from "@/components/dashboard/NewThreadDialogContent";
+import useThreads from "@/hooks/core/useThreads";
+import ThreadTile from "@/components/dashboard/ThreadTile";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export const Route = createFileRoute("/dashboard")({
   beforeLoad: async ({ context }) => {
@@ -19,6 +27,10 @@ export const Route = createFileRoute("/dashboard")({
 
 export default function Dashboard() {
   const [isNewThreadDialogOpen, setIsNewThreadDialogOpen] = useState(false);
+  const { getAllByAuthenticatedUserQuery } = useThreads();
+  const { data, isLoading, error } = getAllByAuthenticatedUserQuery();
+
+  if (error) throw error;
 
   return (
     <>
@@ -28,16 +40,32 @@ export default function Dashboard() {
           className="flex items-center justify-between"
         >
           <div className="">
-            <p className="">Dashboard</p>
-            <p className="text-3xl font-bold">Your threads</p>
+            <p className="text-sm sm:text-base">Dashboard</p>
+            <p className="text-2xl font-bold sm:text-3xl">Your threads</p>
           </div>
           <Button
-            variant={"main-accent"}
             onClick={() => setIsNewThreadDialogOpen(true)}
+            className="rounded-full bg-background p-0 text-main-accent shadow-none sm:rounded-md sm:bg-main-accent sm:p-4 sm:text-main-accent-foreground sm:shadow-sm [&_svg]:size-9 [&_svg]:shrink sm:[&_svg]:size-4 sm:[&_svg]:shrink-0"
           >
             <CirclePlus />
-            <span>New thread</span>
+            <span className="hidden sm:block">New thread</span>
           </Button>
+        </div>
+
+        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {isLoading && <ThreadTileSkeleton length={10} />}
+          {data &&
+            data.map((thread, index) => {
+              const threadNumber = data?.length - index;
+
+              return (
+                <ThreadTile
+                  key={`thread-${thread.id}`}
+                  thread={thread}
+                  threadNumber={threadNumber}
+                />
+              );
+            })}
         </div>
       </div>
 
@@ -53,6 +81,21 @@ export default function Dashboard() {
           <NewThreadDialogContent setIsDialogOpen={setIsNewThreadDialogOpen} />
         </DialogContent>
       </Dialog>
+    </>
+  );
+}
+
+function ThreadTileSkeleton({ length }: { length: number }) {
+  return (
+    <>
+      {Array(length)
+        .fill(0)
+        .map((_, index) => (
+          <Skeleton
+            key={`ThreadTileSkeleton-${index}`}
+            className="h-[30vh] w-full"
+          />
+        ))}
     </>
   );
 }
