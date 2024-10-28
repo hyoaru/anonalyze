@@ -20,3 +20,7 @@ export const USER_BASE_FORM_SCHEMA = {
 export const THREAD_BASE_FORM_SCHEMA = {
   question: z.string().trim().min(4).max(256),
 }
+
+export const POST_BASE_FORM_SCHEMA = {
+  content: z.string().trim().min(8).max(512),
+}

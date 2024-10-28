@@ -1,0 +1,90 @@
+import { zodValidator } from "@tanstack/zod-form-adapter";
+import { useForm } from "@tanstack/react-form";
+import { useState } from "react";
+import * as z from "zod";
+
+// App imports
+import { postFormSchema as formSchema } from "@/constants/form-schemas/posts";
+import { FormError } from "@/components/shared/FormError";
+import FieldInfo from "@/components/shared/FieldInfo";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Post } from "@/types/core-types";
+import { Textarea } from "@/components/ui/textarea";
+
+type PostFormProps = {
+  initialValues?: Post;
+  onSubmit: (data: Record<string, any>) => Promise<Post>;
+};
+
+export default function PostForm({
+  initialValues,
+  onSubmit,
+}: PostFormProps) {
+  const [errorMap, setErrorMap] = useState<Record<string, string> | null>(null);
+
+  const form = useForm({
+    defaultValues: {
+      content: initialValues?.content ?? "",
+    } as z.infer<typeof formSchema>,
+    validatorAdapter: zodValidator(),
+    validators: {
+      onChange: formSchema,
+    },
+    onSubmit: async ({ value }) => {
+      await onSubmit(value)
+        .then(() => {
+          form.reset();
+        })
+        .catch((error) => {
+          setErrorMap(
+            error["response"]["data"]["errors"] as Record<string, string>,
+          );
+        });
+    },
+  });
+
+  return (
+    <>
+      <div className="h-full w-full">
+        <form
+          className="grid"
+          onSubmit={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            form.handleSubmit();
+          }}
+        >
+          <div className="grid gap-4 py-8">
+            <form.Field
+              name="content"
+              children={(field) => (
+                <div className="grid gap-2">
+                  <Label htmlFor={field.name}>Your thoughts</Label>
+                  <Textarea
+                    id={field.name}
+                    name={field.name}
+                    value={field.state.value}
+                    onBlur={field.handleBlur}
+                    onChange={(e) => field.handleChange(e.target.value)}
+                  />
+                  <FieldInfo field={field} />
+                </div>
+              )}
+            />
+
+            <FormError errorMap={errorMap} />
+          </div>
+          <form.Subscribe
+            selector={(state) => [state.canSubmit, state.isSubmitting]}
+            children={([canSubmit, isSubmitting]) => (
+              <Button type="submit" disabled={!canSubmit}>
+                {isSubmitting ? "..." : "Submit"}
+              </Button>
+            )}
+          />
+        </form>
+      </div>
+    </>
+  );
+}

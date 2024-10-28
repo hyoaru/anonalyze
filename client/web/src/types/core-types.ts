@@ -41,6 +41,19 @@ export type Threads = {
   }
 };
 
+export type Posts = {
+  Request: {
+    GetById: paths["/api/posts/{id}"]["get"]["parameters"]["path"];
+    Store: paths["/api/posts"]["post"]["requestBody"]["content"]["application/json"];
+    Destroy: paths["/api/posts/{id}"]["delete"]["parameters"]["path"];
+  };
+  Response: {
+    GetById: paths["/api/posts/{id}"]["get"]["responses"]["200"]['content']['application/json'];
+    Store: paths["/api/posts"]["post"]["responses"]['201']['content']['application/json']
+    Destroy: paths["/api/posts/{id}"]["delete"]["responses"]["200"]['content']['application/json'];
+  }
+};
+
 /**
  * Core user schema type.
  * Represents a user in the system, with properties defined in the OpenAPI schema.

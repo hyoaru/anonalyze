@@ -17,6 +17,7 @@ import { Route as ThreadsThreadIdImport } from './routes/threads/$threadId'
 import { Route as AuthenticationSignUpImport } from './routes/authentication/sign-up'
 import { Route as AuthenticationSignInImport } from './routes/authentication/sign-in'
 import { Route as AuthenticationForgotPasswordImport } from './routes/authentication/forgot-password'
+import { Route as ThreadsThreadIdPostsNewImport } from './routes/threads/$threadId_.posts_.new'
 
 // Create/Update Routes
 
@@ -56,6 +57,12 @@ const AuthenticationForgotPasswordRoute =
     path: '/authentication/forgot-password',
     getParentRoute: () => rootRoute,
   } as any)
+
+const ThreadsThreadIdPostsNewRoute = ThreadsThreadIdPostsNewImport.update({
+  id: '/threads/$threadId_/posts_/new',
+  path: '/threads/$threadId/posts/new',
+  getParentRoute: () => rootRoute,
+} as any)
 
 // Populate the FileRoutesByPath interface
 
@@ -103,6 +110,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ThreadsThreadIdImport
       parentRoute: typeof rootRoute
     }
+    '/threads/$threadId_/posts_/new': {
+      id: '/threads/$threadId_/posts_/new'
+      path: '/threads/$threadId/posts/new'
+      fullPath: '/threads/$threadId/posts/new'
+      preLoaderRoute: typeof ThreadsThreadIdPostsNewImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -115,6 +129,7 @@ export interface FileRoutesByFullPath {
   '/authentication/sign-in': typeof AuthenticationSignInRoute
   '/authentication/sign-up': typeof AuthenticationSignUpRoute
   '/threads/$threadId': typeof ThreadsThreadIdRoute
+  '/threads/$threadId/posts/new': typeof ThreadsThreadIdPostsNewRoute
 }
 
 export interface FileRoutesByTo {
@@ -124,6 +139,7 @@ export interface FileRoutesByTo {
   '/authentication/sign-in': typeof AuthenticationSignInRoute
   '/authentication/sign-up': typeof AuthenticationSignUpRoute
   '/threads/$threadId': typeof ThreadsThreadIdRoute
+  '/threads/$threadId/posts/new': typeof ThreadsThreadIdPostsNewRoute
 }
 
 export interface FileRoutesById {
@@ -134,6 +150,7 @@ export interface FileRoutesById {
   '/authentication/sign-in': typeof AuthenticationSignInRoute
   '/authentication/sign-up': typeof AuthenticationSignUpRoute
   '/threads/$threadId': typeof ThreadsThreadIdRoute
+  '/threads/$threadId_/posts_/new': typeof ThreadsThreadIdPostsNewRoute
 }
 
 export interface FileRouteTypes {
@@ -145,6 +162,7 @@ export interface FileRouteTypes {
     | '/authentication/sign-in'
     | '/authentication/sign-up'
     | '/threads/$threadId'
+    | '/threads/$threadId/posts/new'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -153,6 +171,7 @@ export interface FileRouteTypes {
     | '/authentication/sign-in'
     | '/authentication/sign-up'
     | '/threads/$threadId'
+    | '/threads/$threadId/posts/new'
   id:
     | '__root__'
     | '/'
@@ -161,6 +180,7 @@ export interface FileRouteTypes {
     | '/authentication/sign-in'
     | '/authentication/sign-up'
     | '/threads/$threadId'
+    | '/threads/$threadId_/posts_/new'
   fileRoutesById: FileRoutesById
 }
 
@@ -171,6 +191,7 @@ export interface RootRouteChildren {
   AuthenticationSignInRoute: typeof AuthenticationSignInRoute
   AuthenticationSignUpRoute: typeof AuthenticationSignUpRoute
   ThreadsThreadIdRoute: typeof ThreadsThreadIdRoute
+  ThreadsThreadIdPostsNewRoute: typeof ThreadsThreadIdPostsNewRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -180,6 +201,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticationSignInRoute: AuthenticationSignInRoute,
   AuthenticationSignUpRoute: AuthenticationSignUpRoute,
   ThreadsThreadIdRoute: ThreadsThreadIdRoute,
+  ThreadsThreadIdPostsNewRoute: ThreadsThreadIdPostsNewRoute,
 }
 
 export const routeTree = rootRoute
@@ -199,7 +221,8 @@ export const routeTree = rootRoute
         "/authentication/forgot-password",
         "/authentication/sign-in",
         "/authentication/sign-up",
-        "/threads/$threadId"
+        "/threads/$threadId",
+        "/threads/$threadId_/posts_/new"
       ]
     },
     "/": {
@@ -219,6 +242,9 @@ export const routeTree = rootRoute
     },
     "/threads/$threadId": {
       "filePath": "threads/$threadId.tsx"
+    },
+    "/threads/$threadId_/posts_/new": {
+      "filePath": "threads/$threadId_.posts_.new.tsx"
     }
   }
 }
