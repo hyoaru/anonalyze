@@ -9,6 +9,7 @@ use App\Http\Controllers\Posts\PostController;
 use App\Http\Controllers\Threads\ThreadAnalyticController;
 use App\Http\Controllers\Threads\ThreadController;
 use App\Http\Controllers\Threads\ThreadSummaryController;
+use App\Models\Threads\ThreadAnalytic;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('/auth')->group(function () {
@@ -30,6 +31,7 @@ Route::apiResource('sentiments', SentimentController::class)->only(['index', 'sh
 Route::apiResource('emotions', EmotionController::class)->only(['index', 'show']);
 
 Route::apiResource('threads', ThreadController::class);
+Route::get('/threads/{thread}/thread-analytics/metrics', [ThreadAnalyticController::class, 'getThreadAnalyticMetrics']);
 Route::apiResource('thread-summaries', ThreadSummaryController::class)->only(['show']);
 Route::apiResource('thread-analytics', ThreadAnalyticController::class)->only(['show']);
 
