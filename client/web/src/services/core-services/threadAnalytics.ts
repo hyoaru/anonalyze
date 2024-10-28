@@ -12,7 +12,7 @@ export const threadAnalytics = {
   getById: async (
     params: ThreadAnalytics["Request"]["GetById"],
   ): Promise<ThreadAnalytics["Response"]["GetById"]> => {
-    const endPoint: keyof paths = `/api/threadAnalytics/${params.id}` as keyof paths;
+    const endPoint: keyof paths = `/api/thread-analytics/${params.id}` as keyof paths;
     return await axiosInstance
       .get<ThreadAnalytics["Response"]["GetById"]>(endPoint)
       .then((response) => {
@@ -28,7 +28,7 @@ export const threadAnalytics = {
   destroy: async (
     params: ThreadAnalytics["Request"]["Destroy"],
   ): Promise<ThreadAnalytics["Response"]["Destroy"]> => {
-    const endPoint: keyof paths = `/api/threadAnalytics/${params.id}` as keyof paths;
+    const endPoint: keyof paths = `/api/thread-analytics/${params.id}` as keyof paths;
     return await axiosInstance
       .delete<ThreadAnalytics["Response"]["Destroy"]>(endPoint)
       .then((response) => {

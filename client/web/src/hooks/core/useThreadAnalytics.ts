@@ -10,6 +10,7 @@ export default function useThreadAnalytics() {
     useQuery({
       queryFn: () => coreService.threadAnalytics.getById(params),
       queryKey: ["thread_analytics", { id: params.id }],
+      staleTime: 3 * 1000,
     });
 
   const destroyMutation = useMutation({
@@ -17,14 +18,16 @@ export default function useThreadAnalytics() {
       params: Parameters<typeof coreService.threadAnalytics.destroy>[0],
     ) => coreService.threadAnalytics.destroy(params),
     onSuccess: (response) => {
-      [["threads"], ["thread_analytics"], ["thread_analytics", { id: response.id }]].forEach(
-        (queryKey) => {
-          queryClient.invalidateQueries({
-            queryKey: queryKey,
-            refetchType: "all",
-          });
-        },
-      );
+      [
+        ["threads"],
+        ["thread_analytics"],
+        ["thread_analytics", { id: response.id }],
+      ].forEach((queryKey) => {
+        queryClient.invalidateQueries({
+          queryKey: queryKey,
+          refetchType: "all",
+        });
+      });
     },
   });
 
@@ -34,14 +37,14 @@ export default function useThreadAnalytics() {
     >[0],
   ) =>
     useQuery({
-      queryFn: () =>
-        coreService.threadAnalytics.getThreadAnalyticMetrics(params),
+      queryFn: () => coreService.threadAnalytics.getThreadAnalyticMetrics(params),
       queryKey: ["thread_analytics_metrics", { thread_id: params.id }],
+      staleTime: 3 * 1000,
     });
 
   return {
     getByIdQuery,
     destroyMutation,
-    getThreadAnalyticMetrics
+    getThreadAnalyticMetrics,
   };
 }
