@@ -728,6 +728,45 @@
                 ]
             }
         },
+        "/api/threads/{id}/thread-analytics/metrics": {
+            "get": {
+                "tags": [
+                    "Thread analytics"
+                ],
+                "summary": "Retrieve a thread analytic metrics by thread ID",
+                "description": "Retrieves a thread analytic metrics",
+                "operationId": "bbd6105e43170ad94ca3e63d2da8981d",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the thread to retrieve analytic metrics on",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful retrieval of a thread analytic metrics",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetThreadAnalyticMetricsResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Thread not found"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                }
+            }
+        },
         "/api/threads": {
             "get": {
                 "tags": [
@@ -1365,6 +1404,61 @@
                     "updated_at": {
                         "type": "string",
                         "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "GetThreadAnalyticMetricsResponse": {
+                "required": [
+                    "total_response",
+                    "key_concept",
+                    "leading_sentiment",
+                    "leading_emotion",
+                    "sentiment_ratio"
+                ],
+                "properties": {
+                    "total_response": {
+                        "description": "Total number of responses in the thread",
+                        "type": "integer",
+                        "example": 15
+                    },
+                    "key_concept": {
+                        "description": "The key concept of the thread",
+                        "type": "string",
+                        "example": "Sustainability"
+                    },
+                    "leading_sentiment": {
+                        "description": "Leading sentiment of the responses",
+                        "type": "string",
+                        "example": "positive"
+                    },
+                    "leading_emotion": {
+                        "description": "Leading emotion in the responses",
+                        "type": "string",
+                        "example": "joy"
+                    },
+                    "sentiment_ratio": {
+                        "description": "Ratio of sentiments in the thread responses",
+                        "properties": {
+                            "positive": {
+                                "type": "number",
+                                "format": "float"
+                            },
+                            "neutral": {
+                                "type": "number",
+                                "format": "float"
+                            },
+                            "negative": {
+                                "type": "number",
+                                "format": "float"
+                            }
+                        },
+                        "type": "object",
+                        "example": {
+                            "positive": 0.6,
+                            "neutral": 0.3,
+                            "negative": 0.1
+                        }
                     }
                 },
                 "type": "object"

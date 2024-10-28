@@ -9,6 +9,7 @@ use App\Models\Threads\Thread;
 use App\Models\Threads\ThreadAnalytic;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class ThreadAnalyticController extends Controller
 {
@@ -99,6 +100,34 @@ class ThreadAnalyticController extends Controller
         return $response;
     }
 
+    /**
+     * @OA\Get(
+     *     path="/api/threads/{id}/thread-analytics/metrics",
+     *     tags={"Thread analytics"},
+     *     summary="Retrieve a thread analytic metrics by thread ID",
+     *     description="Retrieves a thread analytic metrics",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID of the thread to retrieve analytic metrics on",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful retrieval of a thread analytic metrics",
+     *         @OA\JsonContent(ref="#/components/schemas/GetThreadAnalyticMetricsResponse")
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Thread not found"
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Server error"
+     *     ),
+     * )
+     */
     public function getThreadAnalyticMetrics(Thread $thread)
     {
         $thread = $thread->load([
@@ -117,23 +146,19 @@ class ThreadAnalyticController extends Controller
         // 1. Total Response
         $totalResponse = $thread->posts->count();
 
-        // 2. Key Concept
         $keyConcept = $thread->threadAnalytic
             ->threadExtractedConceptGroup
             ->threadExtractedConcepts
             ->sortByDesc('significance_score')
-            ->first();
-            // ->concept ?? 'No concept available';
+            ->first()
+            ->concept;
 
-        return $keyConcept;
-
-        // 3. Leading Sentiment
         $sentimentCounts = [];
         $thread->posts->each(function ($post) use (&$sentimentCounts) {
             $sentiment = $post->postAnalytic->postPredictedSentiment->sentiment->class ?? null;
-            $probability = $post->postAnalytic->postPredictedSentiment->probability ?? 0;
-            if ($sentiment) {
-                $sentimentCounts[$sentiment] = ($sentimentCounts[$sentiment] ?? 0) + $probability;
+            // $probability = $post->postAnalytic->postPredictedSentiment->probability ?? 0;
+            if ($sentiment) {       
+                $sentimentCounts[$sentiment] = ($sentimentCounts[$sentiment] ?? 0) + 1;
             }
         });
 
@@ -143,9 +168,9 @@ class ThreadAnalyticController extends Controller
         $emotionCounts = [];
         $thread->posts->each(function ($post) use (&$emotionCounts) {
             $emotion = $post->postAnalytic->postPredictedEmotion->emotion->class ?? null;
-            $probability = $post->postAnalytic->postPredictedEmotion->probability ?? 0;
+            // $probability = $post->postAnalytic->postPredictedEmotion->probability ?? 0;
             if ($emotion) {
-                $emotionCounts[$emotion] = ($emotionCounts[$emotion] ?? 0) + $probability;
+                $emotionCounts[$emotion] = ($emotionCounts[$emotion] ?? 0) + 1;
             }
         });
 
@@ -154,7 +179,15 @@ class ThreadAnalyticController extends Controller
         // 5. Sentiment Ratio
         $sentimentTotals = collect($sentimentCounts)->sum();
         $sentimentRatio = collect($sentimentCounts)->map(function ($count) use ($sentimentTotals) {
-            return $count / ($sentimentTotals ?: 1); // Avoid division by zero
+            return $count / ($sentimentTotals ?: 1); 
         });
+
+        return response()->json([
+            'total_response' => $totalResponse,
+            'key_concept' => $keyConcept,
+            'leading_sentiment' => $leadingSentiment,
+            'leading_emotion' => $leadingEmotion,
+            'sentiment_ratio' => $sentimentRatio,
+        ], 200);
     }
 }

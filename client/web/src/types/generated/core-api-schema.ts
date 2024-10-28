@@ -332,6 +332,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/threads/{id}/thread-analytics/metrics": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Retrieve a thread analytic metrics by thread ID
+         * @description Retrieves a thread analytic metrics
+         */
+        get: operations["bbd6105e43170ad94ca3e63d2da8981d"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/threads": {
         parameters: {
             query?: never;
@@ -554,6 +574,44 @@ export interface components {
             created_at: string;
             /** Format: date-time */
             updated_at: string;
+        };
+        GetThreadAnalyticMetricsResponse: {
+            /**
+             * @description Total number of responses in the thread
+             * @example 15
+             */
+            total_response: number;
+            /**
+             * @description The key concept of the thread
+             * @example Sustainability
+             */
+            key_concept: string;
+            /**
+             * @description Leading sentiment of the responses
+             * @example positive
+             */
+            leading_sentiment: string;
+            /**
+             * @description Leading emotion in the responses
+             * @example joy
+             */
+            leading_emotion: string;
+            /**
+             * @description Ratio of sentiments in the thread responses
+             * @example {
+             *       "positive": 0.6,
+             *       "neutral": 0.3,
+             *       "negative": 0.1
+             *     }
+             */
+            sentiment_ratio: {
+                /** Format: float */
+                positive?: number;
+                /** Format: float */
+                neutral?: number;
+                /** Format: float */
+                negative?: number;
+            };
         };
         StoreThreadRequest: {
             /** @description The question of the thread */
@@ -1335,6 +1393,43 @@ export interface operations {
                 content?: never;
             };
             /** @description Thread analytic not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    bbd6105e43170ad94ca3e63d2da8981d: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description ID of the thread to retrieve analytic metrics on */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful retrieval of a thread analytic metrics */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GetThreadAnalyticMetricsResponse"];
+                };
+            };
+            /** @description Thread not found */
             404: {
                 headers: {
                     [name: string]: unknown;
