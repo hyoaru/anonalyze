@@ -39,7 +39,7 @@ const MetricHeader = ({ children, className }: MetricHeaderProps) => (
 const MetricValue = ({ children, classNames }: MetricValueProps) => (
   <div
     className={cn(
-      "flex h-full items-center justify-start overflow-hidden",
+      "flex h-full items-start justify-start overflow-hidden",
       classNames?.container,
     )}
   >

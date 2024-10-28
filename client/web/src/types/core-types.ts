@@ -41,6 +41,10 @@ export type Threads = {
   }
 };
 
+/**
+ * Types related to posts requests and responses.
+ * These are organized by request and response for each endpoint.
+ */
 export type Posts = {
   Request: {
     GetById: paths["/api/posts/{id}"]["get"]["parameters"]["path"];
@@ -51,6 +55,23 @@ export type Posts = {
     GetById: paths["/api/posts/{id}"]["get"]["responses"]["200"]['content']['application/json'];
     Store: paths["/api/posts"]["post"]["responses"]['201']['content']['application/json']
     Destroy: paths["/api/posts/{id}"]["delete"]["responses"]["200"]['content']['application/json'];
+  }
+};
+
+/**
+ * Types related to thread analytics requests and responses.
+ * These are organized by request and response for each endpoint.
+ */
+export type ThreadAnalytics = {
+  Request: {
+    GetById: paths["/api/thread-analytics/{id}"]["get"]["parameters"]["path"];
+    Destroy: paths["/api/thread-analytics/{id}"]["delete"]["parameters"]["path"];
+    GetThreadAnalyticMetrics: paths["/api/threads/{id}/thread-analytics/metrics"]["get"]["parameters"]["path"];
+  };
+  Response: {
+    GetById: paths["/api/thread-analytics/{id}"]["get"]["responses"]["200"]['content']['application/json'];
+    Destroy: paths["/api/thread-analytics/{id}"]["delete"]["responses"]["200"]['content']['application/json'];
+    GetThreadAnalyticMetrics: paths["/api/threads/{id}/thread-analytics/metrics"]["get"]["responses"]["200"]['content']['application/json'];
   }
 };
 
