@@ -145,7 +145,11 @@ class ThreadController extends Controller implements HasMiddleware
      */
     public function show(Thread $thread)
     {
-        $data = $thread;
+        $data = $thread->load([
+            'threadSummary',
+            'threadAnalytic',
+        ]);
+        
         return response()->json($data, 200);
     }
 
