@@ -13,6 +13,7 @@
 import { Route as rootRoute } from './routes/__root'
 import { Route as DashboardImport } from './routes/dashboard'
 import { Route as IndexImport } from './routes/index'
+import { Route as ThreadsThreadIdImport } from './routes/threads/$threadId'
 import { Route as AuthenticationSignUpImport } from './routes/authentication/sign-up'
 import { Route as AuthenticationSignInImport } from './routes/authentication/sign-in'
 import { Route as AuthenticationForgotPasswordImport } from './routes/authentication/forgot-password'
@@ -28,6 +29,12 @@ const DashboardRoute = DashboardImport.update({
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ThreadsThreadIdRoute = ThreadsThreadIdImport.update({
+  id: '/threads/$threadId',
+  path: '/threads/$threadId',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -89,6 +96,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticationSignUpImport
       parentRoute: typeof rootRoute
     }
+    '/threads/$threadId': {
+      id: '/threads/$threadId'
+      path: '/threads/$threadId'
+      fullPath: '/threads/$threadId'
+      preLoaderRoute: typeof ThreadsThreadIdImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -100,6 +114,7 @@ export interface FileRoutesByFullPath {
   '/authentication/forgot-password': typeof AuthenticationForgotPasswordRoute
   '/authentication/sign-in': typeof AuthenticationSignInRoute
   '/authentication/sign-up': typeof AuthenticationSignUpRoute
+  '/threads/$threadId': typeof ThreadsThreadIdRoute
 }
 
 export interface FileRoutesByTo {
@@ -108,6 +123,7 @@ export interface FileRoutesByTo {
   '/authentication/forgot-password': typeof AuthenticationForgotPasswordRoute
   '/authentication/sign-in': typeof AuthenticationSignInRoute
   '/authentication/sign-up': typeof AuthenticationSignUpRoute
+  '/threads/$threadId': typeof ThreadsThreadIdRoute
 }
 
 export interface FileRoutesById {
@@ -117,6 +133,7 @@ export interface FileRoutesById {
   '/authentication/forgot-password': typeof AuthenticationForgotPasswordRoute
   '/authentication/sign-in': typeof AuthenticationSignInRoute
   '/authentication/sign-up': typeof AuthenticationSignUpRoute
+  '/threads/$threadId': typeof ThreadsThreadIdRoute
 }
 
 export interface FileRouteTypes {
@@ -127,6 +144,7 @@ export interface FileRouteTypes {
     | '/authentication/forgot-password'
     | '/authentication/sign-in'
     | '/authentication/sign-up'
+    | '/threads/$threadId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -134,6 +152,7 @@ export interface FileRouteTypes {
     | '/authentication/forgot-password'
     | '/authentication/sign-in'
     | '/authentication/sign-up'
+    | '/threads/$threadId'
   id:
     | '__root__'
     | '/'
@@ -141,6 +160,7 @@ export interface FileRouteTypes {
     | '/authentication/forgot-password'
     | '/authentication/sign-in'
     | '/authentication/sign-up'
+    | '/threads/$threadId'
   fileRoutesById: FileRoutesById
 }
 
@@ -150,6 +170,7 @@ export interface RootRouteChildren {
   AuthenticationForgotPasswordRoute: typeof AuthenticationForgotPasswordRoute
   AuthenticationSignInRoute: typeof AuthenticationSignInRoute
   AuthenticationSignUpRoute: typeof AuthenticationSignUpRoute
+  ThreadsThreadIdRoute: typeof ThreadsThreadIdRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -158,6 +179,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticationForgotPasswordRoute: AuthenticationForgotPasswordRoute,
   AuthenticationSignInRoute: AuthenticationSignInRoute,
   AuthenticationSignUpRoute: AuthenticationSignUpRoute,
+  ThreadsThreadIdRoute: ThreadsThreadIdRoute,
 }
 
 export const routeTree = rootRoute
@@ -176,7 +198,8 @@ export const routeTree = rootRoute
         "/dashboard",
         "/authentication/forgot-password",
         "/authentication/sign-in",
-        "/authentication/sign-up"
+        "/authentication/sign-up",
+        "/threads/$threadId"
       ]
     },
     "/": {
@@ -193,6 +216,9 @@ export const routeTree = rootRoute
     },
     "/authentication/sign-up": {
       "filePath": "authentication/sign-up.tsx"
+    },
+    "/threads/$threadId": {
+      "filePath": "threads/$threadId.tsx"
     }
   }
 }

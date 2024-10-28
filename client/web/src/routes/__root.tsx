@@ -10,7 +10,8 @@ import { Toaster } from "@/components/ui/sonner";
 import { useThemeContext } from "@/context/ThemeContext";
 import { QueryClient } from "@tanstack/react-query";
 import { AuthStateContextType } from "@/types/auth-state";
-import ErrorComponent from "@/components/shared/ErrorComponent";
+import ErrorComponent from "@/components/defaults/ErrorComponent";
+import NotFoundComponent from "@/components/defaults/NotFoundComponent";
 
 interface RouterContext {
   queryClient: QueryClient;
@@ -21,6 +22,9 @@ export const Route = createRootRouteWithContext<RouterContext>()({
   component: Root,
   errorComponent: ({ error }) => {
     return <ErrorComponent error={error} />;
+  },
+  notFoundComponent: () => {
+    return <NotFoundComponent />
   },
 });
 

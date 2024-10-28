@@ -1,5 +1,6 @@
 import { formatDate } from "@/lib/utils";
 import { coreService } from "@/services/coreService";
+import { Link } from "@tanstack/react-router";
 
 type ThreadTileProps = {
   thread: Awaited<
@@ -16,19 +17,29 @@ export default function ThreadTile({ thread, threadNumber }: ThreadTileProps) {
   const threadConceptsFormatted = threadConcepts?.length
     ? threadConcepts?.join(",")
     : "No extracted concepts yet";
-  const threadCreatedAtFormatted = formatDate({date: thread.created_at})
+  const threadCreatedAtFormatted = formatDate({ date: thread.created_at });
 
   return (
-    <div className="group flex h-full flex-col rounded-lg bg-secondary p-6 border border-transparent hover:border-main-accent/20 transition-colors duration-200 ease-in-out">
-      <div className="grow flex flex-col gap-1 mb-8">
-        <p className="text-sm">Thread #{threadNumber}</p>
-        <p className="text-xl font-semibold group-hover:text-main-accent transition-colors duration-200 ease-in-out">{thread.question}</p>
+    <Link
+      className="group h-full"
+      to="/threads/$threadId"
+      params={{ threadId: thread.id.toString() }}
+    >
+      <div className="flex h-full flex-col rounded-lg border border-transparent bg-secondary p-6 transition-colors duration-200 ease-in-out group-hover:border-main-accent/20">
+        <div className="mb-8 flex grow flex-col gap-1">
+          <p className="text-sm">Thread #{threadNumber}</p>
+          <p className="text-xl font-semibold transition-colors duration-200 ease-in-out group-hover:text-main-accent">
+            {thread.question}
+          </p>
+        </div>
+
+        <div className="flex flex-col gap-1">
+          <p className="text-sm uppercase">{threadConceptsFormatted}</p>
+          <p className="text-xs uppercase text-muted-foreground">
+            {threadCreatedAtFormatted}
+          </p>
+        </div>
       </div>
-      
-      <div className="flex flex-col gap-1">
-        <p className="text-sm uppercase">{threadConceptsFormatted}</p>
-        <p className="text-xs uppercase text-muted-foreground">{threadCreatedAtFormatted}</p>
-      </div>
-    </div>
+    </Link>
   );
 }

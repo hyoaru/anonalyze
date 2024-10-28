@@ -15,7 +15,7 @@ export default function useThreads() {
   ) =>
     useQuery({
       queryFn: () => coreService.threads.getById(params),
-      queryKey: ["threads", "authenticated_user"],
+      queryKey: ["threads", { id: params.id }],
     });
 
   const storeMutation = useMutation({
