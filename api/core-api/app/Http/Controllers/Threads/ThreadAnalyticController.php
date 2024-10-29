@@ -151,18 +151,19 @@ class ThreadAnalyticController extends Controller
             ->threadExtractedConcepts
             ->sortByDesc('significance_score')
             ->first()
-            ->concept;
+            ->concept ?? null;
 
         $sentimentCounts = [];
         $thread->posts->each(function ($post) use (&$sentimentCounts) {
             $sentiment = $post->postAnalytic->postPredictedSentiment->sentiment->class ?? null;
             // $probability = $post->postAnalytic->postPredictedSentiment->probability ?? 0;
-            if ($sentiment) {       
+            if ($sentiment) {
                 $sentimentCounts[$sentiment] = ($sentimentCounts[$sentiment] ?? 0) + 1;
             }
         });
 
         $leadingSentiment = collect($sentimentCounts)->sortDesc()->keys()->first();
+
 
         // 4. Leading Emotion
         $emotionCounts = [];
@@ -178,9 +179,11 @@ class ThreadAnalyticController extends Controller
 
         // 5. Sentiment Ratio
         $sentimentTotals = collect($sentimentCounts)->sum();
-        $sentimentRatio = collect($sentimentCounts)->map(function ($count) use ($sentimentTotals) {
-            return $count / ($sentimentTotals ?: 1); 
-        });
+        $sentimentRatio = collect($sentimentCounts)->isEmpty()
+            ? null
+            : collect($sentimentCounts)->map(function ($count) use ($sentimentTotals) {
+                return $count / ($sentimentTotals ?: 1);
+            });
 
         return response()->json([
             'total_response' => $totalResponse,
