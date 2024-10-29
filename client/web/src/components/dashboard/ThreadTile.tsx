@@ -25,7 +25,7 @@ export default function ThreadTile({ thread, threadNumber }: ThreadTileProps) {
       to="/threads/$threadId"
       params={{ threadId: thread.id.toString() }}
     >
-      <div className="flex h-full flex-col rounded-lg border border-transparent bg-secondary p-6 transition-colors duration-200 ease-in-out group-hover:border-main-accent/20">
+      <div className="flex h-full flex-col rounded-lg border dark:bg-secondary/60 bg-secondary p-6 transition-colors duration-200 ease-in-out group-hover:border-main-accent/20">
         <div className="mb-8 flex grow flex-col gap-1">
           <p className="text-sm">Thread #{threadNumber}</p>
           <p className="text-xl font-semibold transition-colors duration-200 ease-in-out group-hover:text-main-accent">

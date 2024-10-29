@@ -53,7 +53,7 @@ export default function Dashboard() {
         </div>
 
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {isLoading && <ThreadTileSkeleton length={10} />}
+          {isLoading && <ThreadTileSkeleton length={12} />}
           {data &&
             data.map((thread, index) => {
               const threadNumber = data?.length - index;
@@ -93,7 +93,7 @@ function ThreadTileSkeleton({ length }: { length: number }) {
         .map((_, index) => (
           <div
             key={`ThreadTileSkeleton-${index}`}
-            className="relative h-80 w-full"
+            className="relative h-72 w-full"
           >
             <div className="absolute inset-0 flex items-center justify-center">
               <LoaderCircle className="animate-spin" />

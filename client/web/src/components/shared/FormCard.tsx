@@ -28,7 +28,7 @@ type FormCardBodyProps = {
 export const FormCard = ({ children, className }: FormCardProps) => (
   <div
     className={cn(
-      "w-full rounded-lg bg-transparent py-10 backdrop-blur-[1px] md:p-10 md:shadow lg:w-8/12 xl:w-6/12",
+      "w-full rounded-lg md:border bg-transparent py-10 backdrop-blur-[1px] md:p-10 lg:w-8/12 xl:w-6/12",
       className,
     )}
   >
