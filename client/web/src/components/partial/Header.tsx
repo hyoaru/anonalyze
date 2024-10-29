@@ -73,7 +73,7 @@ export default function Header() {
                   <DropdownMenuItem onClick={onSignOut}>
                     Sign Out
                   </DropdownMenuItem>
-                  <DropdownMenuSeparator />
+                  <DropdownMenuSeparator className="sm:hidden" />
                   <DropdownMenuItem className="sm:hidden capitalize" onClick={toggleTheme}>
                     {theme}
                   </DropdownMenuItem>
