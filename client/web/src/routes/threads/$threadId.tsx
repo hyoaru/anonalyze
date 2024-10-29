@@ -30,7 +30,7 @@ export default function Thread() {
             <p className="text-2xl font-bold sm:text-3xl">{data.question}</p>
           </div>
         </div>
-        <div className="overflow-hidden grid mt-4">
+        <div className="overflow-hidden grid mt-8">
           <ThreadAnalyticMetricGroup threadId={data.id} />
         </div>
         <div className="mt-4">
@@ -39,6 +39,13 @@ export default function Thread() {
                 <ThreadAnalyticWordCloud
                   threadAnalyticId={data.thread_analytic?.id!}
                 />
+              </div>
+              <div className="col-span-full xl:col-span-2">
+                <div className="rounded-lg border bg-secondary h-[200px] xl:h-full">
+                  <div className="flex items-center justify-center w-full h-full">
+                    <p className="uppercase">thread summary</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
