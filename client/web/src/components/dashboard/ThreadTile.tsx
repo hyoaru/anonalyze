@@ -15,7 +15,7 @@ export default function ThreadTile({ thread, threadNumber }: ThreadTileProps) {
     threadAnalytic?.thread_extracted_concept_group;
   const threadConcepts = threadExtractedConceptGroup?.thread_extracted_concepts;
   const threadConceptsFormatted = threadConcepts?.length
-    ? threadConcepts?.join(",")
+    ? threadConcepts.slice(0,3)?.map((threadConcept) => threadConcept.concept).join(",")
     : "No extracted concepts yet";
   const threadCreatedAtFormatted = formatDate({ date: thread.created_at });
 
@@ -34,7 +34,7 @@ export default function ThreadTile({ thread, threadNumber }: ThreadTileProps) {
         </div>
 
         <div className="flex flex-col gap-1">
-          <p className="text-sm uppercase">{threadConceptsFormatted}</p>
+          <p className="text-sm">{threadConceptsFormatted}</p>
           <p className="text-xs uppercase text-muted-foreground">
             {threadCreatedAtFormatted}
           </p>
