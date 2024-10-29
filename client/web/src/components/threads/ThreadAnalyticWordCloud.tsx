@@ -19,7 +19,7 @@ export default function ThreadAnalyticWordCloud({
   const extracted_concepts_formatted = extracted_concepts?.map(
     (extracted_concept) => ({
       text: extracted_concept.concept,
-      value: extracted_concept.significance_score * 100,
+      value: extracted_concept.significance_score,
     }),
   );
 
@@ -30,7 +30,7 @@ export default function ThreadAnalyticWordCloud({
       {data && (
         <WordCloudComponent
           words={extracted_concepts_formatted!}
-          className="w-full rounded-lg border bg-secondary dark:bg-secondary/60"
+          className="w-full h-[500px] rounded-lg border dark:bg-secondary/60"
         />
       )}
     </>
