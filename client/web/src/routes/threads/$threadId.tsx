@@ -35,7 +35,7 @@ export default function Thread() {
         </div>
         <div className="mt-4">
             <div className="grid grid-cols-5 gap-4">
-              <div className="col-span-3">
+              <div className="col-span-full xl:col-span-3">
                 <ThreadAnalyticWordCloud
                   threadAnalyticId={data.thread_analytic?.id!}
                 />
