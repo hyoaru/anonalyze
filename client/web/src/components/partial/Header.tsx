@@ -1,4 +1,4 @@
-import { Brackets, SunDim } from "lucide-react";
+import { Brackets, Menu, SunDim } from "lucide-react";
 
 // App imports
 import { Button } from "@/components/ui/button";
@@ -14,12 +14,13 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuSeparator
 } from "@/components/ui/dropdown-menu";
 import { toast } from "sonner";
 
 export default function Header() {
   const router = useRouter();
-  const { toggleTheme } = useThemeContext();
+  const { toggleTheme, theme } = useThemeContext();
   const authState = useAuthStateContext();
   const { signOutMutation } = useAuthentication();
 
@@ -58,16 +59,23 @@ export default function Header() {
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant={"secondary"}>
-                    {authState.authenticatedUser.email}
+                    <span className="hidden sm:block">
+                      {authState.authenticatedUser.email}
+                    </span>
+                    <Menu className="sm:hidden" />
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" side="bottom">
                   <DropdownMenuItem>
-                    <Link to="/dashboard">Dashboard</Link>
+                    <Link className="w-full h-full" to="/dashboard">Dashboard</Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem>Account</DropdownMenuItem>
                   <DropdownMenuItem onClick={onSignOut}>
                     Sign Out
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem className="sm:hidden capitalize" onClick={toggleTheme}>
+                    {theme}
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -81,7 +89,7 @@ export default function Header() {
               </Link>
             </>
           )}
-          <Toggle size={"sm"} onClick={toggleTheme}>
+          <Toggle className="hidden sm:block" size={"sm"} onClick={toggleTheme}>
             <SunDim />
           </Toggle>
         </div>
