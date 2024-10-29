@@ -1,5 +1,5 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
-import { CirclePlus } from "lucide-react";
+import { CirclePlus, LoaderCircle } from "lucide-react";
 import { useState } from "react";
 
 // App imports
@@ -91,10 +91,15 @@ function ThreadTileSkeleton({ length }: { length: number }) {
       {Array(length)
         .fill(0)
         .map((_, index) => (
-          <Skeleton
+          <div
             key={`ThreadTileSkeleton-${index}`}
-            className="h-[30vh] w-full"
-          />
+            className="relative h-80 w-full"
+          >
+            <div className="absolute inset-0 flex items-center justify-center">
+              <LoaderCircle className="animate-spin" />
+            </div>
+            <Skeleton className="h-full w-full" />
+          </div>
         ))}
     </>
   );

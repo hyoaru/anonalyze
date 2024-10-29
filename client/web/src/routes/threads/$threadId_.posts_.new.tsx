@@ -7,6 +7,7 @@ import PostForm from "@/components/shared/PostForm";
 import usePosts from "@/hooks/core/usePosts";
 import useThreads from "@/hooks/core/useThreads";
 import { toast } from "sonner";
+import LoadingComponent from "@/components/defaults/LoadingComponent";
 
 export const Route = createFileRoute("/threads/$threadId_/posts_/new")({
   component: NewThreadPost,
@@ -26,8 +27,9 @@ export default function NewThreadPost() {
     id: Number(pathParams.threadId),
   });
 
+  if (isLoading) return <LoadingComponent />;
   if (error) throw error;
-  if (!thread && !isLoading) return notFound();
+  if (!thread) return notFound();
 
   async function onSubmit(data: Record<string, any>) {
     return await storeMutation

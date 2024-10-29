@@ -12,6 +12,7 @@ import { QueryClient } from "@tanstack/react-query";
 import { AuthStateContextType } from "@/types/auth-state";
 import ErrorComponent from "@/components/defaults/ErrorComponent";
 import NotFoundComponent from "@/components/defaults/NotFoundComponent";
+import LoadingComponent from "@/components/defaults/LoadingComponent";
 
 interface RouterContext {
   queryClient: QueryClient;
@@ -23,9 +24,8 @@ export const Route = createRootRouteWithContext<RouterContext>()({
   errorComponent: ({ error }) => {
     return <ErrorComponent error={error} />;
   },
-  notFoundComponent: () => {
-    return <NotFoundComponent />
-  },
+  notFoundComponent: NotFoundComponent,
+  pendingComponent: LoadingComponent
 });
 
 export function Root() {

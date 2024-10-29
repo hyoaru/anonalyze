@@ -1,3 +1,4 @@
+import LoadingComponent from "@/components/defaults/LoadingComponent";
 import ThreadAnalyticMetricGroup from "@/components/threads/ThreadAnalyticMetricGroup";
 import ThreadAnalyticWordCloud from "@/components/threads/ThreadAnalyticWordCloud";
 import useThreads from "@/hooks/core/useThreads";
@@ -14,12 +15,9 @@ export default function Thread() {
     id: Number(pathParams.threadId),
   });
 
-  if (!data && !isLoading) throw notFound();
+  if (isLoading) return <LoadingComponent />;
   if (error) throw error;
-
-  if (isLoading || !data) {
-    return <></>;
-  }
+  if (!data) throw notFound();
 
   return (
     <>
@@ -30,25 +28,25 @@ export default function Thread() {
             <p className="text-2xl font-bold sm:text-3xl">{data.question}</p>
           </div>
         </div>
-        <div className="overflow-hidden grid mt-8">
+        <div className="mt-8 grid overflow-hidden">
           <ThreadAnalyticMetricGroup threadId={data.id} />
         </div>
         <div className="mt-4">
-            <div className="grid grid-cols-5 gap-4">
-              <div className="col-span-full xl:col-span-3">
-                <ThreadAnalyticWordCloud
-                  threadAnalyticId={data.thread_analytic?.id!}
-                />
-              </div>
-              <div className="col-span-full xl:col-span-2">
-                <div className="rounded-lg border bg-secondary h-[200px] xl:h-full">
-                  <div className="flex items-center justify-center w-full h-full">
-                    <p className="uppercase">thread summary</p>
-                  </div>
+          <div className="grid grid-cols-5 gap-4">
+            <div className="col-span-full xl:col-span-3">
+              <ThreadAnalyticWordCloud
+                threadAnalyticId={data.thread_analytic?.id!}
+              />
+            </div>
+            <div className="col-span-full xl:col-span-2">
+              <div className="h-[200px] rounded-lg border bg-secondary xl:h-full">
+                <div className="flex h-full w-full items-center justify-center">
+                  <p className="uppercase">thread summary</p>
                 </div>
               </div>
             </div>
           </div>
+        </div>
       </div>
     </>
   );
