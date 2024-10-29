@@ -2,6 +2,7 @@ import useThreadAnalytics from "@/hooks/core/useThreadAnalytics";
 import { Metric } from "@/components/shared/Metric";
 import { Hash } from "lucide-react";
 import { Skeleton } from "../ui/skeleton";
+import { ScrollArea, ScrollBar } from "../ui/scroll-area";
 
 export default function ThreadAnalyticMetricGroup({
   threadId,
@@ -29,47 +30,52 @@ export default function ThreadAnalyticMetricGroup({
   ];
 
   return (
-    <div className="mt-8 grid grid-cols-5 gap-4">
-      {isLoading && <LoadingComponent />}
-      {error && <ErrorComponent />}
-
-      {data && (
-        <>
-          {metrics.map((metric) => (
-            <Metric key={`metric-${metric.name}`}>
+    <ScrollArea>
+      <div className="grid w-max xl:w-full grid-cols-5 gap-4">
+        {isLoading && <LoadingComponent />}
+        {error && <ErrorComponent />}
+        {data && (
+          <>
+            {metrics.map((metric) => (
+              <Metric key={`metric-${metric.name}`} className="w-80 xl:w-full px-10 py-8 xl:py-10">
+                <Metric.Header>
+                  <p className="uppercase">{metric.name}</p>
+                  <Hash />
+                </Metric.Header>
+                <Metric.Value>{metric.value}</Metric.Value>
+              </Metric>
+            ))}
+            <Metric className="w-80 xl:w-full px-10 py-8 xl:py-10">
               <Metric.Header>
-                <p className="uppercase">{metric.name}</p>
+                <p className="uppercase">key concept</p>
                 <Hash />
               </Metric.Header>
-              <Metric.Value>{metric.value}</Metric.Value>
+              <Metric.Value classNames={{ value: "text-sm" }}>
+                {data?.key_concept}
+              </Metric.Value>
             </Metric>
-          ))}
-
-          <Metric>
-            <Metric.Header>
-              <p className="uppercase">key concept</p>
-              <Hash />
-            </Metric.Header>
-            <Metric.Value classNames={{ value: "text-base" }}>
-              {data?.key_concept}
-            </Metric.Value>
-          </Metric>
-          <Metric>
-            <Metric.Header>
-              <p className="uppercase">sentiment ratio</p>
-              <Hash />
-            </Metric.Header>
-            <Metric.Value>
-              <span className="text-green-500">{(data?.sentiment_ratio?.positive ?? 0) * 10}</span>
-              <span>:</span>
-              <span>{(data?.sentiment_ratio?.neutral ?? 0) * 10}</span>
-              <span>:</span>
-              <span className="text-red-500">{(data?.sentiment_ratio?.negative ?? 0) * 10}</span>
-            </Metric.Value>
-          </Metric>
-        </>
-      )}
-    </div>
+            <Metric className="w-80 xl:w-full px-10 py-8 xl:py-10">
+              <Metric.Header>
+                <p className="uppercase">sentiment ratio</p>
+                <Hash />
+              </Metric.Header>
+              <Metric.Value>
+                <span className="text-green-500">
+                  {(data?.sentiment_ratio?.positive ?? 0) * 10}
+                </span>
+                <span>:</span>
+                <span>{(data?.sentiment_ratio?.neutral ?? 0) * 10}</span>
+                <span>:</span>
+                <span className="text-red-500">
+                  {(data?.sentiment_ratio?.negative ?? 0) * 10}
+                </span>
+              </Metric.Value>
+            </Metric>
+          </>
+        )}
+      </div>
+      <ScrollBar orientation="horizontal" />
+    </ScrollArea>
   );
 }
 

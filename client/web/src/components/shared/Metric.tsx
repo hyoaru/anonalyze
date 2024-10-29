@@ -22,7 +22,7 @@ type MetricValueProps = {
 export const Metric = ({ children, className }: MetricProps) => (
   <div
     className={cn(
-      "h-30 flex w-full flex-col gap-2 rounded-lg border bg-secondary dark:bg-secondary/60 p-10",
+      "flex w-full flex-col gap-2 rounded-lg border bg-secondary dark:bg-secondary/60 p-10",
       className,
     )}
   >
@@ -39,7 +39,7 @@ const MetricHeader = ({ children, className }: MetricHeaderProps) => (
 const MetricValue = ({ children, classNames }: MetricValueProps) => (
   <div
     className={cn(
-      "flex h-full items-start justify-start overflow-hidden",
+      "flex h-full items-start justify-start text-wrap",
       classNames?.container,
     )}
   >

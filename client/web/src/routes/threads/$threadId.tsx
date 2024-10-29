@@ -30,20 +30,18 @@ export default function Thread() {
             <p className="text-2xl font-bold sm:text-3xl">{data.question}</p>
           </div>
         </div>
-
-        <div className="mt-8">
+        <div className="overflow-hidden grid mt-4">
           <ThreadAnalyticMetricGroup threadId={data.id} />
         </div>
-
         <div className="mt-4">
-          <div className="grid grid-cols-5 gap-4">
-            <div className="col-span-3">
-              <ThreadAnalyticWordCloud
-                threadAnalyticId={data.thread_analytic?.id!}
-              />
+            <div className="grid grid-cols-5 gap-4">
+              <div className="col-span-3">
+                <ThreadAnalyticWordCloud
+                  threadAnalyticId={data.thread_analytic?.id!}
+                />
+              </div>
             </div>
           </div>
-        </div>
       </div>
     </>
   );
