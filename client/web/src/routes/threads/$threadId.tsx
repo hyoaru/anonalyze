@@ -1,8 +1,17 @@
+import { PencilLine, Settings, Share2, Trash } from "lucide-react";
+import { createFileRoute, notFound } from "@tanstack/react-router";
+
+// App imports
 import LoadingComponent from "@/components/defaults/LoadingComponent";
 import ThreadAnalyticMetricGroup from "@/components/threads/ThreadAnalyticMetricGroup";
 import ThreadAnalyticWordCloud from "@/components/threads/ThreadAnalyticWordCloud";
+import { Button } from "@/components/ui/button";
 import useThreads from "@/hooks/core/useThreads";
-import { createFileRoute, notFound } from "@tanstack/react-router";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 export const Route = createFileRoute("/threads/$threadId")({
   component: Thread,
@@ -23,9 +32,35 @@ export default function Thread() {
     <>
       <div className="">
         <div id="thread-header">
-          <div className="flex flex-col gap-1">
-            <p className="text-sm sm:text-base">Thread question</p>
-            <p className="text-2xl font-bold sm:text-3xl">{data.question}</p>
+          <div className="flex items-center">
+            <div className="me-auto flex flex-col gap-1 pe-8">
+              <p className="text-sm sm:text-base">Thread question</p>
+              <p className="text-2xl font-bold sm:text-3xl">{data.question}</p>
+            </div>
+            <div className="flex flex-col gap-2 self-start">
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button variant={"outline"} size={"icon"}>
+                    <Settings />
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent
+                  side="bottom"
+                  align="center"
+                  className="flex w-max flex-col gap-1 border-none bg-transparent p-0 shadow-none"
+                >
+                  <Button variant={"outline"} size={"icon"}>
+                    <PencilLine />
+                  </Button>
+                  <Button variant={"outline"} size={"icon"}>
+                    <Trash />
+                  </Button>
+                  <Button variant={"outline"} size={"icon"}>
+                    <Share2 />
+                  </Button>
+                </PopoverContent>
+              </Popover>
+            </div>
           </div>
         </div>
         <div className="mt-8 grid overflow-hidden">
