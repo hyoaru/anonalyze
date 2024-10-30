@@ -21,7 +21,7 @@ import {
   DialogDescription,
   DialogTitle,
 } from "@/components/ui/dialog";
-
+import ShareThreadDialogContent from "@/components/shared/thread/ShareThreadDialogContent";
 
 export const Route = createFileRoute("/threads/$threadId")({
   component: Thread,
@@ -83,7 +83,11 @@ export default function Thread() {
                   >
                     <Trash />
                   </Button>
-                  <Button variant={"outline"} size={"icon"}>
+                  <Button
+                    variant={"outline"}
+                    size={"icon"}
+                    onClick={() => setisShareThreadDialogOpen(true)}
+                  >
                     <Share2 />
                   </Button>
                 </PopoverContent>
@@ -111,6 +115,22 @@ export default function Thread() {
           </div>
         </div>
       </div>
+
+      <Dialog
+        open={isShareThreadDialogOpen}
+        onOpenChange={setisShareThreadDialogOpen}
+      >
+        <DialogContent>
+          <div className="hidden">
+            <DialogTitle>Share thread</DialogTitle>
+            <DialogDescription></DialogDescription>
+          </div>
+          <ShareThreadDialogContent
+            setIsDialogOpen={setIsEditThreadDialogOpen}
+            id={data.id}
+          />
+        </DialogContent>
+      </Dialog>
 
       <Dialog
         open={isDeleteThreadConfirmationDialogOpen}
