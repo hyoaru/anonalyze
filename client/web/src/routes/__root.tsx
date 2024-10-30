@@ -35,7 +35,7 @@ export function Root() {
       <div className="flex min-h-screen flex-col">
         <Header />
         <BaseContainer className="my-4 grid w-full grow">
-          <main className="grid grow overflow-auto px-2">
+          <main className="grid grow overflow-auto px-2 sm:px-0">
             <Outlet />
           </main>
         </BaseContainer>

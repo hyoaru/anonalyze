@@ -1,11 +1,10 @@
-import { Brackets, Menu, SunDim } from "lucide-react";
+import { Brackets, Menu, Moon, Sun } from "lucide-react";
 
 // App imports
 import { Button } from "@/components/ui/button";
 import { Link, useRouter } from "@tanstack/react-router";
 import BaseContainer from "./BaseContainer";
 import { useThemeContext } from "@/context/ThemeContext";
-import { Toggle } from "@/components/ui/toggle";
 import useAuthentication from "@/hooks/core/useAuthentication";
 import { useAuthStateContext } from "@/context/AuthStateContext";
 
@@ -14,7 +13,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-  DropdownMenuSeparator
+  DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import { toast } from "sonner";
 
@@ -67,14 +66,19 @@ export default function Header() {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" side="bottom">
                   <DropdownMenuItem>
-                    <Link className="w-full h-full" to="/dashboard">Dashboard</Link>
+                    <Link className="h-full w-full" to="/dashboard">
+                      Dashboard
+                    </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem>Account</DropdownMenuItem>
                   <DropdownMenuItem onClick={onSignOut}>
                     Sign Out
                   </DropdownMenuItem>
                   <DropdownMenuSeparator className="sm:hidden" />
-                  <DropdownMenuItem className="sm:hidden capitalize" onClick={toggleTheme}>
+                  <DropdownMenuItem
+                    className="capitalize sm:hidden"
+                    onClick={toggleTheme}
+                  >
                     {theme}
                   </DropdownMenuItem>
                 </DropdownMenuContent>
@@ -89,9 +93,14 @@ export default function Header() {
               </Link>
             </>
           )}
-          <Toggle className="hidden sm:block" size={"sm"} onClick={toggleTheme}>
-            <SunDim />
-          </Toggle>
+          <Button
+            variant={"secondary"}
+            className="hidden sm:flex"
+            size={"icon"}
+            onClick={toggleTheme}
+          >
+            {theme === "light" ? <Sun /> : <Moon />}
+          </Button>
         </div>
       </BaseContainer>
     </header>
