@@ -2,7 +2,7 @@ import { toast } from "sonner";
 
 // App imports
 import useThreads from "@/hooks/core/useThreads";
-import ThreadForm from "@/components/shared/ThreadForm";
+import ThreadForm from "./ThreadForm";
 
 type NewThreadDialogContentProps = {
   setIsDialogOpen?: React.Dispatch<React.SetStateAction<boolean>>

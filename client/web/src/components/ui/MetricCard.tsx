@@ -1,17 +1,17 @@
 import React from "react";
 import { cn } from "@/lib/utils";
 
-type MetricProps = {
+type MetricCardProps = {
   children: React.ReactNode;
   className?: string;
 };
 
-type MetricHeaderProps = {
+type MetricCardHeaderProps = {
   children: React.ReactNode;
   className?: string;
 };
 
-type MetricValueProps = {
+type MetricCardValueProps = {
   children: React.ReactNode;
   classNames?: {
     container?: string;
@@ -19,7 +19,7 @@ type MetricValueProps = {
   };
 };
 
-export const Metric = ({ children, className }: MetricProps) => (
+export const MetricCard = ({ children, className }: MetricCardProps) => (
   <div
     className={cn(
       "flex w-full flex-col gap-2 rounded-lg border bg-secondary dark:bg-secondary/60 p-10",
@@ -30,13 +30,13 @@ export const Metric = ({ children, className }: MetricProps) => (
   </div>
 );
 
-const MetricHeader = ({ children, className }: MetricHeaderProps) => (
+const MetricCardHeader = ({ children, className }: MetricCardHeaderProps) => (
   <div className={cn("flex items-center justify-between", className)}>
     {children}
   </div>
 );
 
-const MetricValue = ({ children, classNames }: MetricValueProps) => (
+const MetricCardValue = ({ children, classNames }: MetricCardValueProps) => (
   <div
     className={cn(
       "flex h-full items-start justify-start text-wrap",
@@ -49,5 +49,5 @@ const MetricValue = ({ children, classNames }: MetricValueProps) => (
   </div>
 );
 
-Metric.Header = MetricHeader;
-Metric.Value = MetricValue;
+MetricCard.Header = MetricCardHeader;
+MetricCard.Value = MetricCardValue;

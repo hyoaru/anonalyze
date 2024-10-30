@@ -4,28 +4,28 @@ import { useState } from "react";
 import * as z from "zod";
 
 // App imports
-import { postFormSchema as formSchema } from "@/constants/form-schemas/posts";
-import { FormError } from "@/components/shared/FormError";
-import FieldInfo from "@/components/shared/FieldInfo";
+import { threadFormSchema as formSchema } from "@/constants/form-schemas/threads";
+import { FormError } from "@/components/ui/FormError";
+import FieldInfo from "@/components/ui/FieldInfo";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { Post } from "@/types/core-types";
+import { Thread } from "@/types/core-types";
 import { Textarea } from "@/components/ui/textarea";
 
-type PostFormProps = {
-  initialValues?: Post;
-  onSubmit: (data: Record<string, any>) => Promise<Post>;
+type ThreadFormProps = {
+  initialValues?: Thread;
+  onSubmit: (data: Record<string, any>) => Promise<Thread>;
 };
 
-export default function PostForm({
+export default function ThreadForm({
   initialValues,
   onSubmit,
-}: PostFormProps) {
+}: ThreadFormProps) {
   const [errorMap, setErrorMap] = useState<Record<string, string> | null>(null);
 
   const form = useForm({
     defaultValues: {
-      content: initialValues?.content ?? "",
+      question: initialValues?.question ?? "",
     } as z.infer<typeof formSchema>,
     validatorAdapter: zodValidator(),
     validators: {
@@ -57,10 +57,10 @@ export default function PostForm({
         >
           <div className="grid gap-4 py-8">
             <form.Field
-              name="content"
+              name="question"
               children={(field) => (
                 <div className="grid gap-2">
-                  <Label htmlFor={field.name}>Your thoughts</Label>
+                  <Label htmlFor={field.name}>Question</Label>
                   <Textarea
                     id={field.name}
                     name={field.name}

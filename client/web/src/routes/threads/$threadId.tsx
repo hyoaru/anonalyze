@@ -3,7 +3,7 @@ import { PencilLine, Settings, Share2, Trash } from "lucide-react";
 import { createFileRoute, notFound } from "@tanstack/react-router";
 
 // App imports
-import EditThreadDialogContent from "@/components/dashboard/EditThreadDialogContent.tsx";
+import EditThreadDialogContent from "@/components/shared/thread/EditThreadDialogContent.tsx";
 import ThreadAnalyticMetricGroup from "@/components/threads/ThreadAnalyticMetricGroup";
 import ThreadAnalyticWordCloud from "@/components/threads/ThreadAnalyticWordCloud";
 import LoadingComponent from "@/components/defaults/LoadingComponent";
@@ -34,7 +34,7 @@ export default function Thread() {
 
   const [isEditThreadDialogOpen, setIsEditThreadDialogOpen] = useState(false);
   const [isShareThreadDialogOpen, setisShareThreadDialogOpen] = useState(false);
-  
+
   const [
     isDeleteThreadConfirmationDialogOpen,
     setisDeleteThreadConfirmationDialogOpen,

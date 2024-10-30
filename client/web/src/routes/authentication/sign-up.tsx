@@ -16,10 +16,10 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import CenteredLayout from "@/components/layout/CenteredLayout";
 import { signUpFormSchema as formSchema } from "@/constants/form-schemas/authentication";
-import FieldInfo from "@/components/shared/FieldInfo";
+import FieldInfo from "@/components/ui/FieldInfo";
 import useAuthentication from "@/hooks/core/useAuthentication";
-import { FormError } from "@/components/shared/FormError";
-import { FormCard } from "@/components/shared/FormCard";
+import { FormError } from "@/components/ui/FormError";
+import { FormCard } from "@/components/ui/FormCard";
 
 export const Route = createFileRoute("/authentication/sign-up")({
   beforeLoad: async ({ context }) => {

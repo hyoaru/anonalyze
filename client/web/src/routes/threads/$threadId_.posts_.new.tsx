@@ -2,8 +2,8 @@ import { createFileRoute, notFound } from "@tanstack/react-router";
 
 // App imports
 import CenteredLayout from "@/components/layout/CenteredLayout";
-import { FormCard } from "@/components/shared/FormCard";
-import PostForm from "@/components/shared/PostForm";
+import { FormCard } from "@/components/ui/FormCard";
+import PostForm from "@/components/shared/post/PostForm";
 import usePosts from "@/hooks/core/usePosts";
 import useThreads from "@/hooks/core/useThreads";
 import { toast } from "sonner";

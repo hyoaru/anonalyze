@@ -10,9 +10,9 @@ import {
   DialogDescription,
   DialogTitle,
 } from "@/components/ui/dialog";
-import NewThreadDialogContent from "@/components/dashboard/NewThreadDialogContent";
+import NewThreadDialogContent from "@/components/shared/thread/NewThreadDialogContent";
 import useThreads from "@/hooks/core/useThreads";
-import ThreadTile from "@/components/dashboard/ThreadTile";
+import ThreadTile from "@/components/shared/thread/ThreadTile";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export const Route = createFileRoute("/dashboard")({

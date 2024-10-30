@@ -1,14 +1,8 @@
 import useThreadAnalytics from "@/hooks/core/useThreadAnalytics";
-import { Metric } from "@/components/shared/Metric";
-import {
-  CircleX,
-  Hash,
-  LoaderCircle,
-  RotateCw,
-  TriangleAlert,
-} from "lucide-react";
-import { Skeleton } from "../ui/skeleton";
-import { ScrollArea, ScrollBar } from "../ui/scroll-area";
+import { MetricCard } from "@/components/ui/MetricCard";
+import { Hash, LoaderCircle } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
 export default function ThreadAnalyticMetricGroup({
   threadId,
@@ -43,32 +37,36 @@ export default function ThreadAnalyticMetricGroup({
         {data && (
           <>
             {metrics.map((metric) => (
-              <Metric
+              <MetricCard
                 key={`metric-${metric.name}`}
                 className="w-80 px-10 py-8 xl:w-full xl:py-10"
               >
-                <Metric.Header>
+                <MetricCard.Header>
                   <p className="uppercase">{metric.name}</p>
                   <Hash />
-                </Metric.Header>
-                <Metric.Value>{metric.value ?? 'N/A'}</Metric.Value>
-              </Metric>
+                </MetricCard.Header>
+                <MetricCard.Value>{metric.value ?? "N/A"}</MetricCard.Value>
+              </MetricCard>
             ))}
-            <Metric className="w-80 px-10 py-8 xl:w-full xl:py-10">
-              <Metric.Header>
+            <MetricCard className="w-80 px-10 py-8 xl:w-full xl:py-10">
+              <MetricCard.Header>
                 <p className="uppercase">key concept</p>
                 <Hash />
-              </Metric.Header>
-              <Metric.Value classNames={{ value: data?.key_concept ? "text-sm" : 'text-2xl' }}>
-                {data?.key_concept ?? 'N/A'}
-              </Metric.Value>
-            </Metric>
-            <Metric className="w-80 px-10 py-8 xl:w-full xl:py-10">
-              <Metric.Header>
+              </MetricCard.Header>
+              <MetricCard.Value
+                classNames={{
+                  value: data?.key_concept ? "text-sm" : "text-2xl",
+                }}
+              >
+                {data?.key_concept ?? "N/A"}
+              </MetricCard.Value>
+            </MetricCard>
+            <MetricCard className="w-80 px-10 py-8 xl:w-full xl:py-10">
+              <MetricCard.Header>
                 <p className="uppercase">sentiment ratio</p>
                 <Hash />
-              </Metric.Header>
-              <Metric.Value>
+              </MetricCard.Header>
+              <MetricCard.Value>
                 <span className="text-green-500">
                   {Math.round((data?.sentiment_ratio?.positive ?? 0) * 10)}
                 </span>
@@ -80,8 +78,8 @@ export default function ThreadAnalyticMetricGroup({
                 <span className="text-red-500">
                   {Math.round((data?.sentiment_ratio?.negative ?? 0) * 10)}
                 </span>
-              </Metric.Value>
-            </Metric>
+              </MetricCard.Value>
+            </MetricCard>
           </>
         )}
       </div>
@@ -120,7 +118,9 @@ function ErrorComponent() {
             key={`MetricSkeletonError-${index}`}
             className="flex h-40 w-72 items-center justify-center rounded-lg border border-destructive bg-destructive/5 xl:w-full"
           >
-            <p className="uppercase text-destructive font-bold text-2xl">Error</p>
+            <p className="text-2xl font-bold uppercase text-destructive">
+              Error
+            </p>
           </div>
         ))}
     </>

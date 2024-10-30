@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import CenteredLayout from "@/components/layout/CenteredLayout";
-import { FormCard } from "@/components/shared/FormCard";
+import { FormCard } from "@/components/ui/FormCard";
 
 export const Route = createFileRoute("/authentication/forgot-password")({
   component: ForgotPassword,
