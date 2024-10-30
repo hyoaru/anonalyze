@@ -22,6 +22,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import ShareThreadDialogContent from "@/components/shared/thread/ShareThreadDialogContent";
+import { useAuthStateContext } from "@/context/AuthStateContext";
 
 export const Route = createFileRoute("/threads/$threadId")({
   component: Thread,
@@ -29,6 +30,7 @@ export const Route = createFileRoute("/threads/$threadId")({
 
 export default function Thread() {
   const pathParams = Route.useParams();
+  const { authenticatedUser } = useAuthStateContext();
   const { getByIdQuery } = useThreads();
   const { data, isLoading, error } = getByIdQuery({
     id: Number(pathParams.threadId),
@@ -56,42 +58,52 @@ export default function Thread() {
               <p className="text-2xl font-bold sm:text-3xl">{data.question}</p>
             </div>
             <div className="flex flex-col gap-2 self-start">
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button variant={"outline"} size={"icon"} className="z-[5]">
-                    <Settings />
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent
-                  side="bottom"
-                  align="center"
-                  className="flex w-max flex-col gap-1 border-none bg-transparent p-0 shadow-none"
+              {authenticatedUser ? (
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button variant={"outline"} size={"icon"} className="z-[5]">
+                      <Settings />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent
+                    side="bottom"
+                    align="center"
+                    className="flex w-max flex-col gap-1 border-none bg-transparent p-0 shadow-none"
+                  >
+                    <Button
+                      variant={"outline"}
+                      size={"icon"}
+                      onClick={() => setIsEditThreadDialogOpen(true)}
+                    >
+                      <PencilLine />
+                    </Button>
+                    <Button
+                      variant={"outline"}
+                      size={"icon"}
+                      onClick={() =>
+                        setisDeleteThreadConfirmationDialogOpen(true)
+                      }
+                    >
+                      <Trash />
+                    </Button>
+                    <Button
+                      variant={"outline"}
+                      size={"icon"}
+                      onClick={() => setisShareThreadDialogOpen(true)}
+                    >
+                      <Share2 />
+                    </Button>
+                  </PopoverContent>
+                </Popover>
+              ) : (
+                <Button
+                  variant={"outline"}
+                  size={"icon"}
+                  onClick={() => setisShareThreadDialogOpen(true)}
                 >
-                  <Button
-                    variant={"outline"}
-                    size={"icon"}
-                    onClick={() => setIsEditThreadDialogOpen(true)}
-                  >
-                    <PencilLine />
-                  </Button>
-                  <Button
-                    variant={"outline"}
-                    size={"icon"}
-                    onClick={() =>
-                      setisDeleteThreadConfirmationDialogOpen(true)
-                    }
-                  >
-                    <Trash />
-                  </Button>
-                  <Button
-                    variant={"outline"}
-                    size={"icon"}
-                    onClick={() => setisShareThreadDialogOpen(true)}
-                  >
-                    <Share2 />
-                  </Button>
-                </PopoverContent>
-              </Popover>
+                  <Share2 />
+                </Button>
+              )}
             </div>
           </div>
         </div>
