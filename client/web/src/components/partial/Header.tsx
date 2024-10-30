@@ -94,7 +94,7 @@ export default function Header() {
             </>
           )}
           <Button
-            variant={"secondary"}
+            variant={"secondary-main-accent"}
             className="hidden sm:flex"
             size={"icon"}
             onClick={toggleTheme}
