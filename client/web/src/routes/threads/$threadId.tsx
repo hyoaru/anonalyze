@@ -1,10 +1,12 @@
+import { useState } from "react";
 import { PencilLine, Settings, Share2, Trash } from "lucide-react";
 import { createFileRoute, notFound } from "@tanstack/react-router";
 
 // App imports
-import LoadingComponent from "@/components/defaults/LoadingComponent";
+import EditThreadDialogContent from "@/components/dashboard/EditThreadDialogContent.tsx";
 import ThreadAnalyticMetricGroup from "@/components/threads/ThreadAnalyticMetricGroup";
 import ThreadAnalyticWordCloud from "@/components/threads/ThreadAnalyticWordCloud";
+import LoadingComponent from "@/components/defaults/LoadingComponent";
 import { Button } from "@/components/ui/button";
 import useThreads from "@/hooks/core/useThreads";
 import {
@@ -12,6 +14,12 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 export const Route = createFileRoute("/threads/$threadId")({
   component: Thread,
@@ -23,6 +31,14 @@ export default function Thread() {
   const { data, isLoading, error } = getByIdQuery({
     id: Number(pathParams.threadId),
   });
+
+  const [isEditThreadDialogOpen, setIsEditThreadDialogOpen] = useState(false);
+  const [isShareThreadDialogOpen, setisShareThreadDialogOpen] = useState(false);
+  
+  const [
+    isDeleteThreadConfirmationDialogOpen,
+    setisDeleteThreadConfirmationDialogOpen,
+  ] = useState(false);
 
   if (isLoading) return <LoadingComponent />;
   if (error) throw error;
@@ -49,7 +65,11 @@ export default function Thread() {
                   align="center"
                   className="flex w-max flex-col gap-1 border-none bg-transparent p-0 shadow-none"
                 >
-                  <Button variant={"outline"} size={"icon"}>
+                  <Button
+                    variant={"outline"}
+                    size={"icon"}
+                    onClick={() => setIsEditThreadDialogOpen(true)}
+                  >
                     <PencilLine />
                   </Button>
                   <Button variant={"outline"} size={"icon"}>
@@ -83,6 +103,22 @@ export default function Thread() {
           </div>
         </div>
       </div>
+
+      <Dialog
+        open={isEditThreadDialogOpen}
+        onOpenChange={setIsEditThreadDialogOpen}
+      >
+        <DialogContent>
+          <div className="hidden">
+            <DialogTitle>New thread</DialogTitle>
+            <DialogDescription></DialogDescription>
+          </div>
+          <EditThreadDialogContent
+            setIsDialogOpen={setIsEditThreadDialogOpen}
+            id={data.id}
+          />
+        </DialogContent>
+      </Dialog>
     </>
   );
 }

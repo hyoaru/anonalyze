@@ -22,7 +22,7 @@ export default function useThreads() {
     mutationFn: (params: Parameters<typeof coreService.threads.store>[0]) =>
       coreService.threads.store(params),
     onSuccess: () => {
-      [["threads", "authenticated_user"]].forEach((queryKey) => {
+      [["threads"], ["threads", "authenticated_user"]].forEach((queryKey) => {
         queryClient.invalidateQueries({
           queryKey: queryKey,
           refetchType: "all",
@@ -34,8 +34,12 @@ export default function useThreads() {
   const updateMutation = useMutation({
     mutationFn: (params: Parameters<typeof coreService.threads.update>[0]) =>
       coreService.threads.update(params),
-    onSuccess: () => {
-      [["threads", "authenticated_user"]].forEach((queryKey) => {
+    onSuccess: (response) => {
+      [
+        ["threads"],
+        ["threads", "authenticated_user"],
+        ["threads", { id: response.id }],
+      ].forEach((queryKey) => {
         queryClient.invalidateQueries({
           queryKey: queryKey,
           refetchType: "all",
@@ -47,8 +51,12 @@ export default function useThreads() {
   const destroyMutation = useMutation({
     mutationFn: (params: Parameters<typeof coreService.threads.destroy>[0]) =>
       coreService.threads.destroy(params),
-    onSuccess: () => {
-      [["threads", "authenticated_user"]].forEach((queryKey) => {
+    onSuccess: (response) => {
+      [
+        ["threads"],
+        ["threads", "authenticated_user"],
+        ["threads", { id: response.id }],
+      ].forEach((queryKey) => {
         queryClient.invalidateQueries({
           queryKey: queryKey,
           refetchType: "all",

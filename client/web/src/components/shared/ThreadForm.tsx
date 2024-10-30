@@ -9,8 +9,8 @@ import { FormError } from "@/components/shared/FormError";
 import FieldInfo from "@/components/shared/FieldInfo";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
 import { Thread } from "@/types/core-types";
+import { Textarea } from "../ui/textarea";
 
 type ThreadFormProps = {
   initialValues?: Thread;
@@ -61,7 +61,7 @@ export default function ThreadForm({
               children={(field) => (
                 <div className="grid gap-2">
                   <Label htmlFor={field.name}>Question</Label>
-                  <Input
+                  <Textarea
                     id={field.name}
                     name={field.name}
                     value={field.state.value}
