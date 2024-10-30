@@ -18,7 +18,7 @@ export default function ShareThreadDialogContent({
   const { getByIdQuery } = useThreads();
   const { data } = getByIdQuery({ id: id });
 
-  const url = `${location.origin}/threads/${id}`;
+  const url = `${location.origin}/threads/${id}/posts/new`;
 
   async function onCopyUrl() {
     await navigator.clipboard
