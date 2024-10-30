@@ -15,11 +15,15 @@ import { Textarea } from "@/components/ui/textarea";
 type ThreadFormProps = {
   initialValues?: Thread;
   onSubmit: (data: Record<string, any>) => Promise<Thread>;
+  isReadOnly?: boolean;
+  isDestructive?: boolean;
 };
 
 export default function ThreadForm({
   initialValues,
   onSubmit,
+  isReadOnly,
+  isDestructive,
 }: ThreadFormProps) {
   const [errorMap, setErrorMap] = useState<Record<string, string> | null>(null);
 
@@ -67,6 +71,7 @@ export default function ThreadForm({
                     value={field.state.value}
                     onBlur={field.handleBlur}
                     onChange={(e) => field.handleChange(e.target.value)}
+                    readOnly={isReadOnly}
                   />
                   <FieldInfo field={field} />
                 </div>
@@ -78,7 +83,11 @@ export default function ThreadForm({
           <form.Subscribe
             selector={(state) => [state.canSubmit, state.isSubmitting]}
             children={([canSubmit, isSubmitting]) => (
-              <Button type="submit" disabled={!canSubmit}>
+              <Button
+                variant={isDestructive ? "destructive" : "default"}
+                type="submit"
+                disabled={!canSubmit}
+              >
                 {isSubmitting ? "..." : "Submit"}
               </Button>
             )}

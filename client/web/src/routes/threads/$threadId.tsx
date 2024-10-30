@@ -3,7 +3,8 @@ import { PencilLine, Settings, Share2, Trash } from "lucide-react";
 import { createFileRoute, notFound } from "@tanstack/react-router";
 
 // App imports
-import EditThreadDialogContent from "@/components/shared/thread/EditThreadDialogContent.tsx";
+import DeleteThreadDialogContent from "@/components/shared/thread/DeleteThreadDialogContent";
+import EditThreadDialogContent from "@/components/shared/thread/EditThreadDialogContent";
 import ThreadAnalyticMetricGroup from "@/components/threads/ThreadAnalyticMetricGroup";
 import ThreadAnalyticWordCloud from "@/components/threads/ThreadAnalyticWordCloud";
 import LoadingComponent from "@/components/defaults/LoadingComponent";
@@ -20,6 +21,7 @@ import {
   DialogDescription,
   DialogTitle,
 } from "@/components/ui/dialog";
+
 
 export const Route = createFileRoute("/threads/$threadId")({
   component: Thread,
@@ -72,7 +74,13 @@ export default function Thread() {
                   >
                     <PencilLine />
                   </Button>
-                  <Button variant={"outline"} size={"icon"}>
+                  <Button
+                    variant={"outline"}
+                    size={"icon"}
+                    onClick={() =>
+                      setisDeleteThreadConfirmationDialogOpen(true)
+                    }
+                  >
                     <Trash />
                   </Button>
                   <Button variant={"outline"} size={"icon"}>
@@ -105,12 +113,28 @@ export default function Thread() {
       </div>
 
       <Dialog
+        open={isDeleteThreadConfirmationDialogOpen}
+        onOpenChange={setisDeleteThreadConfirmationDialogOpen}
+      >
+        <DialogContent>
+          <div className="hidden">
+            <DialogTitle>Delete thread</DialogTitle>
+            <DialogDescription></DialogDescription>
+          </div>
+          <DeleteThreadDialogContent
+            setIsDialogOpen={setIsEditThreadDialogOpen}
+            id={data.id}
+          />
+        </DialogContent>
+      </Dialog>
+
+      <Dialog
         open={isEditThreadDialogOpen}
         onOpenChange={setIsEditThreadDialogOpen}
       >
         <DialogContent>
           <div className="hidden">
-            <DialogTitle>New thread</DialogTitle>
+            <DialogTitle>Edit thread</DialogTitle>
             <DialogDescription></DialogDescription>
           </div>
           <EditThreadDialogContent

@@ -21,7 +21,7 @@ export default function EditThreadDialogContent({
     return await updateMutation
       .mutateAsync({ question: data.question, id: id })
       .then((response) => {
-        toast.success("Sucessfully created edit thread");
+        toast.success("Sucessfully edited the thread");
         setIsDialogOpen?.(false);
         return response;
       })
