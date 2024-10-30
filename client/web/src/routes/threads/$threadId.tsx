@@ -51,14 +51,14 @@ export default function Thread() {
       <div className="">
         <div id="thread-header">
           <div className="flex items-center">
-            <div className="me-auto flex flex-col gap-1 pe-8">
+            <div className="me-auto flex flex-col gap-1 pe-0 sm:pe-8">
               <p className="text-sm sm:text-base">Thread question</p>
               <p className="text-2xl font-bold sm:text-3xl">{data.question}</p>
             </div>
             <div className="flex flex-col gap-2 self-start">
               <Popover>
                 <PopoverTrigger asChild>
-                  <Button variant={"outline"} size={"icon"}>
+                  <Button variant={"outline"} size={"icon"} className="z-[5]">
                     <Settings />
                   </Button>
                 </PopoverTrigger>

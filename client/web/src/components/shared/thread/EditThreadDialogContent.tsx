@@ -33,11 +33,13 @@ export default function EditThreadDialogContent({
 
   return (
     <div className="h-full w-full p-2">
-      <p className="text-2xl font-bold">Edit thread</p>
-      <p className="text-sm">
-        Update the thread details to refine the discussion or share additional
-        insights. Complete the form below to make your changes.
-      </p>
+      <div className="grid gap-1">
+        <p className="text-2xl font-bold">Edit thread</p>
+        <p className="text-sm">
+          Update the thread details to refine the discussion or share additional
+          insights. Complete the form below to make your changes.
+        </p>
+      </div>
       <ThreadForm onSubmit={onSubmit} initialValues={threadQuery.data} />
     </div>
   );

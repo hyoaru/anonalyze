@@ -36,13 +36,15 @@ export default function DeleteThreadDialogContent({
 
   return (
     <div className="h-full w-full p-2">
-      <p className="text-2xl font-bold text-destructive">
-        Are you absolutely sure?
-      </p>
-      <p className="text-sm">
-        This action cannot be undone. This will permanently delete your thread
-        and remove it from our servers.
-      </p>
+      <div className="grid gap-1">
+        <p className="text-2xl font-bold text-destructive">
+          Delete thread
+        </p>
+        <p className="text-sm">
+          This action cannot be undone. This will permanently delete your thread
+          and remove it from our servers.
+        </p>
+      </div>
       <ThreadForm
         onSubmit={onSubmit}
         initialValues={threadQuery.data}

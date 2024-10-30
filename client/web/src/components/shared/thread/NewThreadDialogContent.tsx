@@ -26,11 +26,13 @@ export default function NewThreadDialogContent({setIsDialogOpen}: NewThreadDialo
 
   return (
     <div className="h-full w-full p-2">
-      <p className="text-2xl font-bold">Create new thread</p>
-      <p className="text-sm">
-        Share your thoughts or start a new discussion by creating a thread. Fill
-        in the details below to get started.
-      </p>
+      <div className="grid gap-1">
+        <p className="text-2xl font-bold">Create new thread</p>
+        <p className="text-sm">
+          Share your thoughts or start a new discussion by creating a thread. Fill
+          in the details below to get started.
+        </p>
+      </div>
       <ThreadForm onSubmit={onSubmit} />
     </div>
   );

@@ -57,12 +57,15 @@ export default function Header() {
             <>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant={"secondary"}>
-                    <span className="hidden sm:block">
-                      {authState.authenticatedUser.email}
-                    </span>
-                    <Menu className="sm:hidden" />
-                  </Button>
+                  <div className="">
+                    <Button variant={"secondary"} className="hidden sm:block">
+                        {authState.authenticatedUser.email}
+                    </Button>
+
+                    <Button variant={"secondary"} size={'icon'} className="sm:hidden" >
+                      <Menu />
+                    </Button>
+                  </div>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" side="bottom">
                   <DropdownMenuItem>

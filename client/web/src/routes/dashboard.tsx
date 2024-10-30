@@ -3,17 +3,18 @@ import { CirclePlus, LoaderCircle } from "lucide-react";
 import { useState } from "react";
 
 // App imports
+import NewThreadDialogContent from "@/components/shared/thread/NewThreadDialogContent";
+import ThreadTile from "@/components/shared/thread/ThreadTile";
+import { Skeleton } from "@/components/ui/skeleton";
+import useThreads from "@/hooks/core/useThreads";
 import { Button } from "@/components/ui/button";
+
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogTitle,
 } from "@/components/ui/dialog";
-import NewThreadDialogContent from "@/components/shared/thread/NewThreadDialogContent";
-import useThreads from "@/hooks/core/useThreads";
-import ThreadTile from "@/components/shared/thread/ThreadTile";
-import { Skeleton } from "@/components/ui/skeleton";
 
 export const Route = createFileRoute("/dashboard")({
   beforeLoad: async ({ context }) => {
@@ -44,6 +45,7 @@ export default function Dashboard() {
             <p className="text-2xl font-bold sm:text-3xl">Your threads</p>
           </div>
           <Button
+            variant={"main-accent"}
             onClick={() => setIsNewThreadDialogOpen(true)}
             className="rounded-full bg-background p-0 text-main-accent shadow-none sm:rounded-md sm:bg-main-accent sm:p-4 sm:text-main-accent-foreground sm:shadow-sm [&_svg]:size-9 [&_svg]:shrink sm:[&_svg]:size-4 sm:[&_svg]:shrink-0"
           >
