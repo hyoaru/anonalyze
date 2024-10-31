@@ -2,6 +2,7 @@ services:
   api_ml_flask:
     build: ./api/ml-api
     container_name: anonalyze_api_ml
+    restart: unless-stopped
     volumes:
       - ./api/ml-api:/app
     ports:
@@ -50,6 +51,7 @@ services:
   database_mysql:
     image: mysql:8
     container_name: anonalyze_database_mysql
+    restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
       MSQL_TCP_PORT: 3306
