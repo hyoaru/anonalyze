@@ -20,7 +20,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
       MYSQL_DATABASE: ${DB_DATABASE}
-      MSQL_TCP_PORT: 3306
+      MYSQL_TCP_PORT: 3306
     volumes:  
       - database_volume_mysql:/var/lib/mysql
     ports:

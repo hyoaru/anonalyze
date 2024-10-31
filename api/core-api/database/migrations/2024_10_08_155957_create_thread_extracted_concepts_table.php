@@ -13,10 +13,15 @@ return new class extends Migration
     {
         Schema::create('thread_extracted_concepts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('thread_extracted_concept_group_id')->constrained('thread_extracted_concept_groups')->onDelete('cascade');
+            $table->unsignedBigInteger('thread_extracted_concept_group_id');
             $table->string('concept');
             $table->float('significance_score');
             $table->timestamps();
+
+            $table->foreign('thread_extracted_concept_group_id', 'thread_extracted_concept_group_id_fk')
+                ->references('id')
+                ->on('thread_extracted_concept_groups')
+                ->onDelete('cascade');
         });
     }
 
