@@ -6,6 +6,8 @@ services:
       - ./api/ml-api:/app
     ports:
       - 8000:8000
+    expose:
+      - 8000
 
   database:
     image: mysql:8
