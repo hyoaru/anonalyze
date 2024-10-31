@@ -1,14 +1,31 @@
 services:
-  api_ml_flask:
-    build: ./api/ml-api
-    container_name: anonalyze_api_ml
+  web_server_nginx:
+    image: nginx:alpine
+    container_name: anonalyze_web_server_nginx
     restart: unless-stopped
     volumes:
-      - ./api/ml-api:/app
+      - ./api/core-api:/var/www
+      - ./.docker/nginx/conf:/etc/nginx/conf.d
+    depends_on:
+      - api_core_laravel
     ports:
-      - 8000:8000
+      - 8001:80
+    networks:
+      - network
+
+  database_mysql:
+    image: mysql:8
+    container_name: anonalyze_database_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MSQL_TCP_PORT: 3306
+    volumes:  
+      - database_volume_mysql:/var/lib/mysql
+    ports:
+      - 3306:3306
     expose:
-      - 8000
+      - 3306
     networks:
       - network
 
@@ -34,35 +51,18 @@ services:
     networks:
       - network
 
-  web_server_nginx:
-    image: nginx:alpine
-    container_name: anonalyze_web_server_nginx
+  api_ml_flask:
+    build: ./api/ml-api
+    container_name: anonalyze_api_ml
     restart: unless-stopped
     volumes:
-      - ./api/core-api:/var/www
-      - ./.docker/nginx/conf:/etc/nginx/conf.d
-    depends_on:
-      - api_core_laravel
+      - ./api/ml-api:/app
     ports:
-      - 8001:80
-    networks:
-      - network    
-
-  database_mysql:
-    image: mysql:8
-    container_name: anonalyze_database_mysql
-    restart: unless-stopped
-    environment:
-      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
-      MSQL_TCP_PORT: 3306
-    volumes:  
-      - database_volume_mysql:/var/lib/mysql
-    ports:
-      - 3306:3306
+      - 8000:8000
     expose:
-      - 3306
+      - 8000
     networks:
-      - network
+      - network  
 
 networks:
   network:
