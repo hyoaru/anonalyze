@@ -1,7 +1,7 @@
 services:
   web_server_nginx:
     image: nginx:alpine
-    container_name: anonalyze_web_server_nginx
+    container_name: anonalyze_web_server
     restart: unless-stopped
     volumes:
       - ./api/core-api:/var/www
@@ -15,10 +15,11 @@ services:
 
   database_mysql:
     image: mysql:8
-    container_name: anonalyze_database_mysql
+    container_name: anonalyze_database
     restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
       MSQL_TCP_PORT: 3306
     volumes:  
       - database_volume_mysql:/var/lib/mysql
@@ -38,6 +39,7 @@ services:
       dockerfile: Dockerfile
     container_name: anonalyze_api_core
     restart: unless-stopped 
+    working_dir: /var/www
     volumes:
       - ./api/core-api:/var/www
       - ./.docker/php/local.ini:/usr/local/etc/php/local.ini
