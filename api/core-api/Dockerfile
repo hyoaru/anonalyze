@@ -1,33 +1,40 @@
-FROM php:8.2-apache
+# Use the official PHP 8.3 FPM image as the base image
+FROM php:8.3-fpm
 
+# Define build arguments for user and user ID
+ARG user
+ARG uid
+
+# Install necessary packages and dependencies
 RUN apt-get update && apt-get install -y \
-    build-essential \
+    git \
+    curl \
     libpng-dev \
-    libjpeg-dev \
-    libfreetype6-dev \
     libonig-dev \
     libxml2-dev \
     zip \
-    curl \
-    unzip \
-    git \
-    sqlite3 \
-    libsqlite3-dev
+    unzip
 
-RUN docker-php-ext-install pdo pdo_mysql mbstring exif pcntl bcmath gd
+# Clean up the apt cache to reduce image size
+RUN apt-get clean
 
-RUN a2enmod rewrite
+# Install PHP extensions required for the application
+RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
 
-WORKDIR /var/www/html
+# Copy the Composer binary from the Composer image
+COPY --from=composer:2.8 /usr/bin/composer /usr/bin/composer
 
-COPY . .
+# Create a new user with the specified UID and set the default shell to bash
+RUN useradd -u $uid -ms /bin/bash -g www-data $user
 
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+# Copy the application source code into the container
+COPY . /var/www
 
-RUN composer install
+# Change ownership of the copied files to the specified user and the www-data group
+COPY --chown=$user:www-data . /var/www
 
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+# Switch to the newly created user
+USER $user
 
-EXPOSE 80
-
-CMD ["apache2-foreground"]
+# Command to run PHP-FPM when the container starts
+CMD ["php-fpm"]

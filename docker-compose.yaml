@@ -1,5 +1,5 @@
 services:
-  flask-ml-api:
+  api_ml_flask:
     build: ./api/ml-api
     container_name: anonalyze_api_ml
     volumes:
@@ -8,19 +8,63 @@ services:
       - 8000:8000
     expose:
       - 8000
+    networks:
+      - network
 
-  database:
+  api_core_laravel:
+    build: 
+      args:
+        user: admin
+        uid: 1000
+      context: ./api/core-api
+      dockerfile: Dockerfile
+    container_name: anonalyze_api_core
+    restart: unless-stopped 
+    volumes:
+      - ./api/core-api:/var/www
+      - ./.docker/php/local.ini:/usr/local/etc/php/local.ini
+    depends_on:
+      - api_ml_flask
+      - database_mysql
+    ports:
+      - 9000:9000
+    expose: 
+      - 9000
+    networks:
+      - network
+
+  web_server_nginx:
+    image: nginx:alpine
+    container_name: anonalyze_web_server_nginx
+    restart: unless-stopped
+    volumes:
+      - ./api/core-api:/var/www
+      - ./.docker/nginx/conf:/etc/nginx/conf.d
+    depends_on:
+      - api_core_laravel
+    ports:
+      - 8001:80
+    networks:
+      - network    
+
+  database_mysql:
     image: mysql:8
     container_name: anonalyze_database_mysql
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
       MSQL_TCP_PORT: 3306
     volumes:  
-      - database-data-mysql:/var/lib/mysql
+      - database_volume_mysql:/var/lib/mysql
     ports:
       - 3306:3306
     expose:
       - 3306
+    networks:
+      - network
+
+networks:
+  network:
+    driver: bridge
 
 volumes:
-  database-data-mysql:
+  database_volume_mysql:
