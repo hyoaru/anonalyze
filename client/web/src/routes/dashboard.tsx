@@ -55,30 +55,40 @@ export default function Dashboard() {
         </div>
 
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {isLoading && <ThreadTileSkeleton length={12} />}
-          {data?.length ? (
-            data.map((thread, index) => {
-              const threadNumber = data?.length - index;
-
-              return (
-                <ThreadTile
-                  key={`thread-${thread.id}`}
-                  thread={thread}
-                  threadNumber={threadNumber}
-                />
-              );
-            })
+          {isLoading ? (
+            <ThreadTileSkeleton length={12} />
           ) : (
             <>
-              <div className="absolute inset-0 col-span-full flex w-full items-center justify-center flex-col pointer-events-none">
-                <Binoculars size={200} />
-                <p className="text-2xl font-semibold mt-4">
-                  No threads yet
-                </p>
-                <Button size={'sm'} variant={'link'} className="p-0 h-max pointer-events-auto" onClick={() => setIsNewThreadDialogOpen(true)}>
-                  <p className="text-sm">Create new thread</p>
-                </Button>
-              </div>
+              {data?.length ? (
+                data.map((thread, index) => {
+                  const threadNumber = data?.length - index;
+
+                  return (
+                    <ThreadTile
+                      key={`thread-${thread.id}`}
+                      thread={thread}
+                      threadNumber={threadNumber}
+                    />
+                  );
+                })
+              ) : (
+                <>
+                  <div className="pointer-events-none absolute inset-0 col-span-full flex w-full flex-col items-center justify-center">
+                    <Binoculars size={200} />
+                    <p className="mt-4 text-2xl font-semibold">
+                      No threads yet
+                    </p>
+                    <Button
+                      size={"sm"}
+                      variant={"link"}
+                      className="pointer-events-auto h-max p-0"
+                      onClick={() => setIsNewThreadDialogOpen(true)}
+                    >
+                      <p className="text-sm">Create new thread</p>
+                    </Button>
+                  </div>
+                </>
+              )}
             </>
           )}
         </div>
