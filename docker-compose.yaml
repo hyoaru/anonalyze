@@ -2,7 +2,6 @@ services:
   web_server_nginx:
     image: nginx:alpine
     container_name: anonalyze_web_server
-    restart: unless-stopped
     volumes:
       - ./api/core-api:/var/www
       - ./.docker/nginx/conf:/etc/nginx/conf.d
@@ -16,7 +15,6 @@ services:
   database_mysql:
     image: mysql:8
     container_name: anonalyze_database
-    restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
       MYSQL_DATABASE: ${DB_DATABASE}
@@ -38,7 +36,6 @@ services:
       context: ./api/core-api
       dockerfile: Dockerfile
     container_name: anonalyze_api_core
-    restart: unless-stopped 
     working_dir: /var/www
     volumes:
       - ./api/core-api:/var/www
@@ -56,7 +53,6 @@ services:
   api_ml_flask:
     build: ./api/ml-api
     container_name: anonalyze_api_ml
-    restart: unless-stopped
     volumes:
       - ./api/ml-api:/app
     ports:
