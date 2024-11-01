@@ -50,11 +50,13 @@ export type Posts = {
     GetById: paths["/api/posts/{id}"]["get"]["parameters"]["path"];
     Store: paths["/api/posts"]["post"]["requestBody"]["content"]["application/json"];
     Destroy: paths["/api/posts/{id}"]["delete"]["parameters"]["path"];
+    GetByThreadId: paths["/api/posts/by-thread-id"]["post"]["requestBody"]["content"]["application/json"];
   };
   Response: {
     GetById: paths["/api/posts/{id}"]["get"]["responses"]["200"]['content']['application/json'];
     Store: paths["/api/posts"]["post"]["responses"]['201']['content']['application/json']
     Destroy: paths["/api/posts/{id}"]["delete"]["responses"]["200"]['content']['application/json'];
+    GetByThreadId: paths["/api/posts/by-thread-id"]["post"]["responses"]["200"]['content']['application/json'];
   }
 };
 

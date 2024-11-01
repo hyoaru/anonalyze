@@ -577,6 +577,47 @@
                 ]
             }
         },
+        "/api/posts/by-thread-id": {
+            "post": {
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "Retrieve posts by thread ID",
+                "description": "Get all posts associated with a given thread ID along with analytics, sentiment, and emotion data",
+                "operationId": "5b89225848f03c92bb956d0a9bb8c9d2",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/GetPostsByThreadIdRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful retrieval of posts for the specified thread",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Post"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Thread or posts not found"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                }
+            }
+        },
         "/api/sentiments": {
             "get": {
                 "tags": [
@@ -1199,6 +1240,18 @@
                     "updated_at": {
                         "type": "string",
                         "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "GetPostsByThreadIdRequest": {
+                "required": [
+                    "thread_id"
+                ],
+                "properties": {
+                    "thread_id": {
+                        "description": "The unique identifier of the associated thread",
+                        "type": "integer"
                     }
                 },
                 "type": "object"

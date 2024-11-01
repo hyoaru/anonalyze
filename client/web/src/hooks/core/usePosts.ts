@@ -12,6 +12,14 @@ export default function usePosts() {
       queryKey: ["posts", { id: params.id }],
     });
 
+  const getByThreadIdQuery = (
+    params: Parameters<typeof coreService.posts.getByThreadId>[0],
+  ) =>
+    useQuery({
+      queryFn: () => coreService.posts.getByThreadId(params),
+      queryKey: ["posts", { thread_id: params.thread_id }],
+    });
+
   const storeMutation = useMutation({
     mutationFn: (params: Parameters<typeof coreService.posts.store>[0]) =>
       coreService.posts.store(params),
@@ -44,6 +52,7 @@ export default function usePosts() {
 
   return {
     getByIdQuery,
+    getByThreadIdQuery,
     storeMutation,
     destroyMutation,
   };

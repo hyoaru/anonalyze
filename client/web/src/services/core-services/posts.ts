@@ -22,6 +22,22 @@ export const posts = {
   },
 
   /**
+   * Fetch a posts by its thread id .
+   * @param {Posts["Request"]["GetById"]} params - An object containing the thread id.
+   * @returns {Promise<Posts["Response"]["GetById"]>} - A promise that resolves to the list of post data.
+   */
+  getByThreadId: async (
+    params: Posts["Request"]["GetByThreadId"],
+  ): Promise<Posts["Response"]["GetByThreadId"]> => {
+    const endPoint: keyof paths = `/api/posts/by-thread-id`
+    return await axiosInstance
+      .post<Posts["Response"]["GetByThreadId"]>(endPoint, params)
+      .then((response) => {
+        return response.data;
+      });
+  },
+
+  /**
    * Store a new post.
    * @param {Posts["Request"]["Store"]} params - The parameters required to create a new post.
    * @returns {Promise<Posts["Response"]["Store"]>} - A promise that resolves to the created post data.

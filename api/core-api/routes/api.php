@@ -36,4 +36,5 @@ Route::apiResource('thread-summaries', ThreadSummaryController::class)->only(['s
 Route::apiResource('thread-analytics', ThreadAnalyticController::class)->only(['show']);
 
 Route::apiResource('posts', PostController::class)->only(['store', 'show', 'destroy']);
+Route::post('/posts/by-thread-id', [PostController::class, 'getPostsByThreadId']);
 Route::apiResource('post-analytics', PostAnalyticController::class)->only(['show']);

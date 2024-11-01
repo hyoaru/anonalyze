@@ -268,6 +268,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/posts/by-thread-id": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Retrieve posts by thread ID
+         * @description Get all posts associated with a given thread ID along with analytics, sentiment, and emotion data
+         */
+        post: operations["5b89225848f03c92bb956d0a9bb8c9d2"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/sentiments": {
         parameters: {
             query?: never;
@@ -497,6 +517,10 @@ export interface components {
             created_at: string;
             /** Format: date-time */
             updated_at: string;
+        };
+        GetPostsByThreadIdRequest: {
+            /** @description The unique identifier of the associated thread */
+            thread_id: number;
         };
         /** Post */
         Post: {
@@ -1248,6 +1272,44 @@ export interface operations {
                 content?: never;
             };
             /** @description Post not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    "5b89225848f03c92bb956d0a9bb8c9d2": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["GetPostsByThreadIdRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful retrieval of posts for the specified thread */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Post"][];
+                };
+            };
+            /** @description Thread or posts not found */
             404: {
                 headers: {
                     [name: string]: unknown;

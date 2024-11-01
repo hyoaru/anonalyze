@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Posts;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Posts\Post\GetPostsByThreadIdRequest;
 use App\Http\Requests\Posts\Post\StorePostRequest;
 use App\Http\Requests\Posts\Post\UpdatePostRequest;
 use App\Models\Posts\Post;
@@ -21,7 +22,8 @@ class PostController extends Controller implements HasMiddleware
     {
         return [
             new Middleware('auth:sanctum', only: [
-                'destroy'
+                'destroy',
+                'getPostsByThreadId'
             ])
         ];
     }
@@ -171,6 +173,49 @@ class PostController extends Controller implements HasMiddleware
             'postAnalytic.postPredictedEmotion',
             'postAnalytic.postPredictedEmotion.emotion',
         ]);
+
+        return response()->json($data, 200);
+    }
+
+
+    /**
+     * @OA\Post(
+     *     path="/api/posts/by-thread-id",
+     *     tags={"Posts"},
+     *     summary="Retrieve posts by thread ID",
+     *     description="Get all posts associated with a given thread ID along with analytics, sentiment, and emotion data",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(ref="#/components/schemas/GetPostsByThreadIdRequest")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful retrieval of posts for the specified thread",
+     *         @OA\JsonContent(type="array", @OA\Items(ref="#/components/schemas/Post"))
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Thread or posts not found"
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Server error"
+     *     )
+     * )
+     */
+    public function getPostsByThreadId(GetPostsByThreadIdRequest $request)
+    {
+        $threadId = $request->validated()['thread_id'];
+        $this->authorize('getPostsByThreadId', [Post::class, $threadId]);
+        $data = Post::where('thread_id', $threadId)
+            ->with([
+                'postAnalytic',
+                'postAnalytic.postPredictedSentiment',
+                'postAnalytic.postPredictedSentiment.sentiment',
+                'postAnalytic.postPredictedEmotion',
+                'postAnalytic.postPredictedEmotion.emotion',
+            ])
+            ->get();
 
         return response()->json($data, 200);
     }

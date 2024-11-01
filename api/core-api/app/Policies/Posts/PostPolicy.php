@@ -3,9 +3,9 @@
 namespace App\Policies\Posts;
 
 use App\Models\Posts\Post;
+use App\Models\Threads\Thread;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Illuminate\Auth\Access\Response;
 
 class PostPolicy
 {
@@ -65,5 +65,10 @@ class PostPolicy
     public function forceDelete(User $user, Post $post): bool
     {
         return $user->id === $post->thread->user->id;
+    }
+
+    public function getPostsByThreadId(User $user, int $threadId): bool {
+        $thread = Thread::find($threadId);
+        return $thread && $user->id === $thread->user_id;
     }
 }
