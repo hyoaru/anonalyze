@@ -6,6 +6,9 @@ import { Skeleton } from "@/components/ui/skeleton";
 import usePosts from "@/hooks/core/usePosts";
 import useThreads from "@/hooks/core/useThreads";
 import { default as DefaultLoadingComponent } from "@/components/defaults/LoadingComponent";
+import { ArrowLeft } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Link } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/threads/$threadId_/posts")({
   beforeLoad: async ({ context }) => {
@@ -38,7 +41,7 @@ function ThreadPosts() {
       <div className="">
         <div
           id="thread-posts-header"
-          className="flex items-center justify-between"
+          className="flex items-center justify-between gap-2"
         >
           <div className="">
             <p className="text-sm sm:text-base">Thread question</p>
@@ -46,8 +49,20 @@ function ThreadPosts() {
               {threadQuery.data?.question}
             </p>
           </div>
+          <Link
+            to="/threads/$threadId"
+            params={{ threadId: pathParams.threadId }}
+          >
+            <Button
+              variant={"main-accent"}
+              className="rounded-full bg-background p-0 text-main-accent shadow-none sm:rounded-md sm:bg-main-accent sm:p-4 sm:text-main-accent-foreground sm:shadow-sm [&_svg]:size-9 [&_svg]:shrink sm:[&_svg]:size-4 sm:[&_svg]:shrink-0"
+            >
+              <ArrowLeft />
+              <span className="hidden sm:block">Overview</span>
+            </Button>
+          </Link>
         </div>
-        <div className="mt-8 columns-3 space-y-4">
+        <div className="mt-8 columns-1 space-y-4 sm:columns-2 lg:columns-3">
           {postsQuery.isLoading ? (
             <LoadingComponent />
           ) : (
