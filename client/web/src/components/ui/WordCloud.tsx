@@ -19,7 +19,7 @@ type Props = {
 const MAX_FONT_SIZE = 80;
 const MIN_FONT_SIZE = 30;
 const MAX_FONT_WEIGHT = 700;
-const MIN_FONT_WEIGHT = 700;
+const MIN_FONT_WEIGHT = 400;
 const MAX_WORDS = 150;
 
 export const WordCloudComponent = forwardRef<HTMLDivElement, Props>(
@@ -60,13 +60,17 @@ export const WordCloudComponent = forwardRef<HTMLDivElement, Props>(
     );
 
     const calculateColor = (value: number) => {
-      // const normalizedValue = (value - minOccurences) / (maxOccurences - minOccurences);
-      // const red = Math.round(255 - normalizedValue * (255 - 128));
-      // const green = Math.round(165 - normalizedValue * (165 - 128));
-      // const blue = Math.round(0 + normalizedValue * 128);
-      // return `rgb(${red}, ${green}, ${blue})`;
+      const normalizedValue = (value - minOccurences) / (maxOccurences - minOccurences);
+      const baseRed = 255;
+      const baseGreen = 91;
+      const baseBlue = 26;
 
-      return "#ff5b1a";
+      const red = Math.round(baseRed - normalizedValue * (baseRed - 128));
+      const green = Math.round(baseGreen - normalizedValue * (baseGreen - 50));
+      const blue = Math.round(baseBlue + normalizedValue * (50 - baseBlue));
+      return `rgb(${red}, ${green}, ${blue})`;
+
+      // return "#ff5b1a";
     };
 
     return (
