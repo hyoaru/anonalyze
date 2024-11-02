@@ -17,6 +17,7 @@ import { Route as ThreadsThreadIdImport } from './routes/threads/$threadId'
 import { Route as AuthenticationSignUpImport } from './routes/authentication/sign-up'
 import { Route as AuthenticationSignInImport } from './routes/authentication/sign-in'
 import { Route as AuthenticationForgotPasswordImport } from './routes/authentication/forgot-password'
+import { Route as ThreadsThreadIdPostsImport } from './routes/threads/$threadId_.posts'
 import { Route as ThreadsThreadIdPostsNewImport } from './routes/threads/$threadId_.posts_.new'
 
 // Create/Update Routes
@@ -57,6 +58,12 @@ const AuthenticationForgotPasswordRoute =
     path: '/authentication/forgot-password',
     getParentRoute: () => rootRoute,
   } as any)
+
+const ThreadsThreadIdPostsRoute = ThreadsThreadIdPostsImport.update({
+  id: '/threads/$threadId_/posts',
+  path: '/threads/$threadId/posts',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const ThreadsThreadIdPostsNewRoute = ThreadsThreadIdPostsNewImport.update({
   id: '/threads/$threadId_/posts_/new',
@@ -110,6 +117,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ThreadsThreadIdImport
       parentRoute: typeof rootRoute
     }
+    '/threads/$threadId_/posts': {
+      id: '/threads/$threadId_/posts'
+      path: '/threads/$threadId/posts'
+      fullPath: '/threads/$threadId/posts'
+      preLoaderRoute: typeof ThreadsThreadIdPostsImport
+      parentRoute: typeof rootRoute
+    }
     '/threads/$threadId_/posts_/new': {
       id: '/threads/$threadId_/posts_/new'
       path: '/threads/$threadId/posts/new'
@@ -129,6 +143,7 @@ export interface FileRoutesByFullPath {
   '/authentication/sign-in': typeof AuthenticationSignInRoute
   '/authentication/sign-up': typeof AuthenticationSignUpRoute
   '/threads/$threadId': typeof ThreadsThreadIdRoute
+  '/threads/$threadId/posts': typeof ThreadsThreadIdPostsRoute
   '/threads/$threadId/posts/new': typeof ThreadsThreadIdPostsNewRoute
 }
 
@@ -139,6 +154,7 @@ export interface FileRoutesByTo {
   '/authentication/sign-in': typeof AuthenticationSignInRoute
   '/authentication/sign-up': typeof AuthenticationSignUpRoute
   '/threads/$threadId': typeof ThreadsThreadIdRoute
+  '/threads/$threadId/posts': typeof ThreadsThreadIdPostsRoute
   '/threads/$threadId/posts/new': typeof ThreadsThreadIdPostsNewRoute
 }
 
@@ -150,6 +166,7 @@ export interface FileRoutesById {
   '/authentication/sign-in': typeof AuthenticationSignInRoute
   '/authentication/sign-up': typeof AuthenticationSignUpRoute
   '/threads/$threadId': typeof ThreadsThreadIdRoute
+  '/threads/$threadId_/posts': typeof ThreadsThreadIdPostsRoute
   '/threads/$threadId_/posts_/new': typeof ThreadsThreadIdPostsNewRoute
 }
 
@@ -162,6 +179,7 @@ export interface FileRouteTypes {
     | '/authentication/sign-in'
     | '/authentication/sign-up'
     | '/threads/$threadId'
+    | '/threads/$threadId/posts'
     | '/threads/$threadId/posts/new'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -171,6 +189,7 @@ export interface FileRouteTypes {
     | '/authentication/sign-in'
     | '/authentication/sign-up'
     | '/threads/$threadId'
+    | '/threads/$threadId/posts'
     | '/threads/$threadId/posts/new'
   id:
     | '__root__'
@@ -180,6 +199,7 @@ export interface FileRouteTypes {
     | '/authentication/sign-in'
     | '/authentication/sign-up'
     | '/threads/$threadId'
+    | '/threads/$threadId_/posts'
     | '/threads/$threadId_/posts_/new'
   fileRoutesById: FileRoutesById
 }
@@ -191,6 +211,7 @@ export interface RootRouteChildren {
   AuthenticationSignInRoute: typeof AuthenticationSignInRoute
   AuthenticationSignUpRoute: typeof AuthenticationSignUpRoute
   ThreadsThreadIdRoute: typeof ThreadsThreadIdRoute
+  ThreadsThreadIdPostsRoute: typeof ThreadsThreadIdPostsRoute
   ThreadsThreadIdPostsNewRoute: typeof ThreadsThreadIdPostsNewRoute
 }
 
@@ -201,6 +222,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticationSignInRoute: AuthenticationSignInRoute,
   AuthenticationSignUpRoute: AuthenticationSignUpRoute,
   ThreadsThreadIdRoute: ThreadsThreadIdRoute,
+  ThreadsThreadIdPostsRoute: ThreadsThreadIdPostsRoute,
   ThreadsThreadIdPostsNewRoute: ThreadsThreadIdPostsNewRoute,
 }
 
@@ -222,6 +244,7 @@ export const routeTree = rootRoute
         "/authentication/sign-in",
         "/authentication/sign-up",
         "/threads/$threadId",
+        "/threads/$threadId_/posts",
         "/threads/$threadId_/posts_/new"
       ]
     },
@@ -242,6 +265,9 @@ export const routeTree = rootRoute
     },
     "/threads/$threadId": {
       "filePath": "threads/$threadId.tsx"
+    },
+    "/threads/$threadId_/posts": {
+      "filePath": "threads/$threadId_.posts.tsx"
     },
     "/threads/$threadId_/posts_/new": {
       "filePath": "threads/$threadId_.posts_.new.tsx"
