@@ -1,45 +1,117 @@
-import { formatDate } from "@/lib/utils";
-import { coreService } from "@/services/coreService";
 import { Link } from "@tanstack/react-router";
+import { cn, formatDate } from "@/lib/utils";
+import { ThreadExtractedConcept } from "@/types/core-types";
 
 type ThreadTileProps = {
-  thread: Awaited<
-    ReturnType<typeof coreService.threads.getAllByAuthenticatedUser>
-  >[number];
-  threadNumber: number;
+  classNames?: {
+    link?: string;
+    container?: string;
+  };
+  children: React.ReactNode;
+  threadId: number;
 };
 
-export default function ThreadTile({ thread, threadNumber }: ThreadTileProps) {
-  const threadAnalytic = thread?.thread_analytic;
-  const threadExtractedConceptGroup =
-    threadAnalytic?.thread_extracted_concept_group;
-  const threadConcepts = threadExtractedConceptGroup?.thread_extracted_concepts;
-  const threadConceptsFormatted = threadConcepts?.length
-    ? threadConcepts.slice(0,3)?.map((threadConcept) => threadConcept.concept).join(",")
-    : "No extracted concepts yet";
-  const threadCreatedAtFormatted = formatDate({ date: thread.created_at });
+type ThreadTileBodyProps = {
+  children: React.ReactNode;
+  className?: string;
+};
 
-  return (
-    <Link
-      className="group h-full"
-      to="/threads/$threadId"
-      params={{ threadId: thread.id.toString() }}
+type ThreadTileNumberProps = {
+  children: React.ReactNode;
+  className?: string;
+};
+
+type ThreadTileQuestionProps = {
+  children: React.ReactNode;
+  className?: string;
+};
+
+type ThreadTileFooterProps = {
+  children: React.ReactNode;
+  className?: string;
+};
+
+type ThreadTileExtractedConceptsProps = {
+  className?: string;
+  threadExtractedConcepts: ThreadExtractedConcept[];
+};
+
+type ThreadTileDateProps = {
+  className?: string;
+  createdAt: Date | string;
+};
+
+export const ThreadTile = ({
+  classNames,
+  children,
+  threadId,
+}: ThreadTileProps) => (
+  <Link
+    className={cn("group flex h-full break-inside-avoid w-full", classNames?.link)}
+    to="/threads/$threadId"
+    params={{ threadId: threadId.toString() }}
+  >
+    <div
+      className={cn(
+        "flex w-full h-full flex-col break-inside-avoid rounded-lg border bg-secondary p-6 transition-colors duration-200 ease-in-out group-hover:border-main-accent/20 dark:bg-secondary/60",
+        classNames?.container,
+      )}
     >
-      <div className="flex h-full flex-col rounded-lg border dark:bg-secondary/60 bg-secondary p-6 transition-colors duration-200 ease-in-out group-hover:border-main-accent/20">
-        <div className="mb-8 flex grow flex-col gap-1">
-          <p className="text-sm">Thread #{threadNumber}</p>
-          <p className="text-xl font-semibold transition-colors duration-200 ease-in-out group-hover:text-main-accent">
-            {thread.question}
-          </p>
-        </div>
+      {children}
+    </div>
+  </Link>
+);
 
-        <div className="flex flex-col gap-1">
-          <p className="text-sm">{threadConceptsFormatted}</p>
-          <p className="text-xs uppercase text-muted-foreground">
-            {threadCreatedAtFormatted}
-          </p>
-        </div>
-      </div>
-    </Link>
-  );
-}
+const ThreadTileBody = ({ children, className }: ThreadTileBodyProps) => (
+  <div className={cn("mb-8 flex grow flex-col gap-1", className)}>
+    {children}
+  </div>
+);
+
+const ThreadTileNumber = ({ children, className }: ThreadTileNumberProps) => (
+  <p className={cn("text-sm", className)}>Thread #{children}</p>
+);
+
+const ThreadTileQuestion = ({
+  className,
+  children,
+}: ThreadTileQuestionProps) => (
+  <p
+    className={cn(
+      "text-xl font-semibold transition-colors duration-200 ease-in-out group-hover:text-main-accent",
+      className,
+    )}
+  >
+    {children}
+  </p>
+);
+
+const ThreadTileFooter = ({ children, className }: ThreadTileFooterProps) => (
+  <div className={cn("flex flex-col gap-1", className)}>{children}</div>
+);
+
+const ThreadTileExtractedConcepts = ({
+  className,
+  threadExtractedConcepts,
+}: ThreadTileExtractedConceptsProps) => {
+  const threadConceptsFormatted = threadExtractedConcepts?.length
+    ? threadExtractedConcepts
+        .slice(0, 3)
+        ?.map((threadConcept) => threadConcept.concept)
+        .join(",")
+    : "No extracted concepts yet";
+  return <p className={cn("text-sm", className)}>{threadConceptsFormatted}</p>;
+};
+
+const ThreadTileDate = ({ createdAt, className }: ThreadTileDateProps) => (
+  <p className={cn("text-xs uppercase text-muted-foreground", className)}>
+    {formatDate({ date: createdAt })}
+  </p>
+);
+
+ThreadTile.Body = ThreadTileBody;
+ThreadTile.Number = ThreadTileNumber;
+ThreadTile.Question = ThreadTileQuestion;
+ThreadTile.Footer = ThreadTileFooter;
+ThreadTile.Concepts = ThreadTileExtractedConcepts;
+ThreadTile.Date = ThreadTileDate;

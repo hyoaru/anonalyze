@@ -4,7 +4,7 @@ import { useState } from "react";
 
 // App imports
 import NewThreadDialogContent from "@/components/shared/thread/NewThreadDialogContent";
-import ThreadTile from "@/components/shared/thread/ThreadTile";
+import { ThreadTile } from "@/components/shared/thread/ThreadTile";
 import { Skeleton } from "@/components/ui/skeleton";
 import useThreads from "@/hooks/core/useThreads";
 import { Button } from "@/components/ui/button";
@@ -36,10 +36,7 @@ export default function Dashboard() {
   return (
     <>
       <div className="">
-        <div
-          id="dashboard-header"
-          className="flex items-center gap-2"
-        >
+        <div id="dashboard-header" className="flex items-center gap-2">
           <div className="me-auto flex flex-col gap-1 pe-0 sm:pe-8">
             <p className="text-sm sm:text-base">Dashboard</p>
             <p className="text-2xl font-bold sm:text-3xl">Your threads</p>
@@ -54,7 +51,7 @@ export default function Dashboard() {
           </Button>
         </div>
 
-        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <div className="mt-8 columns-1 space-y-4 sm:columns-2 lg:columns-3">
           {isLoading ? (
             <ThreadTileSkeleton length={12} />
           ) : (
@@ -65,10 +62,26 @@ export default function Dashboard() {
 
                   return (
                     <ThreadTile
-                      key={`thread-${thread.id}`}
-                      thread={thread}
-                      threadNumber={threadNumber}
-                    />
+                      threadId={thread.id}
+                      key={`ThreadTile-${thread.id}`}
+                    >
+                      <ThreadTile.Body>
+                        <ThreadTile.Number>{threadNumber}</ThreadTile.Number>
+                        <ThreadTile.Question>
+                          {thread.question}
+                        </ThreadTile.Question>
+                      </ThreadTile.Body>
+                      <ThreadTile.Footer>
+                        <ThreadTile.Concepts
+                          threadExtractedConcepts={
+                            thread.thread_analytic
+                              ?.thread_extracted_concept_group
+                              ?.thread_extracted_concepts!
+                          }
+                        />
+                        <ThreadTile.Date createdAt={thread.created_at} />
+                      </ThreadTile.Footer>
+                    </ThreadTile>
                   );
                 })
               ) : (
