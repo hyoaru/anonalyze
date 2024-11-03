@@ -38,9 +38,9 @@ export default function Dashboard() {
       <div className="">
         <div
           id="dashboard-header"
-          className="flex items-center justify-between"
+          className="flex items-center gap-2"
         >
-          <div className="">
+          <div className="me-auto flex flex-col gap-1 pe-0 sm:pe-8">
             <p className="text-sm sm:text-base">Dashboard</p>
             <p className="text-2xl font-bold sm:text-3xl">Your threads</p>
           </div>

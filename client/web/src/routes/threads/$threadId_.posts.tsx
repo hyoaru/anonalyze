@@ -41,9 +41,9 @@ function ThreadPosts() {
       <div className="">
         <div
           id="thread-posts-header"
-          className="flex items-center justify-between gap-2"
+          className="flex items-center gap-2"
         >
-          <div className="">
+          <div className="me-auto flex flex-col gap-1 pe-0 sm:pe-8">
             <p className="text-sm sm:text-base">Thread question</p>
             <p className="text-2xl font-bold sm:text-3xl">
               {threadQuery.data?.question}
