@@ -24,14 +24,19 @@ export default function usePosts() {
     mutationFn: (params: Parameters<typeof coreService.posts.store>[0]) =>
       coreService.posts.store(params),
     onSuccess: (post) => {
-      [["posts"], ["threads"], ["posts", { id: post.id }]].forEach(
-        (queryKey) => {
-          queryClient.invalidateQueries({
-            queryKey: queryKey,
-            refetchType: "all",
-          });
-        },
-      );
+      [
+        ["posts"],
+        ["thread_analytics", { id: post.post_analytic?.id }],
+        ["thread_analytic_metrics", { thread_id: post.thread_id }],
+        ["threads", { id: post.thread_id }],
+        ["posts", { thread_id: post.thread_id }],
+        ["posts", { id: post.id }],
+      ].forEach((queryKey) => {
+        queryClient.invalidateQueries({
+          queryKey: queryKey,
+          refetchType: "all",
+        });
+      });
     },
   });
 
@@ -39,14 +44,19 @@ export default function usePosts() {
     mutationFn: (params: Parameters<typeof coreService.posts.destroy>[0]) =>
       coreService.posts.destroy(params),
     onSuccess: (post) => {
-      [["posts"], ["threads"], ["posts", { id: post.id }]].forEach(
-        (queryKey) => {
-          queryClient.invalidateQueries({
-            queryKey: queryKey,
-            refetchType: "all",
-          });
-        },
-      );
+      [
+        ["posts"],
+        ["thread_analytics", { id: post.post_analytic?.id }],
+        ["thread_analytic_metrics", { thread_id: post.thread_id }],
+        ["threads", { id: post.thread_id }],
+        ["posts", { thread_id: post.thread_id }],
+        ["posts", { id: post.id }],
+      ].forEach((queryKey) => {
+        queryClient.invalidateQueries({
+          queryKey: queryKey,
+          refetchType: "all",
+        });
+      });
     },
   });
 
