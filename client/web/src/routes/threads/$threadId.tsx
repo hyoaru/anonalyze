@@ -3,11 +3,13 @@ import { PencilLine, Settings, Share2, Trash } from "lucide-react";
 import { createFileRoute, notFound } from "@tanstack/react-router";
 
 // App imports
+import ShareThreadDialogContent from "@/components/shared/thread/ShareThreadDialogContent";
 import DeleteThreadDialogContent from "@/components/shared/thread/DeleteThreadDialogContent";
 import EditThreadDialogContent from "@/components/shared/thread/EditThreadDialogContent";
 import ThreadAnalyticMetricGroup from "@/components/threads/ThreadAnalyticMetricGroup";
 import ThreadAnalyticWordCloud from "@/components/threads/ThreadAnalyticWordCloud";
 import LoadingComponent from "@/components/defaults/LoadingComponent";
+import { useAuthStateContext } from "@/context/AuthStateContext";
 import { Button } from "@/components/ui/button";
 import useThreads from "@/hooks/core/useThreads";
 import {
@@ -16,21 +18,32 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogTitle,
 } from "@/components/ui/dialog";
-import ShareThreadDialogContent from "@/components/shared/thread/ShareThreadDialogContent";
-import { useAuthStateContext } from "@/context/AuthStateContext";
 
 export const Route = createFileRoute("/threads/$threadId")({
   component: Thread,
 });
 
+type ThreadSettingsControlsProps = {
+  setIsEditThreadDialogOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setisShareThreadDialogOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setisDeleteThreadConfirmationDialogOpen: React.Dispatch<
+    React.SetStateAction<boolean>
+  >;
+};
+
 export default function Thread() {
   const pathParams = Route.useParams();
-  const { authenticatedUser } = useAuthStateContext();
   const { getByIdQuery } = useThreads();
   const { data, isLoading, error } = getByIdQuery({
     id: Number(pathParams.threadId),
@@ -57,54 +70,13 @@ export default function Thread() {
               <p className="text-sm sm:text-base">Thread question</p>
               <p className="text-2xl font-bold sm:text-3xl">{data.question}</p>
             </div>
-            <div className="flex flex-col gap-2 self-start">
-              {authenticatedUser ? (
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button variant={"outline"} size={"icon"} className="z-[5]">
-                      <Settings />
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent
-                    side="bottom"
-                    align="center"
-                    className="flex w-max flex-col gap-1 border-none bg-transparent p-0 shadow-none"
-                  >
-                    <Button
-                      variant={"outline"}
-                      size={"icon"}
-                      onClick={() => setIsEditThreadDialogOpen(true)}
-                    >
-                      <PencilLine />
-                    </Button>
-                    <Button
-                      variant={"outline"}
-                      size={"icon"}
-                      onClick={() =>
-                        setisDeleteThreadConfirmationDialogOpen(true)
-                      }
-                    >
-                      <Trash />
-                    </Button>
-                    <Button
-                      variant={"outline"}
-                      size={"icon"}
-                      onClick={() => setisShareThreadDialogOpen(true)}
-                    >
-                      <Share2 />
-                    </Button>
-                  </PopoverContent>
-                </Popover>
-              ) : (
-                <Button
-                  variant={"outline"}
-                  size={"icon"}
-                  onClick={() => setisShareThreadDialogOpen(true)}
-                >
-                  <Share2 />
-                </Button>
-              )}
-            </div>
+            <ThreadSettingsControls
+              setIsEditThreadDialogOpen={setIsEditThreadDialogOpen}
+              setisDeleteThreadConfirmationDialogOpen={
+                setisDeleteThreadConfirmationDialogOpen
+              }
+              setisShareThreadDialogOpen={setisShareThreadDialogOpen}
+            />
           </div>
         </div>
         <div className="mt-8 grid overflow-hidden">
@@ -176,5 +148,106 @@ export default function Thread() {
         </DialogContent>
       </Dialog>
     </>
+  );
+}
+
+function ThreadSettingsControls({
+  setIsEditThreadDialogOpen,
+  setisDeleteThreadConfirmationDialogOpen,
+  setisShareThreadDialogOpen,
+}: ThreadSettingsControlsProps) {
+  const { authenticatedUser } = useAuthStateContext();
+
+  return (
+    <div className="flex flex-col gap-2 self-start">
+      {authenticatedUser ? (
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button variant={"main-accent"} size={"icon"} className="z-[5]">
+              <Settings />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent
+            side="bottom"
+            align="center"
+            className="flex w-max flex-col gap-1 border-none bg-transparent p-0 shadow-none"
+            autoFocus={false}
+          >
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant={"main-accent"}
+                    size={"icon"}
+                    onClick={() => setIsEditThreadDialogOpen(true)}
+                    tabIndex={-1}
+                  >
+                    <PencilLine />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent side="left">
+                  <p>Edit thread</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant={"main-accent"}
+                    size={"icon"}
+                    onClick={() =>
+                      setisDeleteThreadConfirmationDialogOpen(true)
+                    }
+                    tabIndex={-1}
+                  >
+                    <Trash />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent side="left">
+                  <p>Delete thread</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant={"main-accent"}
+                    size={"icon"}
+                    onClick={() => setisShareThreadDialogOpen(true)}
+                    tabIndex={-1}
+                  >
+                    <Share2 />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent side="left">
+                  <p>Share thread</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </PopoverContent>
+        </Popover>
+      ) : (
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                variant={"main-accent"}
+                size={"icon"}
+                onClick={() => setisShareThreadDialogOpen(true)}
+              >
+                <Share2 />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent side="left">
+              <p>Share thread</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      )}
+    </div>
   );
 }
