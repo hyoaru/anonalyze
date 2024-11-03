@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { PencilLine, Settings, Share2, Trash } from "lucide-react";
-import { createFileRoute, notFound } from "@tanstack/react-router";
+import { Eye, PencilLine, Settings, Share2, Trash } from "lucide-react";
+import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 
 // App imports
 import ShareThreadDialogContent from "@/components/shared/thread/ShareThreadDialogContent";
@@ -65,7 +65,7 @@ export default function Thread() {
     <>
       <div className="">
         <div id="thread-header">
-          <div className="flex items-center">
+          <div className="flex items-center gap-2">
             <div className="me-auto flex flex-col gap-1 pe-0 sm:pe-8">
               <p className="text-sm sm:text-base">Thread question</p>
               <p className="text-2xl font-bold sm:text-3xl">{data.question}</p>
@@ -157,9 +157,10 @@ function ThreadSettingsControls({
   setisShareThreadDialogOpen,
 }: ThreadSettingsControlsProps) {
   const { authenticatedUser } = useAuthStateContext();
+  const pathParams = Route.useParams();
 
   return (
-    <div className="flex flex-col gap-2 self-start">
+    <div className="flex flex-col gap-2">
       {authenticatedUser ? (
         <Popover>
           <PopoverTrigger asChild>
@@ -171,8 +172,25 @@ function ThreadSettingsControls({
             side="bottom"
             align="center"
             className="flex w-max flex-col gap-1 border-none bg-transparent p-0 shadow-none"
-            autoFocus={false}
           >
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Link
+                    to="/threads/$threadId/posts"
+                    params={{ threadId: pathParams.threadId }}
+                  >
+                    <Button variant={"main-accent"} size={"icon"} tabIndex={-1}>
+                      <Eye />
+                    </Button>
+                  </Link>
+                </TooltipTrigger>
+                <TooltipContent side="left">
+                  <p>View posts</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
