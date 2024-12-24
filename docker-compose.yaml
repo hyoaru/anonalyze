@@ -19,7 +19,7 @@ services:
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
       MYSQL_DATABASE: ${DB_DATABASE}
       MYSQL_TCP_PORT: 3306
-    volumes:  
+    volumes:
       - database_volume_mysql:/var/lib/mysql
     ports:
       - 3306:3306
@@ -29,12 +29,7 @@ services:
       - network
 
   api_core_laravel:
-    build: 
-      args:
-        user: admin
-        uid: 1000
-      context: ./api/core-api
-      dockerfile: Dockerfile
+    build: ./api/core-api
     container_name: anonalyze_api_core
     working_dir: /var/www
     volumes:
@@ -44,9 +39,9 @@ services:
       - api_ml_flask
       - database_mysql
     ports:
-      - 9000:9000
-    expose: 
-      - 9000
+      - 8005:8005
+    expose:
+      - 8005
     networks:
       - network
 
@@ -60,7 +55,7 @@ services:
     expose:
       - 8000
     networks:
-      - network  
+      - network
 
 networks:
   network:
