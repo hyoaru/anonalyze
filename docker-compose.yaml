@@ -3,12 +3,11 @@ services:
     image: nginx:alpine
     container_name: anonalyze_web_server
     volumes:
-      - ./api/core-api:/var/www
       - ./.docker/nginx/conf:/etc/nginx/conf.d
     depends_on:
       - api_core_laravel
     ports:
-      - 8001:80
+      - 8000:80
     networks:
       - network
 
@@ -18,30 +17,28 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
       MYSQL_DATABASE: ${DB_DATABASE}
-      MYSQL_TCP_PORT: 3306
+      MYSQL_TCP_PORT: 8001
     volumes:
       - database_volume_mysql:/var/lib/mysql
-    ports:
-      - 3306:3306
     expose:
-      - 3306
+      - 8001
     networks:
       - network
 
   api_core_laravel:
     build: ./api/core-api
     container_name: anonalyze_api_core
-    working_dir: /var/www
+    working_dir: /app
     volumes:
-      - ./api/core-api:/var/www
+      - ./api/core-api:/app
       - ./.docker/php/local.ini:/usr/local/etc/php/local.ini
     depends_on:
       - api_ml_flask
       - database_mysql
     ports:
-      - 8005:8005
+      - 8002:8002
     expose:
-      - 8005
+      - 8002
     networks:
       - network
 
@@ -50,10 +47,8 @@ services:
     container_name: anonalyze_api_ml
     volumes:
       - ./api/ml-api:/app
-    ports:
-      - 8000:8000
     expose:
-      - 8000
+      - 8003
     networks:
       - network
 

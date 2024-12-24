@@ -8,6 +8,8 @@ RUN install-php-extensions \
 	opcache \
     pcntl
 
+COPY --from=composer:2.8 /usr/bin/composer /usr/bin/composer
+
 COPY . /app
 
-CMD ["php", "artisan", "octane:frankenphp", "--port", "8005"]
+CMD ["php", "artisan", "octane:frankenphp", "--port", "8002"]
