@@ -7,7 +7,7 @@ services:
     depends_on:
       - api_core_laravel
     ports:
-      - 8000:80
+      - 8000:8000
     networks:
       - network
 
@@ -47,6 +47,8 @@ services:
     container_name: anonalyze_api_ml
     volumes:
       - ./api/ml-api:/app
+    ports:
+      - 8003:8003
     expose:
       - 8003
     networks:
