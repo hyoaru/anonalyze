@@ -19,7 +19,7 @@ export default function DeleteThreadDialogContent({
 
   const threadQuery = getByIdQuery({ id: id });
 
-  async function onSubmit(data: Record<string, any>) {
+  async function onSubmit() {
     return await destroyMutation
       .mutateAsync({ id: id })
       .then((response) => {
@@ -37,9 +37,7 @@ export default function DeleteThreadDialogContent({
   return (
     <div className="h-full w-full p-2">
       <div className="grid gap-1">
-        <p className="text-2xl font-bold text-destructive">
-          Delete thread
-        </p>
+        <p className="text-2xl font-bold text-destructive">Delete thread</p>
         <p className="text-sm">
           This action cannot be undone. This will permanently delete your thread
           and remove it from our servers.

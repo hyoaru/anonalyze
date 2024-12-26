@@ -12,7 +12,11 @@ export default function Footer() {
           <p className="">
             <span className="font-sans font-bold">©</span>
             <span className="">{" 2024 "}</span>
-            <Button variant={"link"} asChild className="p-0 font-medium text-base">
+            <Button
+              variant={"link"}
+              asChild
+              className="p-0 text-base font-medium"
+            >
               <a href="https://github.com/hyoaru">
                 <span>hyoaru</span>
               </a>
@@ -22,13 +26,21 @@ export default function Footer() {
           <span className="">made with tears</span>
         </div>
         <div className="flex items-center gap-2 font-custom font-medium uppercase md:ms-auto">
-          <Button variant={"link"} asChild className="px-0 font-medium text-base">
-            <Link to="/about">
+          <Button
+            variant={"link"}
+            asChild
+            className="px-0 text-base font-medium"
+          >
+            <Link to="/">
               <p>about</p>
             </Link>
           </Button>
           <hr className="w-8 border-foreground/20" />
-          <Button variant={"link"} asChild className="px-0 font-medium text-base">
+          <Button
+            variant={"link"}
+            asChild
+            className="px-0 text-base font-medium"
+          >
             <a href="https://github.com/hyoaru/anonalyze">
               <p>github</p>
             </a>

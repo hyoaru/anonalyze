@@ -3,6 +3,7 @@ services:
     image: nginx:alpine
     container_name: anonalyze_web_server
     volumes:
+      - ./client/web/dist:/var/www/public
       - ./.docker/nginx/conf:/etc/nginx/conf.d
     depends_on:
       - api_core_laravel
@@ -51,6 +52,14 @@ services:
       - 8003:8003
     expose:
       - 8003
+    networks:
+      - network
+
+  client_web:
+    build: ./client/web
+    container_name: anonalyze_client_web
+    volumes:
+      - ./client/web:/app
     networks:
       - network
 

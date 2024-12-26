@@ -1,2 +1,5 @@
 GET http://localhost:8000/sentiment/health
-GET http://localhost:8003/swaggerui/droid-sans.css
+GET http://localhost:8003/swageerui/droid-sans.css
+GET http://localhost:8000/
+GET http://localhost:8000/api/core
+GET http://localhost:8000/api/ml/
