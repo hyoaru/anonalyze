@@ -36,8 +36,6 @@ services:
     depends_on:
       - api_ml_flask
       - database_mysql
-    ports:
-      - 8002:8002
     expose:
       - 8002
     networks:
@@ -48,8 +46,6 @@ services:
     container_name: anonalyze_api_ml
     volumes:
       - ./api/ml-api:/app
-    ports:
-      - 8003:8003
     expose:
       - 8003
     networks:
