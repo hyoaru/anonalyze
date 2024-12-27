@@ -5,7 +5,7 @@ from typing import Any
 
 class TextVectorizerABC(ABC):
     _instance = None
-    _configurations = Configurations.TextVectorizers
+    _configurations = Configurations.MachineLearning.TextVectorizers
 
     def __init__(self):
         self._vectorizer: Any = None

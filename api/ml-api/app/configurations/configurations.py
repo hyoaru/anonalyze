@@ -1,12 +1,8 @@
 from .interfaces import ConfigurationsABC
-from .machine_learning_model_configurations import MachineLearningModelConfigurations
-from .feature_selector_configurations import FeatureSelectorConfigurations
-from .text_vectorizer_configurations import TextVectorizerConfigurations
+from .machine_learning.machine_learning_configurations import (
+    MachineLearningConfigurations,
+)
 
 
 class Configurations(ConfigurationsABC):
-    # App Configurations
-
-    MachineLearningModels = MachineLearningModelConfigurations
-    TextVectorizers = TextVectorizerConfigurations
-    FeatureSelectors = FeatureSelectorConfigurations
+    MachineLearning = MachineLearningConfigurations

@@ -9,7 +9,7 @@ class TFIDFTextVectorizer(TextVectorizerABC):
     def load(self):
         if self._vectorizer is None:
             self._vectorizer = joblib.load(
-                f"{self._configurations.bin_path}/text_vectorizer_tfidf.pkl"
+                f"{self._configurations.bin_path}/tfidf_text_vectorizer.pkl"
             )
 
     def transform(self, text: str):

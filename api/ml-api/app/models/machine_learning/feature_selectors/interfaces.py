@@ -5,7 +5,7 @@ from typing import Any
 
 class FeatureSelectorABC(ABC):
     _instance = None
-    _configurations = Configurations.FeatureSelectors
+    _configurations = Configurations.MachineLearning.FeatureSelectors
 
     def __init__(self):
         self._selector: Any = None
