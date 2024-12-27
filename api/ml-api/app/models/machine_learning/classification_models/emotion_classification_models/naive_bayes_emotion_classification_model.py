@@ -1,10 +1,10 @@
-from .interfaces import SentimentClassificationModelABC
+from .interfaces import EmotionClassificationModelABC
 from app.models.machine_learning.text_vectorizers.interfaces import TextVectorizerABC
 from app.models.machine_learning.feature_selectors.interfaces import FeatureSelectorABC
 import joblib
 
 
-class NaiveBayesSentimentClassificationModel(SentimentClassificationModelABC):
+class NaiveBayesEmotionClassificationModel(EmotionClassificationModelABC):
     _label_description_map = {
         0: "negative",
         1: "positive",
@@ -20,7 +20,7 @@ class NaiveBayesSentimentClassificationModel(SentimentClassificationModelABC):
     def load(self):
         if self._model is None:
             self._model = joblib.load(
-                f"{self._configurations.bin_path}/sentiment_classification_models/naive_bayes_sentiment_classification_model.pkl"
+                f"{self._configurations.bin_path}/emotion_classification_models/naive_bayes_emotion_classification_model.pkl"
             )
 
     def predict(self, text: str):
