@@ -1,4 +1,16 @@
 services:
+  smtp_mailhog:
+    image: mailhog/mailhog
+    container_name: anonalyze_smtp
+    ports:
+      - 1025:1025
+      - 8025:8025
+    expose:
+      - 1025
+      - 8025
+    networks:
+      - network
+
   database_mysql:
     image: mysql:8
     container_name: anonalyze_database
@@ -25,6 +37,7 @@ services:
     depends_on:
       - api_ml_flask
       - database_mysql
+      - smtp_mailhog
     ports:
       - 8002:8002
     expose:
