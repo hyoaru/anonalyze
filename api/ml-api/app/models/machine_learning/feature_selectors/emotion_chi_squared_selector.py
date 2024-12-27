@@ -3,7 +3,7 @@ import joblib
 from .interfaces import FeatureSelectorABC
 
 
-class EmotionChi2Selector(FeatureSelectorABC):
+class EmotionChiSquaredSelector(FeatureSelectorABC):
     def __init__(self):
         super().__init__()
 

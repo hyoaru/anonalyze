@@ -3,7 +3,7 @@ import joblib
 from .interfaces import FeatureSelectorABC
 
 
-class SentimentChi2Selector(FeatureSelectorABC):
+class SentimentChiSquaredSelector(FeatureSelectorABC):
     def __init__(self):
         super().__init__()
 

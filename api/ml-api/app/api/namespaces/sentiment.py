@@ -1,54 +1,50 @@
-from flask_restx import Resource, Namespace, reqparse
-
-# App imports
-from app.models.sentiment_classifier import ModelSentiment
-from app.utils.preprocessor import Preprocessor
+from app.controllers.sentiment_controller import SentimentController
+from app.models.machine_learning.classification_models.sentiment_classification_models.factory import (
+    SentimentClassificationModelFactory,
+)
+from app.models.machine_learning.feature_selectors.factory import FeatureSelectorFactory
+from app.models.machine_learning.text_vectorizers.factory import TextVectorizerFactory
+from flask_restx import Namespace, Resource, reqparse
 
 ns = Namespace("sentiment")
 
-parser = reqparse.RequestParser().add_argument(
+# Parsers
+predict_parser = reqparse.RequestParser().add_argument(
     "text", type=str, location="json", required=True, help="Text to analyze"
 )
 
+text_vectorizer_tfidf = TextVectorizerFactory.create_tfidf()
+feature_selector_chi_squared = FeatureSelectorFactory.create_chi_squared_sentiment()
+sentiment_classification_model_naive_bayes = (
+    SentimentClassificationModelFactory.create_naive_bayes(
+        text_vectorizer=text_vectorizer_tfidf,
+        feature_selector=feature_selector_chi_squared,
+    )
+)
 
+sentiment_controller_naive_bayes = SentimentController(
+    sentiment_classification_model=sentiment_classification_model_naive_bayes
+)
+
+
+# Routes
 @ns.route("/predict")
-class PredictSentiment(Resource):
-    @ns.expect(parser)
+class SentimentPredict(Resource):
+    @ns.expect(predict_parser)
     def post(self):
-        data = parser.parse_args()
+        data = predict_parser.parse_args()
         text = data["text"]
 
-        preprocessed_text = Preprocessor.process_text(text)
-        predicted_value = ModelSentiment.predict(preprocessed_text)
-
-        return {
-            "data": {
-                "text": text,
-                "predicted_value": {
-                    "class": predicted_value[0],
-                    "probability": predicted_value[1],
-                },
-            }
-        }
+        return sentiment_controller_naive_bayes.predict(text)
 
 
 @ns.route("/model-info")
-class ModelInfo(Resource):
+class SentimentModelInfo(Resource):
     def get(self):
-        return {
-            "model_version": "v1.0",
-            "algorithm": "Multinomial Naive Bayes",
-            "trained_on": "Kaggle Twitter dataset",
-        }
-
-
-@ns.route("/health")
-class HealthCheck(Resource):
-    def get(self):
-        return {"status": "ok"}
+        return sentiment_controller_naive_bayes.model_info()
 
 
 @ns.route("/labels")
 class SentimentLabels(Resource):
     def get(self):
-        return {"labels": ["positive", "negative", "neutral"]}
+        return sentiment_controller_naive_bayes.labels()
