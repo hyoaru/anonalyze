@@ -1,0 +1,67 @@
+services:
+  database_mysql:
+    image: mysql:8
+    container_name: anonalyze_database
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_TCP_PORT: 8001
+    volumes:
+      - database_volume_mysql:/var/lib/mysql
+    ports:
+      - 8001:8001
+    expose:
+      - 8001
+    networks:
+      - network
+
+  api_core_laravel:
+    build: ./api/core-api
+    container_name: anonalyze_api_core
+    working_dir: /app
+    volumes:
+      - ./api/core-api:/app
+      - ./.docker/php/local.ini:/usr/local/etc/php/local.ini
+    depends_on:
+      - api_ml_flask
+      - database_mysql
+    ports:
+      - 8002:8002
+    expose:
+      - 8002
+    networks:
+      - network
+
+  api_ml_flask:
+    build: ./api/ml-api
+    container_name: anonalyze_api_ml
+    working_dir: /app
+    command: python main_development.py
+    volumes:
+      - ./api/ml-api:/app
+    ports:
+      - 8003:8003
+    expose:
+      - 8003
+    networks:
+      - network
+
+  client_web:
+    build: ./client/web
+    container_name: anonalyze_client_web
+    working_dir: /app
+    command: npm run dev -- --host 0.0.0.0 --port 8000
+      - ./client/web:/app
+    ports:
+      - 8000:8000
+    expose:
+      - 8000
+    networks:
+      - network
+
+networks:
+  network:
+    driver: bridge
+
+volumes:
+  database_volume_mysql:
