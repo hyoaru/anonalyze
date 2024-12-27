@@ -10,4 +10,5 @@ class ConceptController:
         return self._concept_extraction_model.extract(text_list)
 
     def get_model_info(self):
-         # TODO: implement get model info
+        # TODO: implement get model info
+        pass
