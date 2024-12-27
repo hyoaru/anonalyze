@@ -2,8 +2,6 @@ import nltk
 from flask import Flask
 
 # App imports
-from app.models.sentiment_classifier import ModelSentiment
-from app.models.emotion_classifier import ModelEmotion
 from app.api.namespaces.sentiment import ns as ns_sentiment
 from app.api.namespaces.emotion import ns as ns_emotion
 from app.api.namespaces.concept import ns as ns_concept
@@ -13,9 +11,6 @@ from app.instances import api, cors
 
 
 def create_app():
-    ModelSentiment._initialize()
-    ModelEmotion._initialize()
-
     app = Flask(__name__)
 
     # Namespaces

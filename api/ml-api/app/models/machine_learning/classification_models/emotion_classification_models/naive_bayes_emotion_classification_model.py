@@ -6,9 +6,12 @@ import joblib
 
 class NaiveBayesEmotionClassificationModel(EmotionClassificationModelABC):
     _label_description_map = {
-        0: "negative",
-        1: "positive",
-        2: "neutral",
+        0: "sadness",
+        1: "joy",
+        2: "love",
+        3: "anger",
+        4: "fear",
+        5: "surprised",
     }
 
     def __init__(self, vectorizer: TextVectorizerABC, selector: FeatureSelectorABC):

@@ -5,6 +5,7 @@ import joblib
 class TFIDFTextVectorizer(TextVectorizerABC):
     def __init__(self):
         super().__init__()
+        self.load()
 
     def load(self):
         if self._vectorizer is None:

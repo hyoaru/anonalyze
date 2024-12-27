@@ -6,6 +6,7 @@ from .interfaces import FeatureSelectorABC
 class SentimentChiSquaredSelector(FeatureSelectorABC):
     def __init__(self):
         super().__init__()
+        self.load()
 
     def load(self):
         if self._selector is None:

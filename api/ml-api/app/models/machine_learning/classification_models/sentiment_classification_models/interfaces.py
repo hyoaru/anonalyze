@@ -11,11 +11,6 @@ class SentimentClassificationModelABC(ABC):
         self._model: Any = None
         pass
 
-    def __new__(cls, *args, **kwargs):
-        if cls._instance is None:
-            cls._instance = super(SentimentClassificationModelABC, cls).__new__(cls)
-        return cls._instance
-
     @abstractmethod
     def load(self):
         pass
