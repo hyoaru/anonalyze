@@ -1,39 +1,43 @@
 from flask_restx import Resource, Namespace, reqparse
-from rake_nltk import Rake
+from app.models.concept_extraction_models.rake_concept_extraction_model import (
+    RakeConceptExtractionModel,
+)
+from app.models.concept_extraction_models.interfaces import ConceptExtractionModelABC
 
-# App imports
-from app.utils.preprocessor import Preprocessor
+ns = Namespace("concept")
 
-ns = Namespace('concept')
+parser = reqparse.RequestParser().add_argument(
+    "texts",
+    type=list,
+    location="json",
+    default=[],
+    action="append",
+    required=True,
+    help="List of text to analyze",
+)
 
-parser = (
-    reqparse.RequestParser()
-    .add_argument(
-        'texts', type=list, location='json', default=[], 
-        action="append", required=True, help='Text to analyze') )
-    
-@ns.route('/extract')
-class ExtractConcept(Resource):
+
+@ns.route("/extract")
+class ConceptExtract(Resource):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self._concept_extraction_model: ConceptExtractionModelABC = (
+            RakeConceptExtractionModel()
+        )
+
     @ns.expect(parser)
     def post(self):
         data = parser.parse_args()
-        texts = data['texts'][0]
+        texts = data["texts"][0]
 
-        r = Rake(min_length=1, max_length=3)
-        r.extract_keywords_from_sentences(texts)
-        phrase_scores = r.get_ranked_phrases_with_scores()
-        phrase_scores_map = {scored_phrase[1]:scored_phrase[0] for scored_phrase in phrase_scores}
+        extracted_concepts = self._concept_extraction_model.extract(texts)
+        return {"data": {"texts": texts, "extracted_concepts": extracted_concepts}}
 
-        return {"data": {'texts': texts, "extracted_concepts": phrase_scores_map}}
 
-@ns.route('/model-info')
+@ns.route("/model-info")
 class ModelInfo(Resource):
-	def get(self):
-		return {
-			"algorithm": "Rapid Automatic Extraction Algorithm",
-		}
-
-@ns.route('/health')
-class HealthCheck(Resource):
-	def get(self):
-		return {'status': 'ok'}
+    def get(self):
+        return {
+            "algorithm": "Rapid Automatic Extraction Algorithm",
+        }
