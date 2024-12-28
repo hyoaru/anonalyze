@@ -7,6 +7,7 @@ services:
       - ./.docker/nginx/conf:/etc/nginx/conf.d
     depends_on:
       - client_web
+      - api_core_laravel
     ports:
       - 8000:8000
     networks:
@@ -36,8 +37,6 @@ services:
     depends_on:
       - api_ml_flask
       - database_mysql
-    ports:
-      - 8002:8002
     expose:
       - 8002
     networks:
@@ -56,8 +55,6 @@ services:
   client_web:
     build: ./client/web
     container_name: anonalyze_client_web
-    depends_on:
-      - api_core_laravel
     volumes:
       - ./client/web:/app
     networks:

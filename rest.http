@@ -4,3 +4,4 @@ GET http://localhost:8000/
 GET http://localhost:8000/api/core
 GET http://localhost:8000/api/ml/
 GET http://localhost:8002/api/sentiments
+GET http://localhost:8000/docs/asset/swagger-ui.css?v=fd5df98cfc0e58ed507042cd86a1f1df
