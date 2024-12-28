@@ -1,10 +1,11 @@
 services:
   web_server_nginx:
-    image: nginx:alpine
+    build: ./web-server
     container_name: anonalyze_web_server
     volumes:
       - ./client/web/dist:/var/www/public
-      - ./.docker/nginx/conf:/etc/nginx/conf.d
+      - ./web-server/conf/default.production.conf:/etc/nginx/conf.d/default.conf
+      - ./web-server/etc/hosts.production.conf:/etc/hosts.conf
     depends_on:
       - client_web
       - api_core_laravel
@@ -33,7 +34,6 @@ services:
     working_dir: /app
     volumes:
       - ./api/core-api:/app
-      - ./.docker/php/local.ini:/usr/local/etc/php/local.ini
     depends_on:
       - api_ml_flask
       - database_mysql
@@ -45,6 +45,7 @@ services:
   api_ml_flask:
     build: ./api/ml-api
     container_name: anonalyze_api_ml
+    working_dir: /app
     volumes:
       - ./api/ml-api:/app
     expose:
@@ -55,6 +56,7 @@ services:
   client_web:
     build: ./client/web
     container_name: anonalyze_client_web
+    working_dir: /app
     volumes:
       - ./client/web:/app
     networks:

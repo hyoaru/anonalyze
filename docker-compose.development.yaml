@@ -44,7 +44,6 @@ services:
     command: php artisan serve --host 0.0.0.0 --port 8002
     volumes:
       - ./api/core-api:/app
-      - ./.docker/php/local.ini:/usr/local/etc/php/local.ini
     depends_on:
       - api_ml_flask
       - database_mysql
