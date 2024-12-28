@@ -20,8 +20,6 @@ services:
       MYSQL_TCP_PORT: 8001
     volumes:
       - database_volume_mysql:/var/lib/mysql
-    ports:
-      - 8001:8001
     expose:
       - 8001
     networks:
@@ -31,6 +29,7 @@ services:
     build: ./api/core-api
     container_name: anonalyze_api_core
     working_dir: /app
+    command: php artisan serve --host 0.0.0.0 --port 8002
     volumes:
       - ./api/core-api:/app
       - ./.docker/php/local.ini:/usr/local/etc/php/local.ini
@@ -52,8 +51,6 @@ services:
     command: python main_development.py
     volumes:
       - ./api/ml-api:/app
-    ports:
-      - 8003:8003
     expose:
       - 8003
     networks:
@@ -64,6 +61,7 @@ services:
     container_name: anonalyze_client_web
     working_dir: /app
     command: npm run dev -- --host 0.0.0.0 --port 8000
+    volumes:
       - ./client/web:/app
     ports:
       - 8000:8000
