@@ -2,9 +2,6 @@ services:
   smtp_mailhog:
     image: mailhog/mailhog
     container_name: anonalyze_smtp
-    ports:
-      - 1025:1025
-      - 8025:8025
     expose:
       - 1025
       - 8025
@@ -17,14 +14,12 @@ services:
     volumes:
       - ./client/web/dist:/var/www/public
       - ./.docker/nginx/conf/default.development.conf:/etc/nginx/conf.d/default.conf
-      - ./.docker/etc/hosts.conf:/etc/hosts.conf
+      - ./.docker/etc/hosts.development.conf:/etc/hosts.conf
     depends_on:
       - client_web
       - api_core_laravel
     ports:
       - 8000:8000
-      - 8002:8002
-      - 8003:8003
     networks:
       - network
 
