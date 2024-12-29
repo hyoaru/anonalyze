@@ -12,7 +12,8 @@ class Emotion extends Model
 
     protected $table = 'emotions';
 
-    public function postPredictedEmotions(): HasMany {
+    public function postPredictedEmotions(): HasMany
+    {
         return $this->hasMany(Emotion::class, 'emotion_id');
     }
 }
