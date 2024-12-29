@@ -16,6 +16,7 @@
         </properties>
     </rule>
 
+    <exclude name="Generic.Files.LineLength.lineLimit"/>
     <exclude name="PEAR.Commenting.FileComment"/>
     <exclude name="PEAR.Commenting.ClassComment"/>
 </ruleset>
