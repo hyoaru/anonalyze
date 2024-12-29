@@ -3,19 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Emotion;
-use App\Repositories\EmotionRepository\EmotionRepositoryInterface;
 use App\Services\EmotionService\EmotionServiceInterface;
 
 class EmotionController extends Controller
 {
-    protected EmotionRepositoryInterface $emotionRepository;
     protected EmotionServiceInterface $emotionService;
 
-    public function __construct(
-        EmotionRepositoryInterface $emotionRepository,
-        EmotionServiceInterface $emotionService
-    ) {
-        $this->emotionRepository = $emotionRepository;
+    public function __construct(EmotionServiceInterface $emotionService)
+    {
         $this->emotionService = $emotionService;
     }
 
@@ -25,14 +20,18 @@ class EmotionController extends Controller
      *     tags={"Emotions"},
      *     summary="Get a list of emotions",
      *     description="Returns a list of all emotions",
+     *
      *     @OA\Response(
      *         response=200,
      *         description="A list of emotions",
+     *
      *         @OA\JsonContent(
      *              type="array",
+     *
      *              @OA\Items(ref="#/components/schemas/Emotion"),
      *         ),
      *     ),
+     *
      *     @OA\Response(
      *         response=500,
      *         description="Server error"
@@ -42,6 +41,7 @@ class EmotionController extends Controller
     public function index()
     {
         $data = $this->emotionService->getAll();
+
         return response()->json($data, 200);
     }
 
@@ -51,18 +51,23 @@ class EmotionController extends Controller
      *     tags={"Emotions"},
      *     summary="Retrieve a emotion by its ID",
      *     description="Get a emotion data",
+     *
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
      *         required=true,
      *         description="ID of the emotion to retrieve",
+     *
      *         @OA\Schema(type="integer")
      *     ),
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Successful retrieval of the emotion",
+     *
      *         @OA\JsonContent(ref="#/components/schemas/Emotion")
      *     ),
+     *
      *     @OA\Response(
      *         response=404,
      *         description="Emotion not found"
@@ -75,7 +80,8 @@ class EmotionController extends Controller
      */
     public function show(Emotion $emotion)
     {
-        $data = $this->emotionService->getById($emotion->id);
+        $data = $emotion;
+
         return response()->json($data, 200);
     }
 }

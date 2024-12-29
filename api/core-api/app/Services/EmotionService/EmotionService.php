@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Collection;
 
 class EmotionService implements EmotionServiceInterface
 {
-    protected $emotionRepository;
+    protected EmotionRepositoryInterface $emotionRepository;
 
     public function __construct(EmotionRepositoryInterface $emotionRepository)
     {

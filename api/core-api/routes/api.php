@@ -3,9 +3,9 @@
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EmotionController;
-use App\Http\Controllers\SentimentController;
 use App\Http\Controllers\Posts\PostAnalyticController;
 use App\Http\Controllers\Posts\PostController;
+use App\Http\Controllers\SentimentController;
 use App\Http\Controllers\Threads\ThreadAnalyticController;
 use App\Http\Controllers\Threads\ThreadController;
 use App\Http\Controllers\Threads\ThreadSummaryController;
