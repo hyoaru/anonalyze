@@ -2,12 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Emotion\StoreEmotionRequest;
-use App\Http\Requests\Emotion\UpdateEmotionRequest;
 use App\Models\Emotion;
+use App\Repositories\EmotionRepository\EmotionRepositoryInterface;
+use App\Services\EmotionService\EmotionServiceInterface;
 
 class EmotionController extends Controller
 {
+    protected EmotionRepositoryInterface $emotionRepository;
+    protected EmotionServiceInterface $emotionService;
+
+    public function __construct(
+        EmotionRepositoryInterface $emotionRepository,
+        EmotionServiceInterface $emotionService
+    ) {
+        $this->emotionRepository = $emotionRepository;
+        $this->emotionService = $emotionService;
+    }
+
     /**
      * @OA\Get(
      *     path="/api/emotions",
@@ -30,14 +41,9 @@ class EmotionController extends Controller
      */
     public function index()
     {
-        $data = Emotion::all();
+        $data = $this->emotionService->getAll();
         return response()->json($data, 200);
     }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreEmotionRequest $request) {}
 
     /**
      * @OA\Get(
@@ -69,17 +75,7 @@ class EmotionController extends Controller
      */
     public function show(Emotion $emotion)
     {
-        $data = $emotion;
+        $data = $this->emotionService->getById($emotion->id);
         return response()->json($data, 200);
     }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateEmotionRequest $request, Emotion $emotion) {}
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Emotion $emotion) {}
 }
