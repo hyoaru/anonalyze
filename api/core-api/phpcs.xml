@@ -15,4 +15,7 @@
             <property name="absoluteLineLimit" value="180"/>
         </properties>
     </rule>
+
+    <exclude name="PEAR.Commenting.FileComment"/>
+    <exclude name="PEAR.Commenting.ClassComment"/>
 </ruleset>
