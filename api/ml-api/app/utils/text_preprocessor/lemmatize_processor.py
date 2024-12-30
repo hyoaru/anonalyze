@@ -31,4 +31,5 @@ class LemmatizeProcessor(TextProcessorABC):
                     wordnet_lemmatizer.lemmatize(token, wordnet_tag)
                 )
 
-        return " ".join(lemmatized_tokens)
+        processed_text = " ".join(lemmatized_tokens)
+        return self.process_next(processed_text)

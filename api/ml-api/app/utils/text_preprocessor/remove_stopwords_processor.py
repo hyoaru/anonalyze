@@ -9,6 +9,6 @@ class RemoveStopwordsProcessor(TextProcessorABC):
             r"|".join([rf"\b{word}\b" for word in stopwords.words("english")])
         )
 
-        text = " ".join(matcher.sub("", text).split())
+        processed_text = " ".join(matcher.sub("", text).split())
 
-        return text
+        return self.process_next(processed_text)
