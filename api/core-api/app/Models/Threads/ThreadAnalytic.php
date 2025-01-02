@@ -5,7 +5,6 @@ namespace App\Models\Threads;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class ThreadAnalytic extends Model
 {
@@ -23,8 +22,8 @@ class ThreadAnalytic extends Model
         return $this->belongsTo(Thread::class);
     }
 
-    public function threadExtractedConceptGroup(): HasOne
+    public function threadExtractedConceptGroup(): BelongsTo
     {
-        return $this->hasOne(ThreadExtractedConceptGroup::class, 'id', 'thread_extracted_concept_group_id');
+        return $this->belongsTo(ThreadExtractedConceptGroup::class);
     }
 }
