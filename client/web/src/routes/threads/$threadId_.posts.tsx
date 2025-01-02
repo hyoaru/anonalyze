@@ -60,7 +60,7 @@ function ThreadPosts() {
             </Button>
           </Link>
         </div>
-        <div className="mt-8 columns-1 space-y-4 sm:columns-2 lg:columns-3">
+        <div className="mt-8 grid grid-cols-1 gap-4 lg:grid-cols-2 xl:grid-cols-3">
           {postsQuery.isLoading ? (
             <LoadingComponent />
           ) : (
