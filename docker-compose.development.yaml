@@ -23,6 +23,21 @@ services:
     networks:
       - network
 
+  database_administration_phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: anonalyze_database_administration
+    environment:
+      PMA_HOST: database_mysql
+      PMA_PORT: 8001
+      PMA_USER: root
+      PMA_PASSWORD: ${DB_ROOT_PASSWORD}
+    depends_on:
+      - database_mysql
+    expose:
+      - 80
+    networks:
+      - network
+
   database_mysql:
     image: mysql:8
     container_name: anonalyze_database
