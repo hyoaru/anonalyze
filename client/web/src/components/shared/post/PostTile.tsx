@@ -18,6 +18,7 @@ import {
 type PostTileType = {
   children: React.ReactNode;
   className?: string;
+  sentiment?: "positive" | "negative" | "neutral";
 };
 
 type PostTileBodyType = {
@@ -60,10 +61,15 @@ type PostTileSentimentType = {
   className?: string;
 };
 
-export const PostTile = ({ children, className }: PostTileType) => (
+export const PostTile = ({ children, className, sentiment }: PostTileType) => (
   <div
     className={cn(
-      "group flex h-full break-inside-avoid flex-col rounded-lg border bg-secondary p-6 transition-colors duration-200 ease-in-out hover:border-main-accent/20 dark:bg-secondary/60",
+      "group flex h-full break-inside-avoid flex-col rounded-lg border bg-secondary p-6 transition-colors duration-200 ease-in-out",
+      sentiment === "positive"
+        ? "border-success/40 bg-success/10 dark:bg-success/20"
+        : sentiment === "negative"
+          ? "border-destructive/40 bg-destructive/10 dark:bg-destructive/20"
+          : "",
       className,
     )}
   >
@@ -84,7 +90,7 @@ const PostTileHeader = ({ children, className }: PostTileHeaderType) => (
 const PostTileContent = ({ children, className }: PostTileContentType) => (
   <p
     className={cn(
-      "text-xl font-semibold transition-colors duration-200 ease-in-out group-hover:text-main-accent",
+      "text-xl font-semibold transition-colors duration-200 ease-in-out",
       className,
     )}
   >
@@ -110,7 +116,7 @@ const PostTileEmotion = ({
     <Tooltip>
       <TooltipTrigger>
         <EmotionEmoji
-          className={cn("border rounded-lg p-1 bg-background size-9", className)}
+          className={cn("size-9 rounded-lg p-1", className)}
           emotion={
             predictedEmotion.emotion?.class as Parameters<
               typeof EmotionEmoji
@@ -141,7 +147,7 @@ const PostTileSentiment = ({
     <Tooltip>
       <TooltipTrigger>
         <SentimentEmoji
-          className={cn("border rounded-lg p-1 bg-background size-9", className)}
+          className={cn("size-9 rounded-lg p-1", className)}
           sentiment={
             predictedSentiment.sentiment?.class as Parameters<
               typeof SentimentEmoji

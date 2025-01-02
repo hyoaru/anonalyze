@@ -9,6 +9,7 @@ import { default as DefaultLoadingComponent } from "@/components/defaults/Loadin
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "@tanstack/react-router";
+import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/threads/$threadId_/posts")({
   beforeLoad: async ({ context }) => {
@@ -39,10 +40,7 @@ function ThreadPosts() {
   return (
     <>
       <div className="">
-        <div
-          id="thread-posts-header"
-          className="flex items-center gap-2"
-        >
+        <div id="thread-posts-header" className="flex items-center gap-2">
           <div className="me-auto flex flex-col gap-1 pe-0 sm:pe-8">
             <p className="text-sm sm:text-base">Thread question</p>
             <p className="text-2xl font-bold sm:text-3xl">
@@ -68,23 +66,33 @@ function ThreadPosts() {
           ) : (
             <>
               {postsQuery.data?.map((post) => (
-                <PostTile key={`PostTile-${post.id}`}>
+                <PostTile
+                  key={`PostTile-${post.id}`}
+                  sentiment={
+                    post.post_analytic?.post_predicted_sentiment?.sentiment
+                      ?.class as Parameters<typeof PostTile>[0]["sentiment"]
+                  }
+                >
                   <PostTile.Body>
                     <PostTile.Header>Response # {post.id}</PostTile.Header>
                     <PostTile.Content>{post.content}</PostTile.Content>
                   </PostTile.Body>
                   <PostTile.Footer>
                     <PostTile.Predictions>
-                      <PostTile.Sentiment
-                        predictedSentiment={
-                          post.post_analytic?.post_predicted_sentiment!
-                        }
-                      />
-                      <PostTile.Emotion
-                        predictedEmotion={
-                          post.post_analytic?.post_predicted_emotion!
-                        }
-                      />
+                      {post.post_analytic?.post_predicted_sentiment && (
+                        <PostTile.Sentiment
+                          predictedSentiment={
+                            post.post_analytic?.post_predicted_sentiment
+                          }
+                        />
+                      )}
+                      {post.post_analytic?.post_predicted_emotion && (
+                        <PostTile.Emotion
+                          predictedEmotion={
+                            post.post_analytic?.post_predicted_emotion
+                          }
+                        />
+                      )}
                     </PostTile.Predictions>
                     <PostTile.Date>{post.created_at}</PostTile.Date>
                   </PostTile.Footer>
