@@ -7,5 +7,5 @@ use App\Models\Threads\Thread;
 
 interface PostServiceInterface
 {
-    public function new(Thread $thread, array $params): Post;
+    public function new(Thread $thread, array $postParams): Post;
 }

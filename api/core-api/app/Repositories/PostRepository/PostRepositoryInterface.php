@@ -8,5 +8,5 @@ interface PostRepositoryInterface
 {
     public function new(array $params): Post;
 
-    public function update(int $id, array $params): Post;
+    public function update(Post $post, array $params): Post;
 }

@@ -5,7 +5,6 @@ namespace App\Models\Posts;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class PostAnalytic extends Model
 {
@@ -19,15 +18,18 @@ class PostAnalytic extends Model
         'post_predicted_emotion_id',
     ];
 
-    public function post(): BelongsTo {
+    public function post(): BelongsTo
+    {
         return $this->belongsTo(Post::class);
     }
 
-    public function postPredictedSentiment(): HasOne {
-        return $this->hasOne(PostPredictedSentiment::class, 'id', 'post_predicted_sentiment_id');
+    public function postPredictedSentiment(): BelongsTo
+    {
+        return $this->belongsTo(PostPredictedSentiment::class);
     }
 
-    public function postPredictedEmotion(): HasOne {
-        return $this->hasOne(PostPredictedEmotion::class, 'id', 'post_predicted_emotion_id');
+    public function postPredictedEmotion(): BelongsTo
+    {
+        return $this->belongsTo(PostPredictedEmotion::class);
     }
 }

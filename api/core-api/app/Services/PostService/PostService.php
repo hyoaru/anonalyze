@@ -56,10 +56,10 @@ class PostService implements PostServiceInterface
         $this->threadRepository = $threadRepository;
     }
 
-    public function new(Thread $thread, array $params): Post
+    public function new(Thread $thread, array $postParams): Post
     {
         // Create new post and associate its author
-        $post = $this->postRepository->new($params['post']);
+        $post = $this->postRepository->new($postParams);
         $post->thread()->associate($thread);
         $post->save();
 
@@ -93,21 +93,14 @@ class PostService implements PostServiceInterface
         $postPredictedEmotion->emotion_id = $emotion->id;
         $postPredictedEmotion->save();
 
-        // Create new post analytic and associate the post predicted sentiment and emotion to it
+        // Create new post analytic
         $postAnalytic = $this->postAnalyticRepository->new();
-        $postPredictedSentiment->postAnalytic()->associate($postAnalytic);
-        $postPredictedSentiment->postAnalytic()->associate($postAnalytic);
 
-        // Associate the post analytic to the post
-        $postAnalytic->post()->associate($post);
-        $post->save();
-
-        return $post;
-    }
-
-    public function update(int $id, array $params): Post
-    {
-        $post = $this->postRepository->update($id, $params);
+        // Associate post and predictions
+        $postAnalytic->post_id = $post->id;
+        $postAnalytic->post_predicted_sentiment_id = $postPredictedSentiment->id;
+        $postAnalytic->post_predicted_emotion_id = $postPredictedEmotion->id;
+        $postAnalytic->save();
 
         return $post;
     }

@@ -32,7 +32,7 @@ use App\Services\MachineLearning\ConceptExtractionService\ConceptExtractionServi
 use App\Services\MachineLearning\ConceptExtractionService\ConceptExtractionServiceInterface;
 use App\Services\PostAnalyticService\PostAnalyticService;
 use App\Services\PostAnalyticService\PostAnalyticServiceInterface;
-use App\Services\PostService;
+use App\Services\PostService\PostService;
 use App\Services\PostService\PostServiceInterface;
 use App\Services\SentimentService\SentimentService;
 use App\Services\SentimentService\SentimentServiceInterface;
@@ -87,7 +87,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(PostPredictedEmotionRepositoryInterface::class, PostPredictedEmotionRepository::class);
 
         // ML API HTTP Client
-        $this->app->singleton(MlApiHttpClient::class, fn () => new MlApiHttpClient());
+        $this->app->singleton(MlApiHttpClient::class, fn () => new MlApiHttpClient);
 
         // ML API: Concept Extraction
         $this->app->bind(ConceptExtractionRepositoryInterface::class, ConceptExtractionRepository::class);

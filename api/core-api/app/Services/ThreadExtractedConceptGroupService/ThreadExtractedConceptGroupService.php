@@ -37,7 +37,10 @@ class ThreadExtractedConceptGroupService implements ThreadExtractedConceptGroupS
 
         // Detele all existing concepts and add the new ones
         $this->threadExtractedConceptGroupRepository->deleteConcepts($threadExtractedConceptGroup);
-        $threadExtractedConceptGroup = $this->threadExtractedConceptGroupRepository->updateConcepts($id, $extractedConcepts);
+        $threadExtractedConceptGroup = $this->threadExtractedConceptGroupRepository->updateConcepts(
+            threadExtractedConceptGroup: $threadExtractedConceptGroup,
+            extractedConcepts: $extractedConcepts,
+        );
 
         return $threadExtractedConceptGroup;
     }
