@@ -18,8 +18,8 @@ return new class extends Migration
         });
 
         DB::table('users')->update([
-            'first_name' => DB::raw('SUBSTR(name, 1, INSTR(name, " ") - 1)'), 
-            'last_name' => DB::raw('SUBSTR(name, INSTR(name, " ") + 1)') 
+            'first_name' => DB::raw('SUBSTR(name, 1, INSTR(name, " ") - 1)'),
+            'last_name' => DB::raw('SUBSTR(name, INSTR(name, " ") + 1)'),
         ]);
 
         Schema::table('users', function (Blueprint $table) {
@@ -40,7 +40,7 @@ return new class extends Migration
         });
 
         DB::table('users')->update([
-            'name' => DB::raw('first_name || " " || last_name')
+            'name' => DB::raw('CONCAT(first_name, " ", last_name)'),
         ]);
 
         Schema::table('users', function (Blueprint $table) {
