@@ -85,9 +85,11 @@ export default function Thread() {
         <div className="mt-4">
           <div className="grid grid-cols-5 gap-4">
             <div className="col-span-full xl:col-span-3">
-              <ThreadAnalyticWordCloud
-                threadAnalyticId={data.thread_analytic?.id!}
-              />
+              {data.thread_analytic?.id && (
+                <ThreadAnalyticWordCloud
+                  threadAnalyticId={data.thread_analytic?.id}
+                />
+              )}
             </div>
             <div className="col-span-full xl:col-span-2">
               <div className="h-[200px] rounded-lg border bg-secondary xl:h-full">
