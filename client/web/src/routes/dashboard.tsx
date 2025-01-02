@@ -51,7 +51,7 @@ export default function Dashboard() {
           </Button>
         </div>
 
-        <div className="mt-8 columns-1 space-y-4 sm:columns-2 lg:columns-3">
+        <div className="mt-8 grid columns-1 grid-cols-1 space-y-4 sm:columns-2 lg:columns-2 xl:grid-cols-3">
           {isLoading ? (
             <ThreadTileSkeleton length={12} />
           ) : (
