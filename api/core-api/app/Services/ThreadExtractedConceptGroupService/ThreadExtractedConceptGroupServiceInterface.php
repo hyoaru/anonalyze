@@ -6,5 +6,5 @@ use App\Models\Threads\ThreadExtractedConceptGroup;
 
 interface ThreadExtractedConceptGroupServiceInterface
 {
-    public function updateConcepts(int $id): ThreadExtractedConceptGroup;
+    public function updateConcepts(ThreadExtractedConceptGroup $threadExtractedConceptGroup): ThreadExtractedConceptGroup;
 }

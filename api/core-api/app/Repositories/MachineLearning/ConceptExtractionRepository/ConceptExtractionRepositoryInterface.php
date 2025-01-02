@@ -4,5 +4,5 @@ namespace App\Repositories\MachineLearning\ConceptExtractionRepository;
 
 interface ConceptExtractionRepositoryInterface
 {
-    public function extract(array $sentences): array;
+    public function extract(array $texts): array;
 }

@@ -13,9 +13,9 @@ class ConceptExtractionRepository implements ConceptExtractionRepositoryInterfac
         $this->mlApiHttpClient = $mlApiHttpClient;
     }
 
-    public function extract(array $sentences): array
+    public function extract(array $texts): array
     {
-        $response = $this->mlApiHttpClient->post('/concept/extract', ['texts' => $sentences]);
+        $response = $this->mlApiHttpClient->post('/concept/extract', ['texts' => $texts]);
 
         return $response['data']['extracted_concepts'];
     }

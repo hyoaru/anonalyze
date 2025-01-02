@@ -19,10 +19,8 @@ class ThreadExtractedConceptGroupRepository implements ThreadExtractedConceptGro
         return new ThreadExtractedConceptGroup;
     }
 
-    public function updateConcepts(int $id, array $extractedConcepts): ThreadExtractedConceptGroup
+    public function updateConcepts(ThreadExtractedConceptGroup $threadExtractedConceptGroup, array $extractedConcepts): ThreadExtractedConceptGroup
     {
-        $threadExtractedConceptGroup = ThreadExtractedConceptGroup::findOrFail($id);
-
         foreach ($extractedConcepts as $concept => $significanceScore) {
             $threadExtractedConceptGroup->threadExtractedConcepts()->create([
                 'concept' => $concept,
@@ -33,9 +31,8 @@ class ThreadExtractedConceptGroupRepository implements ThreadExtractedConceptGro
         return $threadExtractedConceptGroup;
     }
 
-    public function deleteConcepts(int $id): void
+    public function deleteConcepts(ThreadExtractedConceptGroup $threadExtractedConceptGroup): void
     {
-        $threadExtractedConceptGroup = ThreadExtractedConceptGroup::findOrFail($id);
         $threadExtractedConceptGroup->threadExtractedConcepts()->delete();
     }
 }

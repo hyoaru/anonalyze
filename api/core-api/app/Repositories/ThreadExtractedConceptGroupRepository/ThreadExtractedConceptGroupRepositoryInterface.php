@@ -8,7 +8,7 @@ interface ThreadExtractedConceptGroupRepositoryInterface
 {
     public function new(): ThreadExtractedConceptGroup;
 
-    public function updateConcepts(int $id, array $extractedConcepts): ThreadExtractedConceptGroup;
+    public function updateConcepts(ThreadExtractedConceptGroup $threadExtractedConceptGroup, array $extractedConcepts): ThreadExtractedConceptGroup;
 
-    public function deleteConcepts(int $id): void;
+    public function deleteConcepts(ThreadExtractedConceptGroup $threadExtractedConceptGroup): void;
 }

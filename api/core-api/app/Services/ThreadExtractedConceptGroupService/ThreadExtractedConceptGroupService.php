@@ -25,11 +25,18 @@ class ThreadExtractedConceptGroupService implements ThreadExtractedConceptGroupS
         $this->threadExtractedConceptGroupRepository = $threadExtractedConceptGroupRepository;
     }
 
-    public function updateConcepts(int $id): ThreadExtractedConceptGroup
+    public function updateConcepts(ThreadExtractedConceptGroup $threadExtractedConceptGroup): ThreadExtractedConceptGroup
     {
-        $postContents = $this->postRepository->getByThread($id)->toArray();
+        $thread = $threadExtractedConceptGroup->threadAnalytic->thread;
+
+        // Get thread posts and make an array out of the post content
+        $postContents = $thread->posts->pluck('content')->toArray();
+
+        // Extract concepts from the post contents
         $extractedConcepts = $this->conceptExtractionRepository->extract($postContents);
-        $this->threadExtractedConceptGroupRepository->deleteConcepts($id);
+
+        // Detele all existing concepts and add the new ones
+        $this->threadExtractedConceptGroupRepository->deleteConcepts($threadExtractedConceptGroup);
         $threadExtractedConceptGroup = $this->threadExtractedConceptGroupRepository->updateConcepts($id, $extractedConcepts);
 
         return $threadExtractedConceptGroup;
