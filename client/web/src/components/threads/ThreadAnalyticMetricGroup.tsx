@@ -31,7 +31,7 @@ export default function ThreadAnalyticMetricGroup({
 
   return (
     <ScrollArea>
-      <div className="grid w-max grid-cols-5 gap-4 xl:w-full">
+      <div className="grid w-max grid-cols-5 gap-4 2xl:w-full">
         {isLoading && <LoadingComponent />}
         {error && <ErrorComponent />}
         {data && (
