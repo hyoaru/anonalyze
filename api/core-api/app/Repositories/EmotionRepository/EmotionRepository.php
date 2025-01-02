@@ -16,4 +16,9 @@ class EmotionRepository implements EmotionRepositoryInterface
     {
         return Emotion::find($id);
     }
+
+    public function getByClass(string $class): ?Emotion
+    {
+        return Emotion::where('class', $class)->first();
+    }
 }

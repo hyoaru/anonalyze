@@ -1,53 +1,114 @@
 <?php
 
-namespace App\Services\ThreadService;
+namespace App\Services\PostService;
 
+use App\Models\Posts\Post;
 use App\Models\Threads\Thread;
-use App\Models\User;
-use App\Repositories\ThreadAnalyticRepository\ThreadAnalyticRepositoryInterface;
-use App\Repositories\ThreadExtractedConceptGroupRepository\ThreadExtractedConceptGroupRepositoryInterface;
+use App\Repositories\EmotionRepository\EmotionRepositoryInterface;
+use App\Repositories\MachineLearning\EmotionClassificationRepository\EmotionClassificationRepositoryInterface;
+use App\Repositories\MachineLearning\SentimentClassificationRepository\SentimentClassificationRepositoryInterface;
+use App\Repositories\PostAnalyticRepository\PostAnalyticRepositoryInterface;
+use App\Repositories\PostPredictedEmotionRepository\PostPredictedEmotionRepositoryInterface;
+use App\Repositories\PostPredictedSentimentRepository\PostPredictedSentimentRepositoryInterface;
+use App\Repositories\PostRepository\PostRepositoryInterface;
+use App\Repositories\SentimentRepository\SentimentRepositoryInterface;
 use App\Repositories\ThreadRepository\ThreadRepositoryInterface;
 
-class ThreadService implements ThreadServiceInterface
+class PostService implements PostServiceInterface
 {
+    protected PostRepositoryInterface $postRepository;
+
+    protected SentimentClassificationRepositoryInterface $sentimentClassificationRepository;
+
+    protected EmotionClassificationRepositoryInterface $emotionClassificationRepository;
+
+    protected SentimentRepositoryInterface $sentimentRepository;
+
+    protected EmotionRepositoryInterface $emotionRepository;
+
+    protected PostPredictedSentimentRepositoryInterface $postPredictedSentimentRepository;
+
+    protected PostPredictedEmotionRepositoryInterface $postPredictedEmotionRepository;
+
+    protected PostAnalyticRepositoryInterface $postAnalyticRepository;
+
     protected ThreadRepositoryInterface $threadRepository;
 
-    protected ThreadAnalyticRepositoryInterface $threadAnalyticRepository;
-
-    protected ThreadExtractedConceptGroupRepositoryInterface $threadExtractedConceptGroupRepository;
-
     public function __construct(
+        PostRepositoryInterface $postRepository,
+        SentimentClassificationRepositoryInterface $sentimentClassificationRepository,
+        EmotionClassificationRepositoryInterface $emotionClassificationRepository,
+        SentimentRepositoryInterface $sentimentRepository,
+        EmotionRepositoryInterface $emotionRepository,
+        PostPredictedSentimentRepositoryInterface $postPredictedSentimentRepository,
+        PostPredictedEmotionRepositoryInterface $postPredictedEmotionRepository,
+        PostAnalyticRepositoryInterface $postAnalyticRepository,
         ThreadRepositoryInterface $threadRepository,
-        ThreadAnalyticRepositoryInterface $threadAnalyticRepository,
-        ThreadExtractedConceptGroupRepositoryInterface $threadExtractedConceptGroupRepository
     ) {
+        $this->postRepository = $postRepository;
+        $this->sentimentClassificationRepository = $sentimentClassificationRepository;
+        $this->emotionClassificationRepository = $emotionClassificationRepository;
+        $this->sentimentRepository = $sentimentRepository;
+        $this->emotionRepository = $emotionRepository;
+        $this->postPredictedSentimentRepository = $postPredictedSentimentRepository;
+        $this->postPredictedEmotionRepository = $postPredictedEmotionRepository;
+        $this->postAnalyticRepository = $postAnalyticRepository;
         $this->threadRepository = $threadRepository;
-        $this->threadAnalyticRepository = $threadAnalyticRepository;
-        $this->threadExtractedConceptGroupRepository = $threadExtractedConceptGroupRepository;
     }
 
-    public function new(array $params): Thread
+    public function new(Thread $thread, array $params): Post
     {
-        $user = User::findOrFail($params['user']['id']);
-        $thread = $this->threadRepository->new($params['thread']);
-        $thread->user()->associate($user);
-        $thread->save();
+        // Create new post and associate its author
+        $post = $this->postRepository->new($params['post']);
+        $post->thread()->associate($thread);
+        $post->save();
 
-        $threadExtractedConceptGroup = $this->threadExtractedConceptGroupRepository->new();
-        $threadExtractedConceptGroup->save();
+        /*
+        * [ Sentiment prediction process block ]
+        * 1. Predict sentiment
+        * 2. Get the sentiment record from predicted sentiment class
+        * 3. Create a new post predicted sentiment record
+        */
+        $predictedSentiment = $this->sentimentClassificationRepository->classify($post->content);
+        $sentiment = $this->sentimentRepository->getByClass($predictedSentiment['class']);
 
-        $threadAnalytic = $this->threadAnalyticRepository->new();
-        $threadAnalytic->thread()->associate($thread);
-        $threadAnalytic->thread_extracted_concept_group_id = $threadExtractedConceptGroup->id;
-        $threadAnalytic->save();
+        $postPredictedSentiment = $this->postPredictedSentimentRepository->new([
+            'probability' => $predictedSentiment['probability'],
+        ]);
+        $postPredictedSentiment->sentiment_id = $sentiment->id;
+        $postPredictedSentiment->save();
 
-        return $thread;
+        /*
+        * [ Emotion prediction process block ]
+        * 1. Predict emotion
+        * 2. Get the emotion record from predicted emotion class
+        * 3. Create a new post predicted emotion record
+        */
+        $predictedEmotion = $this->emotionClassificationRepository->classify($post->content);
+        $emotion = $this->emotionRepository->getByClass($predictedEmotion['class']);
+
+        $postPredictedEmotion = $this->postPredictedEmotionRepository->new([
+            'probability' => $predictedEmotion['probability'],
+        ]);
+        $postPredictedEmotion->emotion_id = $emotion->id;
+        $postPredictedEmotion->save();
+
+        // Create new post analytic and associate the post predicted sentiment and emotion to it
+        $postAnalytic = $this->postAnalyticRepository->new();
+        $postPredictedSentiment->postAnalytic()->associate($postAnalytic);
+        $postPredictedSentiment->postAnalytic()->associate($postAnalytic);
+
+        // Associate the post analytic to the post
+        $postAnalytic->post()->associate($post);
+        $post->save();
+
+        return $post;
     }
 
-    public function update(int $id, array $params): Thread
+    public function update(int $id, array $params): Post
     {
-        $thread = $this->threadRepository->update($id, $params);
+        $post = $this->postRepository->update($id, $params);
 
-        return $thread;
+        return $post;
     }
 }

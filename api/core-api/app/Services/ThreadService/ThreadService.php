@@ -26,9 +26,8 @@ class ThreadService implements ThreadServiceInterface
         $this->threadExtractedConceptGroupRepository = $threadExtractedConceptGroupRepository;
     }
 
-    public function new(array $params): Thread
+    public function new(User $user, array $params): Thread
     {
-        $user = User::findOrFail($params['user']['id']);
         $thread = $this->threadRepository->new($params['thread']);
         $thread->user()->associate($user);
         $thread->save();

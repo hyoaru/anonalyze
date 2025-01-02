@@ -16,4 +16,9 @@ class SentimentRepository implements SentimentRepositoryInterface
     {
         return Sentiment::find($id);
     }
+
+    public function getByClass(string $class): ?Sentiment
+    {
+        return Sentiment::where('class', $class)->first();
+    }
 }

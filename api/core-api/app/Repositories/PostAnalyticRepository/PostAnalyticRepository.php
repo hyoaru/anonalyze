@@ -16,4 +16,11 @@ class PostAnalyticRepository implements PostAnalyticRepositoryInterface
     {
         return PostAnalytic::find($id);
     }
+
+    public function new(): PostAnalytic
+    {
+        $postAnalytic = new PostAnalytic;
+
+        return $postAnalytic;
+    }
 }

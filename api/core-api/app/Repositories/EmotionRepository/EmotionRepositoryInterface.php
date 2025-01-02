@@ -10,4 +10,6 @@ interface EmotionRepositoryInterface
     public function getAll(): Collection;
 
     public function getById(int $id): ?Emotion;
+
+    public function getByClass(string $class): ?Emotion;
 }

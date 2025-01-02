@@ -10,4 +10,6 @@ interface PostAnalyticRepositoryInterface
     public function getAll(): Collection;
 
     public function getById(int $id): ?PostAnalytic;
+
+    public function new(): PostAnalytic;
 }

@@ -10,4 +10,6 @@ interface SentimentRepositoryInterface
     public function getAll(): Collection;
 
     public function getById(int $id): ?Sentiment;
+
+    public function getByClass(string $class): ?Sentiment;
 }

@@ -13,4 +13,20 @@ class PostRepository implements PostRepositoryInterface
 
         return $posts;
     }
+
+    public function new(array $params): Post
+    {
+        $post = new Post($params);
+
+        return $post;
+    }
+
+    public function update(int $id, array $params): Post
+    {
+        $post = Post::findOrFail($id);
+
+        $post->update($params);
+
+        return $post;
+    }
 }

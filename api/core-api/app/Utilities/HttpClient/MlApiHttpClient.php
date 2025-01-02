@@ -7,27 +7,45 @@ use Illuminate\Support\Facades\Http;
 
 class MlApiHttpClient
 {
-    protected static string $baseUrl = env(
-        'ML_API_URL',
-        'http://anonalyze_api_ml:8003'
-    );
+    private static ?MlApiHttpClient $instance = null;
 
-    protected static array $headers = [
-        'Acept' => 'application/json',
-        'Content-Type' => 'application/json',
-    ];
+    private string $baseUrl;
 
-    public static function get(string $route)
+    private array $headers;
+
+    public function __construct()
     {
-        $response = Http::withHeaders(self::$headers)->get(self::$baseUrl.$route);
+        $this->baseUrl = env(
+            'ML_API_URL',
+            'http://anonalyze_api_ml:8003'
+        );
+
+        $this->headers = [
+            'Accept' => 'application/json',
+            'Content-Type' => 'application/json',
+        ];
+    }
+
+    public static function getInstance(): MlApiHttpClient
+    {
+        if (is_null(self::$instance)) {
+            self::$instance = new self;
+        }
+
+        return self::$instance;
+    }
+
+    public function get(string $route)
+    {
+        $response = Http::withHeaders($this->headers)->get($this->baseUrl.$route);
         throw_if(! $response->successful(), new Exception('An error has occured'));
 
         return $response->json();
     }
 
-    public static function post(string $route, array $payload)
+    public function post(string $route, array $payload)
     {
-        $response = Http::withHeaders(self::$headers)->post(self::$baseUrl.$route, $payload);
+        $response = Http::withHeaders($this->headers)->post($this->baseUrl.$route, $payload);
         throw_if(! $response->successful(), new Exception('An error has occured'));
 
         return $response->json();
