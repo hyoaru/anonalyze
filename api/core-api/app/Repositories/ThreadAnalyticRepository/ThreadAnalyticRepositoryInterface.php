@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Collection;
 
 interface ThreadAnalyticRepositoryInterface
 {
+    public function new(): ThreadAnalytic;
+
     public function getAll(): Collection;
 
     public function getById(int $threadId): ?ThreadAnalytic;

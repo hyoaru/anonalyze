@@ -1,0 +1,8 @@
+<?php
+
+namespace App\Services\MachineLearning\ConceptExtractionService;
+
+interface ConceptExtractionServiceInterface
+{
+    public function extract(array $sentences): array;
+}

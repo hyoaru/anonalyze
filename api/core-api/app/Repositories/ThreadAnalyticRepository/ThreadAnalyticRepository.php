@@ -8,6 +8,11 @@ use Illuminate\Database\Eloquent\Collection;
 
 class ThreadAnalyticRepository implements ThreadAnalyticRepositoryInterface
 {
+    public function new(): ThreadAnalytic
+    {
+        return new ThreadAnalytic;
+    }
+
     public function getAll(): Collection
     {
         return ThreadAnalytic::all();
