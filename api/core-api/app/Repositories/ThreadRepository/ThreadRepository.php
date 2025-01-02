@@ -19,9 +19,8 @@ class ThreadRepository implements ThreadRepositoryInterface
         return $thread;
     }
 
-    public function update(int $id, array $params): Thread
+    public function update(Thread $thread, array $params): Thread
     {
-        $thread = Thread::findOrFail($id);
         $thread->update($params);
 
         return $thread;

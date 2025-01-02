@@ -10,5 +10,5 @@ interface ThreadRepositoryInterface
 
     public function new(array $params): Thread;
 
-    public function update(int $id, array $params): Thread;
+    public function update(Thread $thread, array $params): Thread;
 }

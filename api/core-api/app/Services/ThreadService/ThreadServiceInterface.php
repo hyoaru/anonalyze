@@ -7,7 +7,7 @@ use App\Models\User;
 
 interface ThreadServiceInterface
 {
-    public function new(User $user, array $params): Thread;
+    public function new(User $user, array $threadParams): Thread;
 
-    public function update(int $id, array $params): Thread;
+    public function update(Thread $thread, array $threadParams): Thread;
 }

@@ -26,9 +26,9 @@ class ThreadService implements ThreadServiceInterface
         $this->threadExtractedConceptGroupRepository = $threadExtractedConceptGroupRepository;
     }
 
-    public function new(User $user, array $params): Thread
+    public function new(User $user, array $threadParams): Thread
     {
-        $thread = $this->threadRepository->new($params['thread']);
+        $thread = $this->threadRepository->new($threadParams);
         $thread->user()->associate($user);
         $thread->save();
 
@@ -43,9 +43,12 @@ class ThreadService implements ThreadServiceInterface
         return $thread;
     }
 
-    public function update(int $id, array $params): Thread
+    public function update(Thread $thread, array $threadParams): Thread
     {
-        $thread = $this->threadRepository->update($id, $params);
+        $thread = $this->threadRepository->update(
+            thread: $thread,
+            params: $threadParams,
+        );
 
         return $thread;
     }
