@@ -29,6 +29,7 @@ import {
   DialogDescription,
   DialogTitle,
 } from "@/components/ui/dialog";
+import ThreadSummaryCard from "@/components/dashboard/ThreadSummaryCard";
 
 export const Route = createFileRoute("/threads/$threadId")({
   component: Thread,
@@ -82,21 +83,17 @@ export default function Thread() {
         <div className="mt-8 grid overflow-hidden">
           <ThreadAnalyticMetricGroup threadId={data.id} />
         </div>
-        <div className="mt-4">
-          <div className="grid grid-cols-5 gap-4">
-            <div className="col-span-full xl:col-span-3">
+        <div className="mt-4 h-max xl:h-[550px]">
+          <div className="flex h-full w-full flex-col gap-4 xl:flex-row">
+            <div className="h-[400px] w-full xl:h-full xl:w-3/5">
               {data.thread_analytic?.id && (
                 <ThreadAnalyticWordCloud
                   threadAnalyticId={data.thread_analytic?.id}
                 />
               )}
             </div>
-            <div className="col-span-full xl:col-span-2">
-              <div className="h-[200px] rounded-lg border bg-secondary xl:h-full">
-                <div className="flex h-full w-full items-center justify-center">
-                  <p className="uppercase">thread summary</p>
-                </div>
-              </div>
+            <div className="h-full w-full xl:w-2/5">
+              <ThreadSummaryCard threadId={data.id} />
             </div>
           </div>
         </div>

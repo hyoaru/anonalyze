@@ -60,7 +60,8 @@ export const WordCloudComponent = forwardRef<HTMLDivElement, Props>(
     );
 
     const calculateColor = (value: number) => {
-      const normalizedValue = (value - minOccurences) / (maxOccurences - minOccurences);
+      const normalizedValue =
+        (value - minOccurences) / (maxOccurences - minOccurences);
       const baseRed = 255;
       const baseGreen = 91;
       const baseBlue = 26;
@@ -74,17 +75,23 @@ export const WordCloudComponent = forwardRef<HTMLDivElement, Props>(
     };
 
     return (
-      <div className={cn("relative h-max", className)}>
+      <div className={cn("relative h-full w-full overflow-hidden", className)}>
         <TransformWrapper
           limitToBounds={true}
           minScale={0.9}
           centerOnInit={true}
           centerZoomedOut={true}
           wheel={{ step: 0.05 }}
+          onInit={(ref) => ref.zoomIn(0.3)}
         >
           <Controls />
           <TransformComponent wrapperStyle={{ width: "100%", height: "100%" }}>
-            <div ref={ref} className={cn("h-full w-[1000px] uppercase")}>
+            <div
+              ref={ref}
+              className={cn(
+                "h-full w-[350px] uppercase sm:w-[600px] md:w-[700px] lg:w-[900px] xl:w-[700px] 2xl:w-[1000px]",
+              )}
+            >
               <WordCloud
                 width={2000}
                 font={"Fira Mono"}

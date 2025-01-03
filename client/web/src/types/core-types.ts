@@ -33,12 +33,12 @@ export type Threads = {
     Destroy: paths["/api/threads/{id}"]["delete"]["parameters"]["path"];
   };
   Response: {
-    GetAllByAuthenticatedUser: paths["/api/threads"]["get"]["responses"]['200']['content']['application/json'];
-    GetById: paths["/api/threads/{id}"]["get"]["responses"]["200"]['content']['application/json'];
-    Store: paths["/api/threads"]["post"]["responses"]['201']['content']['application/json']
-    Update: paths["/api/threads/{id}"]["put"]["responses"]["200"]['content']['application/json']
-    Destroy: paths["/api/threads/{id}"]["delete"]["responses"]["200"]['content']['application/json'];
-  }
+    GetAllByAuthenticatedUser: paths["/api/threads"]["get"]["responses"]["200"]["content"]["application/json"];
+    GetById: paths["/api/threads/{id}"]["get"]["responses"]["200"]["content"]["application/json"];
+    Store: paths["/api/threads"]["post"]["responses"]["201"]["content"]["application/json"];
+    Update: paths["/api/threads/{id}"]["put"]["responses"]["200"]["content"]["application/json"];
+    Destroy: paths["/api/threads/{id}"]["delete"]["responses"]["200"]["content"]["application/json"];
+  };
 };
 
 /**
@@ -53,11 +53,11 @@ export type Posts = {
     GetByThreadId: paths["/api/posts/by-thread-id"]["post"]["requestBody"]["content"]["application/json"];
   };
   Response: {
-    GetById: paths["/api/posts/{id}"]["get"]["responses"]["200"]['content']['application/json'];
-    Store: paths["/api/posts"]["post"]["responses"]['201']['content']['application/json']
-    Destroy: paths["/api/posts/{id}"]["delete"]["responses"]["200"]['content']['application/json'];
-    GetByThreadId: paths["/api/posts/by-thread-id"]["post"]["responses"]["200"]['content']['application/json'];
-  }
+    GetById: paths["/api/posts/{id}"]["get"]["responses"]["200"]["content"]["application/json"];
+    Store: paths["/api/posts"]["post"]["responses"]["201"]["content"]["application/json"];
+    Destroy: paths["/api/posts/{id}"]["delete"]["responses"]["200"]["content"]["application/json"];
+    GetByThreadId: paths["/api/posts/by-thread-id"]["post"]["responses"]["200"]["content"]["application/json"];
+  };
 };
 
 /**
@@ -71,10 +71,23 @@ export type ThreadAnalytics = {
     GetThreadAnalyticMetrics: paths["/api/threads/{id}/thread-analytics/metrics"]["get"]["parameters"]["path"];
   };
   Response: {
-    GetById: paths["/api/thread-analytics/{id}"]["get"]["responses"]["200"]['content']['application/json'];
-    Destroy: paths["/api/thread-analytics/{id}"]["delete"]["responses"]["200"]['content']['application/json'];
-    GetThreadAnalyticMetrics: paths["/api/threads/{id}/thread-analytics/metrics"]["get"]["responses"]["200"]['content']['application/json'];
-  }
+    GetById: paths["/api/thread-analytics/{id}"]["get"]["responses"]["200"]["content"]["application/json"];
+    Destroy: paths["/api/thread-analytics/{id}"]["delete"]["responses"]["200"]["content"]["application/json"];
+    GetThreadAnalyticMetrics: paths["/api/threads/{id}/thread-analytics/metrics"]["get"]["responses"]["200"]["content"]["application/json"];
+  };
+};
+
+/**
+ * Types related to thread summaries requests and responses.
+ * These are organized by request and response for each endpoint.
+ */
+export type ThreadSummaries = {
+  Request: {
+    GetById: paths["/api/thread-summaries/{id}"]["get"]["parameters"]["path"];
+  };
+  Response: {
+    GetById: paths["/api/thread-summaries/{id}"]["get"]["responses"]["200"]["content"]["application/json"];
+  };
 };
 
 /**

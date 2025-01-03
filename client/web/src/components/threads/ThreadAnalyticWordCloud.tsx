@@ -26,13 +26,13 @@ export default function ThreadAnalyticWordCloud({
 
   if (isLoading) return <LoadingComponent />;
   if (error) return <ErrorComponent />;
-  
+
   return (
     <>
       {data && extracted_concepts?.length ? (
         <WordCloudComponent
           words={extracted_concepts_formatted!}
-          className="h-[500px] w-full rounded-lg border border-main-accent bg-main-accent/5"
+          className="h-full rounded-lg border border-main-accent bg-main-accent/5"
         />
       ) : (
         <EmptyComponent />
