@@ -72,13 +72,18 @@ export default function Dashboard() {
                         </ThreadTile.Question>
                       </ThreadTile.Body>
                       <ThreadTile.Footer>
-                        <ThreadTile.Concepts
-                          threadExtractedConcepts={
-                            thread.thread_analytic
-                              ?.thread_extracted_concept_group
-                              ?.thread_extracted_concepts!
-                          }
-                        />
+                        {thread.thread_analytic?.thread_extracted_concept_group
+                          ?.thread_extracted_concepts && (
+                          <>
+                            <ThreadTile.Concepts
+                              threadExtractedConcepts={
+                                thread.thread_analytic
+                                  ?.thread_extracted_concept_group
+                                  ?.thread_extracted_concepts
+                              }
+                            />
+                          </>
+                        )}
                         <ThreadTile.Date createdAt={thread.created_at} />
                       </ThreadTile.Footer>
                     </ThreadTile>
