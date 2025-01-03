@@ -14,9 +14,9 @@ class ConceptExtractionService implements ConceptExtractionServiceInterface
         $this->conceptExtractionRepository = $conceptExtractionRepository;
     }
 
-    public function extract(array $sentences): array
+    public function extract(string $text): array
     {
-        $extractedConcepts = $this->conceptExtractionRepository->extract($sentences);
+        $extractedConcepts = $this->conceptExtractionRepository->extract($text);
 
         return $extractedConcepts;
     }

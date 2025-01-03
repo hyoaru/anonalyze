@@ -94,17 +94,17 @@ class PostController extends Controller implements HasMiddleware
                 postParams: $postParams,
             );
 
-            // Update thread's key concepts
-            $threadExtractedConceptGroup = $thread->threadAnalytic->threadExtractedConceptGroup;
-            $this->threadExtractedConceptGroupService->updateConcepts(
-                threadExtractedConceptGroup: $threadExtractedConceptGroup,
-            );
-
             // Upsert post to summary buffer
             $threadSummary = $thread->threadSummary;
             $this->threadSummaryService->upsertSummaryBuffer(
                 threadSummary: $threadSummary,
                 post: $post,
+            );
+
+            // Update thread's key concepts
+            $threadExtractedConceptGroup = $thread->threadAnalytic->threadExtractedConceptGroup;
+            $this->threadExtractedConceptGroupService->updateConcepts(
+                threadExtractedConceptGroup: $threadExtractedConceptGroup,
             );
 
             // Update thread summary

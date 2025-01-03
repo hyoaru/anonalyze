@@ -28,12 +28,18 @@ class ThreadExtractedConceptGroupService implements ThreadExtractedConceptGroupS
     public function updateConcepts(ThreadExtractedConceptGroup $threadExtractedConceptGroup): ThreadExtractedConceptGroup
     {
         $thread = $threadExtractedConceptGroup->threadAnalytic->thread;
+        $threadSummary = $thread->threadSummary;
 
-        // Get thread posts and make an array out of the post content
-        $postContents = $thread->posts->pluck('content')->toArray();
+        // Get the thread summary buffer and replace all occurences of the tag with empty character
+        $threadSummaryBuffer = $threadSummary->summary_buffer;
+        $formattedThreadSummaryBuffer = str_replace(
+            ['[positive]', '[negative]', '[neutral]'],
+            '',
+            $threadSummaryBuffer
+        );
 
-        // Extract concepts from the post contents
-        $extractedConcepts = $this->conceptExtractionRepository->extract($postContents);
+        // Extract concepts from the thread summary buffer
+        $extractedConcepts = $this->conceptExtractionRepository->extract($formattedThreadSummaryBuffer);
 
         // Detele all existing concepts and add the new ones
         $this->threadExtractedConceptGroupRepository->deleteConcepts($threadExtractedConceptGroup);
