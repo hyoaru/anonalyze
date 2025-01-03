@@ -15,5 +15,5 @@ class ConceptExtractionModelABC(ABC):
         return cls._instance
 
     @abstractmethod
-    def extract(self, text_list: list[str]) -> dict:
+    def extract(self, text_list: str) -> dict:
         pass

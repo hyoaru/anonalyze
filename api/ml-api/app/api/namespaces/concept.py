@@ -7,13 +7,11 @@ from app.models.concept_extraction_models.interfaces import ConceptExtractionMod
 ns = Namespace("concept")
 
 parser = reqparse.RequestParser().add_argument(
-    "texts",
-    type=list,
+    "text",
+    type=str,
     location="json",
-    default=[],
-    action="append",
     required=True,
-    help="List of text to analyze",
+    help="Text to analyze",
 )
 
 
@@ -29,10 +27,10 @@ class ConceptExtract(Resource):
     @ns.expect(parser)
     def post(self):
         data = parser.parse_args()
-        texts = data["texts"][0]
+        text = data["text"]
 
-        extracted_concepts = self._concept_extraction_model.extract(texts)
-        return {"data": {"texts": texts, "extracted_concepts": extracted_concepts}}
+        extracted_concepts = self._concept_extraction_model.extract(text)
+        return {"data": {"extracted_concepts": extracted_concepts}}
 
 
 @ns.route("/model-info")

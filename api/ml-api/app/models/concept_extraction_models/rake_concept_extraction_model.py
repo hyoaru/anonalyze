@@ -7,8 +7,8 @@ class RakeConceptExtractionModel(ConceptExtractionModelABC):
         super().__init__()
         self._model = Rake(min_length=1, max_length=3)
 
-    def extract(self, text_list: list[str]) -> dict:
-        self._model.extract_keywords_from_sentences(text_list)
+    def extract(self, text: str) -> dict:
+        self._model.extract_keywords_from_text(text)
         phrase_scores = self._model.get_ranked_phrases_with_scores()
 
         phrase_scores_map = {
