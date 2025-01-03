@@ -28,18 +28,23 @@ class ThreadSummaryController extends Controller
      *     tags={"Thread summaries"},
      *     summary="Retrieve a thread summary by its ID",
      *     description="Get a thread summary along with its analytics, sentiment, and emotion data",
+     *
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
      *         required=true,
      *         description="ID of the thread summary to retrieve",
+     *
      *         @OA\Schema(type="integer")
      *     ),
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Successful retrieval of the thread summary and its analytics",
+     *
      *         @OA\JsonContent(ref="#/components/schemas/ThreadSummary")
      *     ),
+     *
      *     @OA\Response(
      *         response=404,
      *         description="Thread summary not found"
@@ -52,8 +57,9 @@ class ThreadSummaryController extends Controller
      */
     public function show(ThreadSummary $threadSummary)
     {
-        $response = $threadSummary;
-        return $response;
+        $data = $threadSummary;
+
+        return response()->json($data, 200);
     }
 
     /**

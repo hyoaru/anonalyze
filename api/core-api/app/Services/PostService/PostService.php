@@ -13,6 +13,7 @@ use App\Repositories\PostPredictedSentimentRepository\PostPredictedSentimentRepo
 use App\Repositories\PostRepository\PostRepositoryInterface;
 use App\Repositories\SentimentRepository\SentimentRepositoryInterface;
 use App\Repositories\ThreadRepository\ThreadRepositoryInterface;
+use App\Repositories\ThreadSummaryRepository\ThreadSummaryRepositoryInterface;
 
 class PostService implements PostServiceInterface
 {
@@ -34,6 +35,8 @@ class PostService implements PostServiceInterface
 
     protected ThreadRepositoryInterface $threadRepository;
 
+    protected ThreadSummaryRepositoryInterface $threadSummaryRepository;
+
     public function __construct(
         PostRepositoryInterface $postRepository,
         SentimentClassificationRepositoryInterface $sentimentClassificationRepository,
@@ -44,6 +47,7 @@ class PostService implements PostServiceInterface
         PostPredictedEmotionRepositoryInterface $postPredictedEmotionRepository,
         PostAnalyticRepositoryInterface $postAnalyticRepository,
         ThreadRepositoryInterface $threadRepository,
+        ThreadSummaryRepositoryInterface $threadSummaryRepository,
     ) {
         $this->postRepository = $postRepository;
         $this->sentimentClassificationRepository = $sentimentClassificationRepository;
@@ -54,6 +58,7 @@ class PostService implements PostServiceInterface
         $this->postPredictedEmotionRepository = $postPredictedEmotionRepository;
         $this->postAnalyticRepository = $postAnalyticRepository;
         $this->threadRepository = $threadRepository;
+        $this->threadSummaryRepository = $threadSummaryRepository;
     }
 
     public function new(Thread $thread, array $postParams): Post

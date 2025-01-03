@@ -10,6 +10,7 @@ use App\Models\Posts\Post;
 use App\Models\Threads\Thread;
 use App\Services\PostService\PostServiceInterface;
 use App\Services\ThreadExtractedConceptGroupService\ThreadExtractedConceptGroupServiceInterface;
+use App\Services\ThreadSummaryService\ThreadSummaryServiceInterface;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
@@ -21,14 +22,18 @@ class PostController extends Controller implements HasMiddleware
 
     protected PostServiceInterface $postService;
 
+    protected ThreadSummaryServiceInterface $threadSummaryService;
+
     protected ThreadExtractedConceptGroupServiceInterface $threadExtractedConceptGroupService;
 
     public function __construct(
         PostServiceInterface $postService,
-        ThreadExtractedConceptGroupServiceInterface $threadExtractedConceptGroupService
+        ThreadExtractedConceptGroupServiceInterface $threadExtractedConceptGroupService,
+        ThreadSummaryServiceInterface $threadSummaryService
     ) {
         $this->postService = $postService;
         $this->threadExtractedConceptGroupService = $threadExtractedConceptGroupService;
+        $this->threadSummaryService = $threadSummaryService;
     }
 
     public static function middleware()
@@ -93,6 +98,18 @@ class PostController extends Controller implements HasMiddleware
             $threadExtractedConceptGroup = $thread->threadAnalytic->threadExtractedConceptGroup;
             $this->threadExtractedConceptGroupService->updateConcepts(
                 threadExtractedConceptGroup: $threadExtractedConceptGroup,
+            );
+
+            // Upsert post to summary buffer
+            $threadSummary = $thread->threadSummary;
+            $this->threadSummaryService->upsertSummaryBuffer(
+                threadSummary: $threadSummary,
+                post: $post,
+            );
+
+            // Update thread summary
+            $threadSummary = $this->threadSummaryService->updateSummary(
+                threadSummary: $threadSummary,
             );
 
             DB::commit();

@@ -10,6 +10,8 @@ use App\Repositories\MachineLearning\EmotionClassificationRepository\EmotionClas
 use App\Repositories\MachineLearning\EmotionClassificationRepository\EmotionClassificationRepositoryInterface;
 use App\Repositories\MachineLearning\SentimentClassificationRepository\SentimentClassificationRepository;
 use App\Repositories\MachineLearning\SentimentClassificationRepository\SentimentClassificationRepositoryInterface;
+use App\Repositories\MachineLearning\SummarizationRepository\SummarizationRepository;
+use App\Repositories\MachineLearning\SummarizationRepository\SummarizationRepositoryInterface;
 use App\Repositories\PostAnalyticRepository\PostAnalyticRepository;
 use App\Repositories\PostAnalyticRepository\PostAnalyticRepositoryInterface;
 use App\Repositories\PostPredictedEmotionRepository\PostPredictedEmotionRepository;
@@ -26,6 +28,8 @@ use App\Repositories\ThreadExtractedConceptGroupRepository\ThreadExtractedConcep
 use App\Repositories\ThreadExtractedConceptGroupRepository\ThreadExtractedConceptGroupRepositoryInterface;
 use App\Repositories\ThreadRepository\ThreadRepository;
 use App\Repositories\ThreadRepository\ThreadRepositoryInterface;
+use App\Repositories\ThreadSummaryRepository\ThreadSummaryRepository;
+use App\Repositories\ThreadSummaryRepository\ThreadSummaryRepositoryInterface;
 use App\Services\EmotionService\EmotionService;
 use App\Services\EmotionService\EmotionServiceInterface;
 use App\Services\MachineLearning\ConceptExtractionService\ConceptExtractionService;
@@ -42,6 +46,8 @@ use App\Services\ThreadExtractedConceptGroupService\ThreadExtractedConceptGroupS
 use App\Services\ThreadExtractedConceptGroupService\ThreadExtractedConceptGroupServiceInterface;
 use App\Services\ThreadService\ThreadService;
 use App\Services\ThreadService\ThreadServiceInterface;
+use App\Services\ThreadSummaryService\ThreadSummaryService;
+use App\Services\ThreadSummaryService\ThreadSummaryServiceInterface;
 use App\Utilities\HttpClient\MlApiHttpClient;
 use Illuminate\Support\ServiceProvider;
 
@@ -72,6 +78,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(ThreadExtractedConceptGroupRepositoryInterface::class, ThreadExtractedConceptGroupRepository::class);
         $this->app->bind(ThreadExtractedConceptGroupServiceInterface::class, ThreadExtractedConceptGroupService::class);
 
+        // Thread summary
+        $this->app->bind(ThreadSummaryRepositoryInterface::class, ThreadSummaryRepository::class);
+        $this->app->bind(ThreadSummaryServiceInterface::class, ThreadSummaryService::class);
+
         // Post
         $this->app->bind(PostRepositoryInterface::class, PostRepository::class);
         $this->app->bind(PostServiceInterface::class, PostService::class);
@@ -98,6 +108,9 @@ class AppServiceProvider extends ServiceProvider
 
         // ML API: Sentiment Classification
         $this->app->bind(SentimentClassificationRepositoryInterface::class, SentimentClassificationRepository::class);
+
+        // ML: API: Summarization
+        $this->app->bind(SummarizationRepositoryInterface::class, SummarizationRepository::class);
     }
 
     /**
