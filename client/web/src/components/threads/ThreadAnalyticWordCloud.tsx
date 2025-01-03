@@ -43,7 +43,7 @@ export default function ThreadAnalyticWordCloud({
 
 function LoadingComponent() {
   return (
-    <div className="relative h-96 w-full">
+    <div className="relative h-full w-full">
       <div className="absolute inset-0 flex items-center justify-center">
         <LoaderCircle className="animate-spin" />
       </div>
