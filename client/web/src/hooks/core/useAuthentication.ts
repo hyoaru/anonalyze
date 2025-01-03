@@ -1,38 +1,39 @@
+import { CoreService } from "@/services/CoreService";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 // App imports
-import { coreService } from "@/services/coreService";
-
 export default function useAuthentication() {
   const queryClient = useQueryClient();
 
+  /* eslint-disable react-hooks/rules-of-hooks */
+  const authenticatedUserQuery = () =>
+    useQuery({
+      queryFn: CoreService.authentication.getAuthenticatedUser,
+      queryKey: ["authenticated_user"],
+      retry: false,
+    });
+  /* eslint-enable react-hooks/rules-of-hooks */
+
   const signInMutation = useMutation({
-    mutationFn: coreService.authentication.signIn,
+    mutationFn: CoreService.authentication.signIn,
     onSuccess: () => {
       queryClient.resetQueries();
     },
   });
 
   const signUpMutation = useMutation({
-    mutationFn: coreService.authentication.signUp,
+    mutationFn: CoreService.authentication.signUp,
     onSuccess: () => {
       queryClient.resetQueries();
     },
   });
 
   const signOutMutation = useMutation({
-    mutationFn: coreService.authentication.signOut,
+    mutationFn: CoreService.authentication.signOut,
     onSuccess: () => {
-      queryClient.resetQueries()
+      queryClient.resetQueries();
     },
   });
-
-  const authenticatedUserQuery = () =>
-    useQuery({
-      queryFn: coreService.authentication.getAuthenticatedUser,
-      queryKey: ["authenticated_user"],
-      retry: false
-    });
 
   return {
     signInMutation,

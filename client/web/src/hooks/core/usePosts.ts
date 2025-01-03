@@ -1,28 +1,30 @@
-import { coreService } from "@/services/coreService";
+import { CoreService } from "@/services/CoreService";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export default function usePosts() {
   const queryClient = useQueryClient();
 
+  /* eslint-disable react-hooks/rules-of-hooks */
   const getByIdQuery = (
-    params: Parameters<typeof coreService.posts.getById>[0],
+    params: Parameters<typeof CoreService.post.getById>[0],
   ) =>
     useQuery({
-      queryFn: () => coreService.posts.getById(params),
+      queryFn: () => CoreService.post.getById(params),
       queryKey: ["posts", { id: params.id }],
     });
 
   const getByThreadIdQuery = (
-    params: Parameters<typeof coreService.posts.getByThreadId>[0],
+    params: Parameters<typeof CoreService.post.getByThreadId>[0],
   ) =>
     useQuery({
-      queryFn: () => coreService.posts.getByThreadId(params),
+      queryFn: () => CoreService.post.getByThreadId(params),
       queryKey: ["posts", { thread_id: params.thread_id }],
     });
+  /* eslint-enable react-hooks/rules-of-hooks */
 
   const storeMutation = useMutation({
-    mutationFn: (params: Parameters<typeof coreService.posts.store>[0]) =>
-      coreService.posts.store(params),
+    mutationFn: (params: Parameters<typeof CoreService.post.store>[0]) =>
+      CoreService.post.store(params),
     onSuccess: (post) => {
       [
         ["posts"],
@@ -41,8 +43,8 @@ export default function usePosts() {
   });
 
   const destroyMutation = useMutation({
-    mutationFn: (params: Parameters<typeof coreService.posts.destroy>[0]) =>
-      coreService.posts.destroy(params),
+    mutationFn: (params: Parameters<typeof CoreService.post.destroy>[0]) =>
+      CoreService.post.destroy(params),
     onSuccess: (post) => {
       [
         ["posts"],

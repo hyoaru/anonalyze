@@ -1,22 +1,36 @@
-import { coreService } from "@/services/coreService";
+import { CoreService } from "@/services/CoreService";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export default function useThreadAnalytics() {
   const queryClient = useQueryClient();
 
+  /* eslint-disable react-hooks/rules-of-hooks */
   const getByIdQuery = (
-    params: Parameters<typeof coreService.threadAnalytics.getById>[0],
+    params: Parameters<typeof CoreService.threadAnalytic.getById>[0],
   ) =>
     useQuery({
-      queryFn: () => coreService.threadAnalytics.getById(params),
+      queryFn: () => CoreService.threadAnalytic.getById(params),
       queryKey: ["thread_analytics", { id: params.id }],
       staleTime: 3 * 1000,
     });
 
+  const getThreadAnalyticMetrics = (
+    params: Parameters<
+      typeof CoreService.threadAnalytic.getThreadAnalyticMetrics
+    >[0],
+  ) =>
+    useQuery({
+      queryFn: () =>
+        CoreService.threadAnalytic.getThreadAnalyticMetrics(params),
+      queryKey: ["thread_analytics_metrics", { thread_id: params.id }],
+      staleTime: 3 * 1000,
+    });
+  /* eslint-enable react-hooks/rules-of-hooks */
+
   const destroyMutation = useMutation({
     mutationFn: (
-      params: Parameters<typeof coreService.threadAnalytics.destroy>[0],
-    ) => coreService.threadAnalytics.destroy(params),
+      params: Parameters<typeof CoreService.threadAnalytic.destroy>[0],
+    ) => CoreService.threadAnalytic.destroy(params),
     onSuccess: (response) => {
       [
         ["threads"],
@@ -30,17 +44,6 @@ export default function useThreadAnalytics() {
       });
     },
   });
-
-  const getThreadAnalyticMetrics = (
-    params: Parameters<
-      typeof coreService.threadAnalytics.getThreadAnalyticMetrics
-    >[0],
-  ) =>
-    useQuery({
-      queryFn: () => coreService.threadAnalytics.getThreadAnalyticMetrics(params),
-      queryKey: ["thread_analytics_metrics", { thread_id: params.id }],
-      staleTime: 3 * 1000,
-    });
 
   return {
     getByIdQuery,

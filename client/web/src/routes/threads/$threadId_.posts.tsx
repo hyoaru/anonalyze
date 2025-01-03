@@ -9,7 +9,6 @@ import { default as DefaultLoadingComponent } from "@/components/defaults/Loadin
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "@tanstack/react-router";
-import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/threads/$threadId_/posts")({
   beforeLoad: async ({ context }) => {
