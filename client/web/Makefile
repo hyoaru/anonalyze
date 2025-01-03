@@ -1,2 +1,2 @@
 generate-types:
-	npx openapi-typescript http://localhost:8001/docs/api-docs.json -o ./src/types/generated/core-api-schema.ts
+	npx openapi-typescript http://core.localhost:8000/docs/api-docs.json -o ./src/types/generated/core-api-schema.ts
