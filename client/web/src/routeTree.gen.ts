@@ -13,11 +13,15 @@
 import { Route as rootRoute } from './routes/__root'
 import { Route as DashboardImport } from './routes/dashboard'
 import { Route as IndexImport } from './routes/index'
+import { Route as AccountIndexImport } from './routes/account/index'
 import { Route as ThreadsThreadIdImport } from './routes/threads/$threadId'
 import { Route as AuthenticationSignUpImport } from './routes/authentication/sign-up'
 import { Route as AuthenticationSignInImport } from './routes/authentication/sign-in'
 import { Route as AuthenticationResetPasswordImport } from './routes/authentication/reset-password'
 import { Route as AuthenticationForgotPasswordImport } from './routes/authentication/forgot-password'
+import { Route as AccountUpdatePasswordImport } from './routes/account/update-password'
+import { Route as AccountUpdateInformationImport } from './routes/account/update-information'
+import { Route as AccountUpdateEmailImport } from './routes/account/update-email'
 import { Route as ThreadsThreadIdPostsImport } from './routes/threads/$threadId_.posts'
 import { Route as ThreadsThreadIdPostsNewImport } from './routes/threads/$threadId_.posts_.new'
 
@@ -32,6 +36,12 @@ const DashboardRoute = DashboardImport.update({
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AccountIndexRoute = AccountIndexImport.update({
+  id: '/account/',
+  path: '/account/',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -67,6 +77,24 @@ const AuthenticationForgotPasswordRoute =
     getParentRoute: () => rootRoute,
   } as any)
 
+const AccountUpdatePasswordRoute = AccountUpdatePasswordImport.update({
+  id: '/account/update-password',
+  path: '/account/update-password',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AccountUpdateInformationRoute = AccountUpdateInformationImport.update({
+  id: '/account/update-information',
+  path: '/account/update-information',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AccountUpdateEmailRoute = AccountUpdateEmailImport.update({
+  id: '/account/update-email',
+  path: '/account/update-email',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const ThreadsThreadIdPostsRoute = ThreadsThreadIdPostsImport.update({
   id: '/threads/$threadId_/posts',
   path: '/threads/$threadId/posts',
@@ -95,6 +123,27 @@ declare module '@tanstack/react-router' {
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof DashboardImport
+      parentRoute: typeof rootRoute
+    }
+    '/account/update-email': {
+      id: '/account/update-email'
+      path: '/account/update-email'
+      fullPath: '/account/update-email'
+      preLoaderRoute: typeof AccountUpdateEmailImport
+      parentRoute: typeof rootRoute
+    }
+    '/account/update-information': {
+      id: '/account/update-information'
+      path: '/account/update-information'
+      fullPath: '/account/update-information'
+      preLoaderRoute: typeof AccountUpdateInformationImport
+      parentRoute: typeof rootRoute
+    }
+    '/account/update-password': {
+      id: '/account/update-password'
+      path: '/account/update-password'
+      fullPath: '/account/update-password'
+      preLoaderRoute: typeof AccountUpdatePasswordImport
       parentRoute: typeof rootRoute
     }
     '/authentication/forgot-password': {
@@ -132,6 +181,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ThreadsThreadIdImport
       parentRoute: typeof rootRoute
     }
+    '/account/': {
+      id: '/account/'
+      path: '/account'
+      fullPath: '/account'
+      preLoaderRoute: typeof AccountIndexImport
+      parentRoute: typeof rootRoute
+    }
     '/threads/$threadId_/posts': {
       id: '/threads/$threadId_/posts'
       path: '/threads/$threadId/posts'
@@ -154,11 +210,15 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
+  '/account/update-email': typeof AccountUpdateEmailRoute
+  '/account/update-information': typeof AccountUpdateInformationRoute
+  '/account/update-password': typeof AccountUpdatePasswordRoute
   '/authentication/forgot-password': typeof AuthenticationForgotPasswordRoute
   '/authentication/reset-password': typeof AuthenticationResetPasswordRoute
   '/authentication/sign-in': typeof AuthenticationSignInRoute
   '/authentication/sign-up': typeof AuthenticationSignUpRoute
   '/threads/$threadId': typeof ThreadsThreadIdRoute
+  '/account': typeof AccountIndexRoute
   '/threads/$threadId/posts': typeof ThreadsThreadIdPostsRoute
   '/threads/$threadId/posts/new': typeof ThreadsThreadIdPostsNewRoute
 }
@@ -166,11 +226,15 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
+  '/account/update-email': typeof AccountUpdateEmailRoute
+  '/account/update-information': typeof AccountUpdateInformationRoute
+  '/account/update-password': typeof AccountUpdatePasswordRoute
   '/authentication/forgot-password': typeof AuthenticationForgotPasswordRoute
   '/authentication/reset-password': typeof AuthenticationResetPasswordRoute
   '/authentication/sign-in': typeof AuthenticationSignInRoute
   '/authentication/sign-up': typeof AuthenticationSignUpRoute
   '/threads/$threadId': typeof ThreadsThreadIdRoute
+  '/account': typeof AccountIndexRoute
   '/threads/$threadId/posts': typeof ThreadsThreadIdPostsRoute
   '/threads/$threadId/posts/new': typeof ThreadsThreadIdPostsNewRoute
 }
@@ -179,11 +243,15 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
+  '/account/update-email': typeof AccountUpdateEmailRoute
+  '/account/update-information': typeof AccountUpdateInformationRoute
+  '/account/update-password': typeof AccountUpdatePasswordRoute
   '/authentication/forgot-password': typeof AuthenticationForgotPasswordRoute
   '/authentication/reset-password': typeof AuthenticationResetPasswordRoute
   '/authentication/sign-in': typeof AuthenticationSignInRoute
   '/authentication/sign-up': typeof AuthenticationSignUpRoute
   '/threads/$threadId': typeof ThreadsThreadIdRoute
+  '/account/': typeof AccountIndexRoute
   '/threads/$threadId_/posts': typeof ThreadsThreadIdPostsRoute
   '/threads/$threadId_/posts_/new': typeof ThreadsThreadIdPostsNewRoute
 }
@@ -193,33 +261,45 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/dashboard'
+    | '/account/update-email'
+    | '/account/update-information'
+    | '/account/update-password'
     | '/authentication/forgot-password'
     | '/authentication/reset-password'
     | '/authentication/sign-in'
     | '/authentication/sign-up'
     | '/threads/$threadId'
+    | '/account'
     | '/threads/$threadId/posts'
     | '/threads/$threadId/posts/new'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/dashboard'
+    | '/account/update-email'
+    | '/account/update-information'
+    | '/account/update-password'
     | '/authentication/forgot-password'
     | '/authentication/reset-password'
     | '/authentication/sign-in'
     | '/authentication/sign-up'
     | '/threads/$threadId'
+    | '/account'
     | '/threads/$threadId/posts'
     | '/threads/$threadId/posts/new'
   id:
     | '__root__'
     | '/'
     | '/dashboard'
+    | '/account/update-email'
+    | '/account/update-information'
+    | '/account/update-password'
     | '/authentication/forgot-password'
     | '/authentication/reset-password'
     | '/authentication/sign-in'
     | '/authentication/sign-up'
     | '/threads/$threadId'
+    | '/account/'
     | '/threads/$threadId_/posts'
     | '/threads/$threadId_/posts_/new'
   fileRoutesById: FileRoutesById
@@ -228,11 +308,15 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DashboardRoute: typeof DashboardRoute
+  AccountUpdateEmailRoute: typeof AccountUpdateEmailRoute
+  AccountUpdateInformationRoute: typeof AccountUpdateInformationRoute
+  AccountUpdatePasswordRoute: typeof AccountUpdatePasswordRoute
   AuthenticationForgotPasswordRoute: typeof AuthenticationForgotPasswordRoute
   AuthenticationResetPasswordRoute: typeof AuthenticationResetPasswordRoute
   AuthenticationSignInRoute: typeof AuthenticationSignInRoute
   AuthenticationSignUpRoute: typeof AuthenticationSignUpRoute
   ThreadsThreadIdRoute: typeof ThreadsThreadIdRoute
+  AccountIndexRoute: typeof AccountIndexRoute
   ThreadsThreadIdPostsRoute: typeof ThreadsThreadIdPostsRoute
   ThreadsThreadIdPostsNewRoute: typeof ThreadsThreadIdPostsNewRoute
 }
@@ -240,11 +324,15 @@ export interface RootRouteChildren {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DashboardRoute: DashboardRoute,
+  AccountUpdateEmailRoute: AccountUpdateEmailRoute,
+  AccountUpdateInformationRoute: AccountUpdateInformationRoute,
+  AccountUpdatePasswordRoute: AccountUpdatePasswordRoute,
   AuthenticationForgotPasswordRoute: AuthenticationForgotPasswordRoute,
   AuthenticationResetPasswordRoute: AuthenticationResetPasswordRoute,
   AuthenticationSignInRoute: AuthenticationSignInRoute,
   AuthenticationSignUpRoute: AuthenticationSignUpRoute,
   ThreadsThreadIdRoute: ThreadsThreadIdRoute,
+  AccountIndexRoute: AccountIndexRoute,
   ThreadsThreadIdPostsRoute: ThreadsThreadIdPostsRoute,
   ThreadsThreadIdPostsNewRoute: ThreadsThreadIdPostsNewRoute,
 }
@@ -263,11 +351,15 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/dashboard",
+        "/account/update-email",
+        "/account/update-information",
+        "/account/update-password",
         "/authentication/forgot-password",
         "/authentication/reset-password",
         "/authentication/sign-in",
         "/authentication/sign-up",
         "/threads/$threadId",
+        "/account/",
         "/threads/$threadId_/posts",
         "/threads/$threadId_/posts_/new"
       ]
@@ -277,6 +369,15 @@ export const routeTree = rootRoute
     },
     "/dashboard": {
       "filePath": "dashboard.tsx"
+    },
+    "/account/update-email": {
+      "filePath": "account/update-email.tsx"
+    },
+    "/account/update-information": {
+      "filePath": "account/update-information.tsx"
+    },
+    "/account/update-password": {
+      "filePath": "account/update-password.tsx"
     },
     "/authentication/forgot-password": {
       "filePath": "authentication/forgot-password.tsx"
@@ -292,6 +393,9 @@ export const routeTree = rootRoute
     },
     "/threads/$threadId": {
       "filePath": "threads/$threadId.tsx"
+    },
+    "/account/": {
+      "filePath": "account/index.tsx"
     },
     "/threads/$threadId_/posts": {
       "filePath": "threads/$threadId_.posts.tsx"

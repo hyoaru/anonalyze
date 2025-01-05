@@ -20,5 +20,5 @@ export const forgotPasswordFormSchema = z.object({
 
 export const resetPasswordFormSchema = z.object({
   email: USER_BASE_FORM_SCHEMA.email,
-  password: z.string(),
+  password: USER_BASE_FORM_SCHEMA.password,
 });

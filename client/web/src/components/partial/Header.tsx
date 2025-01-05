@@ -59,22 +59,33 @@ export default function Header() {
                 <DropdownMenuTrigger asChild>
                   <div className="">
                     <Button variant={"secondary"} className="hidden sm:block">
-                        {authState.authenticatedUser.email}
+                      {authState.authenticatedUser.email}
                     </Button>
 
-                    <Button variant={"secondary"} size={'icon'} className="sm:hidden" >
+                    <Button
+                      variant={"secondary"}
+                      size={"icon"}
+                      className="sm:hidden"
+                    >
                       <Menu />
                     </Button>
                   </div>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" side="bottom">
-                  <DropdownMenuItem>
-                    <Link className="h-full w-full" to="/dashboard">
+                  <DropdownMenuItem className="p-0">
+                    <Link className="h-full w-full p-2" to="/dashboard">
                       Dashboard
                     </Link>
                   </DropdownMenuItem>
-                  <DropdownMenuItem>Account</DropdownMenuItem>
-                  <DropdownMenuItem onClick={onSignOut}>
+                  <DropdownMenuItem className="p-0">
+                    <Link className="h-full w-full p-2" to="/dashboard">
+                      Account
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    className="cursor-pointer p-2 text-destructive hover:text-destructive"
+                    onClick={onSignOut}
+                  >
                     Sign Out
                   </DropdownMenuItem>
                   <DropdownMenuSeparator className="sm:hidden" />
