@@ -1174,7 +1174,8 @@
             "UpdatePasswordRequest": {
                 "required": [
                     "current_password",
-                    "new_password"
+                    "new_password",
+                    "new_password_confirmation"
                 ],
                 "properties": {
                     "current_password": {
@@ -1183,6 +1184,10 @@
                     },
                     "new_password": {
                         "description": "The new password of the user",
+                        "type": "string"
+                    },
+                    "new_password_confirmation": {
+                        "description": "The new password confirmation of the user",
                         "type": "string"
                     }
                 },

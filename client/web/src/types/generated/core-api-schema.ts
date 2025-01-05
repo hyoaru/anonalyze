@@ -505,6 +505,8 @@ export interface components {
             current_password: string;
             /** @description The new password of the user */
             new_password: string;
+            /** @description The new password confirmation of the user */
+            new_password_confirmation: string;
         };
         ForgotPasswordRequest: {
             /**

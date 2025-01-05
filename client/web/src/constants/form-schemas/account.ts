@@ -12,6 +12,7 @@ export const updateEmailFormSchema = z.object({
 });
 
 export const updatePasswordFormSchema = z.object({
-  password: z.string(),
-  passwordConfirmation: z.string(),
+  currentPassword: z.string(),
+  newPassword: USER_BASE_FORM_SCHEMA.password,
+  newPasswordConfirmation: USER_BASE_FORM_SCHEMA.passwordConfirmation,
 });
