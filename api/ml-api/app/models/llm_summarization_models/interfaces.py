@@ -9,7 +9,7 @@ class LlmSummarizationModelABC(ABC):
         prompt = f""""
             Summarize the following statements based on their predicted sentiments. 
             The statements are labeled with either [positive], [negative], or [neutral] to indicate their sentiment. 
-            Provide a balanced summary report in strictly 200 words that captures both the overall sentiment distribution and key insights from the statements.
+            Provide a balanced summary report in strictly 150 words that captures both the overall sentiment distribution and key insights from the statements.
 
             [START]
             {text}

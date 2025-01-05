@@ -23,7 +23,7 @@ class ThreadExtractedConceptGroupRepository implements ThreadExtractedConceptGro
     {
         foreach ($extractedConcepts as $concept => $significanceScore) {
             $threadExtractedConceptGroup->threadExtractedConcepts()->create([
-                'concept' => $concept,
+                'concept' => trim(str_replace('.', ' ', $concept)),
                 'significance_score' => $significanceScore,
             ]);
         }
