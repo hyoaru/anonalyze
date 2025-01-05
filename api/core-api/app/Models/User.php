@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Threads\Thread;
+use App\Notifications\ResetPasswordNotification;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -12,7 +13,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasFactory, Notifiable, HasApiTokens;
+    use HasApiTokens, HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -49,7 +50,13 @@ class User extends Authenticatable implements MustVerifyEmail
         ];
     }
 
-    public function threads(): HasMany {
+    public function threads(): HasMany
+    {
         return $this->hasMany(Thread::class);
+    }
+
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ResetPasswordNotification(token: $token));
     }
 }

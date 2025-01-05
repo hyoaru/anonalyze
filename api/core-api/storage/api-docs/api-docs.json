@@ -349,20 +349,20 @@
                 ]
             }
         },
-        "/api/auth/send-reset-password-confirmation": {
+        "/api/auth/forgot-password": {
             "post": {
                 "tags": [
                     "Authentication"
                 ],
                 "summary": "User send reset password confirmation",
                 "description": "Sends a password reset email confirmation to the user",
-                "operationId": "15799788afafcbe802fbe7f0cab57fc3",
+                "operationId": "cff9b52a898f73f39d684747bd69c4e1",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/SendResetPasswordConfirmationRequest"
+                                "$ref": "#/components/schemas/ForgotPasswordRequest"
                             }
                         }
                     }
@@ -373,7 +373,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/SendResetPasswordConfirmationResponse"
+                                    "$ref": "#/components/schemas/ForgotPasswordResponse"
                                 }
                             }
                         }
@@ -1188,6 +1188,27 @@
                 },
                 "type": "object"
             },
+            "ForgotPasswordRequest": {
+                "required": [
+                    "email"
+                ],
+                "properties": {
+                    "email": {
+                        "description": "The email of the user",
+                        "type": "string",
+                        "format": "email"
+                    }
+                },
+                "type": "object"
+            },
+            "ForgotPasswordResponse": {
+                "properties": {
+                    "": {
+                        "$ref": "#/components/schemas/User"
+                    }
+                },
+                "type": "object"
+            },
             "ResetPasswordRequest": {
                 "required": [
                     "email",
@@ -1212,27 +1233,6 @@
                 "type": "object"
             },
             "ResetPasswordResponse": {
-                "properties": {
-                    "": {
-                        "$ref": "#/components/schemas/User"
-                    }
-                },
-                "type": "object"
-            },
-            "SendResetPasswordConfirmationRequest": {
-                "required": [
-                    "email"
-                ],
-                "properties": {
-                    "email": {
-                        "description": "The email of the user",
-                        "type": "string",
-                        "format": "email"
-                    }
-                },
-                "type": "object"
-            },
-            "SendResetPasswordConfirmationResponse": {
                 "properties": {
                     "": {
                         "$ref": "#/components/schemas/User"

@@ -11,24 +11,24 @@ use App\Http\Controllers\Threads\ThreadController;
 use App\Http\Controllers\Threads\ThreadSummaryController;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('/auth')->group(
+Route::prefix('auth')->group(
     function () {
-        Route::post('/sign-in', [AuthController::class, 'signIn']);
-        Route::post('/sign-up', [AuthController::class, 'signUp']);
-        Route::post('/sign-out', [AuthController::class, 'signOut']);
-        Route::get('/email/verify/{id}/{hash}', [AuthController::class, 'verifyEmail'])->name('verification.verify');
-        Route::post('/email/resend-verification', [AuthController::class, 'sendEmailVerification'])->name('verification.send');
-        Route::post('/send-reset-password-confirmation', [AuthController::class, 'sendResetPasswordConfirmation']);
-        Route::get('/reset-password', [AuthController::class, 'resetPassword'])->name('password.reset');
+        Route::post('sign-in', [AuthController::class, 'signIn']);
+        Route::post('sign-up', [AuthController::class, 'signUp']);
+        Route::post('sign-out', [AuthController::class, 'signOut']);
+        Route::get('email/verify/{id}/{hash}', [AuthController::class, 'verifyEmail'])->name('verification.verify');
+        Route::post('email/resend-verification', [AuthController::class, 'sendEmailVerification'])->name('verification.send');
+        Route::post('forgot-password', [AuthController::class, 'forgotPassword']);
+        Route::post('reset-password', [AuthController::class, 'resetPassword'])->name('password.reset');
     }
 );
 
-Route::prefix('/account')->group(
+Route::prefix('account')->group(
     function () {
-        Route::get('/', [AccountController::class, 'getAccountInformation']);
-        Route::post('/update-information', [AccountController::class, 'updateAccountInformation']);
-        Route::post('/update-password', [AccountController::class, 'updatePassword']);
-        Route::post('/update-email', [AccountController::class, 'updateEmail']);
+        Route::get('', [AccountController::class, 'getAccountInformation']);
+        Route::post('update-information', [AccountController::class, 'updateAccountInformation']);
+        Route::post('update-password', [AccountController::class, 'updatePassword']);
+        Route::post('update-email', [AccountController::class, 'updateEmail']);
     }
 );
 
@@ -41,5 +41,5 @@ Route::apiResource('thread-summaries', ThreadSummaryController::class)->only(['s
 Route::apiResource('thread-analytics', ThreadAnalyticController::class)->only(['show']);
 
 Route::apiResource('posts', PostController::class)->only(['store', 'show', 'destroy']);
-Route::post('/posts/by-thread-id', [PostController::class, 'getPostsByThreadId']);
+Route::post('posts/by-thread-id', [PostController::class, 'getPostsByThreadId']);
 Route::apiResource('post-analytics', PostAnalyticController::class)->only(['show']);

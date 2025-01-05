@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Authentication\ForgotPasswordRequest;
 use App\Http\Requests\Authentication\ResetPasswordRequest;
-use App\Http\Requests\Authentication\SendResetPasswordConfirmationRequest;
 use App\Http\Requests\Authentication\SignInRequest;
 use App\Http\Requests\Authentication\SignUpRequest;
 use App\Models\User;
@@ -27,7 +27,7 @@ class AuthController extends Controller implements HasMiddleware
             ]),
             new Middleware('throttle:6,1', only: [
                 'sendEmailVerification',
-                'sendResetPasswordConfirmation',
+                'forgotPassword',
             ]),
             new Middleware('signed', only: [
                 'verifyEmail',
@@ -236,7 +236,7 @@ class AuthController extends Controller implements HasMiddleware
 
     /**
      * @OA\Post(
-     *     path="/api/auth/send-reset-password-confirmation",
+     *     path="/api/auth/forgot-password",
      *     tags={"Authentication"},
      *     summary="User send reset password confirmation",
      *     description="Sends a password reset email confirmation to the user",
@@ -244,14 +244,14 @@ class AuthController extends Controller implements HasMiddleware
      *     @OA\RequestBody(
      *         required=true,
      *
-     *         @OA\JsonContent(ref="#/components/schemas/SendResetPasswordConfirmationRequest")
+     *         @OA\JsonContent(ref="#/components/schemas/ForgotPasswordRequest")
      *     ),
      *
      *     @OA\Response(
      *         response=200,
      *         description="Password reset link sent",
      *
-     *         @OA\JsonContent(ref="#/components/schemas/SendResetPasswordConfirmationResponse")
+     *         @OA\JsonContent(ref="#/components/schemas/ForgotPasswordResponse")
      *     ),
      *
      *     @OA\Response(
@@ -264,7 +264,7 @@ class AuthController extends Controller implements HasMiddleware
      *     )
      * )
      */
-    public function sendResetPasswordConfirmation(SendResetPasswordConfirmationRequest $request)
+    public function forgotPassword(ForgotPasswordRequest $request)
     {
         $validatedData = $request->validated();
         $user = User::where('email', $validatedData['email'])->first();

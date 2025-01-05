@@ -6,10 +6,10 @@ use OpenApi\Annotations as OA;
 
 /**
  * @OA\Schema(
- *     schema="SendResetPasswordConfirmationResponse",
+ *     schema="ForgotPasswordResponse",
  *     type="object",
  *
  *     @OA\Property(ref="#/components/schemas/User")
  * )
  */
-class SendResetPasswordConfirmationResponse {}
+class ForgotPasswordResponse {}
