@@ -326,6 +326,12 @@ class AuthController extends Controller implements HasMiddleware
             }
         );
 
-        return response()->json($user, 200);
+        if ($status == Password::PASSWORD_RESET) {
+            $user->tokens()->delete();
+
+            return response()->json($user, 200);
+        } else {
+            abort(400, 'The provided credentials are incorrect');
+        }
     }
 }

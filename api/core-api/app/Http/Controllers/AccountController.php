@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Account\UpdateEmailRequest;
 use App\Http\Requests\Account\UpdateInformationRequest;
 use App\Http\Requests\Account\UpdatePasswordRequest;
-use App\Http\Requests\Account\UpdateEmailRequest;
 use App\Models\User;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Routing\Controllers\HasMiddleware;
@@ -23,8 +23,8 @@ class AccountController extends Controller implements HasMiddleware
             new Middleware('auth:sanctum'),
             new Middleware('throttle:6,1', only: [
                 'updatePassword',
-                'updateEmail'
-            ])
+                'updateEmail',
+            ]),
         ];
     }
 
@@ -34,10 +34,13 @@ class AccountController extends Controller implements HasMiddleware
      *     tags={"Account"},
      *     summary="Get account information",
      *     description="Retrieve the logged-in user's account information",
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Successful retrieval of account information",
+     *
      *         @OA\JsonContent(ref="#/components/schemas/User")),
+     *
      *     @OA\Response(
      *         response=401,
      *         description="Unauthorized account"
@@ -65,14 +68,19 @@ class AccountController extends Controller implements HasMiddleware
      *     tags={"Account"},
      *     summary="Update account information",
      *     description="Update the user's account information",
+     *
      *     @OA\RequestBody(
      *         required=true,
+     *
      *         @OA\JsonContent(ref="#/components/schemas/UpdateInformationRequest")
      *     ),
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Account information updated successfully",
+     *
      *         @OA\JsonContent(ref="#/components/schemas/User")),
+     *
      *     @OA\Response(
      *         response=400,
      *         description="Validation error"
@@ -106,14 +114,19 @@ class AccountController extends Controller implements HasMiddleware
      *     tags={"Account"},
      *     summary="Update user password",
      *     description="Update the user's password",
+     *
      *     @OA\RequestBody(
      *         required=true,
+     *
      *         @OA\JsonContent(ref="#/components/schemas/UpdatePasswordRequest")
      *     ),
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Password updated successfully",
+     *
      *         @OA\JsonContent(ref="#/components/schemas/User")),
+     *
      *     @OA\Response(
      *         response=400,
      *         description="Current password is incorrect or validation error"
@@ -136,13 +149,14 @@ class AccountController extends Controller implements HasMiddleware
         $validatedData = $request->validated();
         $user = $request->user();
 
-        if (!Hash::check($validatedData['current_password'], $user->password)) {
+        if (! Hash::check($validatedData['current_password'], $user->password)) {
             abort(400, 'Current password is incorrect');
         }
 
         $user->update(['password' => $validatedData['new_password']]);
-
         $data = $user;
+        $user->tokens()->delete();
+
         return response()->json($data, 200);
     }
 
@@ -152,18 +166,24 @@ class AccountController extends Controller implements HasMiddleware
      *     tags={"Account"},
      *     summary="Update user email",
      *     description="Update the user's email address",
+     *
      *     @OA\RequestBody(
      *         required=true,
+     *
      *         @OA\JsonContent(ref="#/components/schemas/UpdateEmailRequest")
      *     ),
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Email updated successfully, verification sent",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="message", type="string", example="Check your email for verification"),
      *             @OA\Property(property="user", ref="#/components/schemas/User")
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=400,
      *         description="Password is incorrect or validation error"
@@ -186,7 +206,7 @@ class AccountController extends Controller implements HasMiddleware
         $validatedData = $request->validated();
         $user = $request->user();
 
-        if (!Hash::check($validatedData['password'], $user->password)) {
+        if (! Hash::check($validatedData['password'], $user->password)) {
             abort(400, 'Password is incorrect');
         }
 
@@ -200,7 +220,7 @@ class AccountController extends Controller implements HasMiddleware
 
         $data = [
             'message' => 'Check your email for verification',
-            'user' => $user
+            'user' => $user,
         ];
 
         return response()->json($data, 200);
