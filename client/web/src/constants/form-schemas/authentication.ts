@@ -13,3 +13,7 @@ export const signInFormSchema = z.object({
   email: USER_BASE_FORM_SCHEMA.email,
   password: USER_BASE_FORM_SCHEMA.password,
 });
+
+export const sendResetPasswordFormSchema = z.object({
+  email: USER_BASE_FORM_SCHEMA.email,
+});

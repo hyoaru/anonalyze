@@ -164,6 +164,46 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/auth/send-reset-password-confirmation": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * User send reset password confirmation
+         * @description Sends a password reset email confirmation to the user
+         */
+        post: operations["15799788afafcbe802fbe7f0cab57fc3"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/auth/reset-password": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * User reset password
+         * @description Resets a user's password
+         */
+        post: operations["6af92e090f994419a2295111b391a205"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/emotions": {
         parameters: {
             query?: never;
@@ -465,6 +505,30 @@ export interface components {
             current_password: string;
             /** @description The new password of the user */
             new_password: string;
+        };
+        ResetPasswordRequest: {
+            /**
+             * Format: email
+             * @description User's email address
+             */
+            email: string;
+            /** @description Password reset token */
+            token: string;
+            /** @description New password */
+            password: string;
+        };
+        ResetPasswordResponse: {
+            ""?: components["schemas"]["User"];
+        };
+        SendResetPasswordConfirmationRequest: {
+            /**
+             * Format: email
+             * @description The email of the user
+             */
+            email: string;
+        };
+        SendResetPasswordConfirmationResponse: {
+            ""?: components["schemas"]["User"];
         };
         SignInRequest: {
             /**
@@ -1064,6 +1128,82 @@ export interface operations {
                         message?: string;
                     };
                 };
+            };
+        };
+    };
+    "15799788afafcbe802fbe7f0cab57fc3": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SendResetPasswordConfirmationRequest"];
+            };
+        };
+        responses: {
+            /** @description Password reset link sent */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SendResetPasswordConfirmationResponse"];
+                };
+            };
+            /** @description Validation errors */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    "6af92e090f994419a2295111b391a205": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ResetPasswordRequest"];
+            };
+        };
+        responses: {
+            /** @description Password reset link sent */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ResetPasswordResponse"];
+                };
+            };
+            /** @description Validation errors */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
         };
     };

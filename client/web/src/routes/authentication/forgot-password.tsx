@@ -1,17 +1,49 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-
-// App imports
+import CenteredLayout from "@/components/layout/CenteredLayout";
+import { Button } from "@/components/ui/button";
+import FieldInfo from "@/components/ui/FieldInfo";
+import { FormCard } from "@/components/ui/FormCard";
+import { FormError } from "@/components/ui/FormError";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
-import CenteredLayout from "@/components/layout/CenteredLayout";
-import { FormCard } from "@/components/ui/FormCard";
+import { sendResetPasswordFormSchema as formSchema } from "@/constants/form-schemas/authentication";
+import useAuthentication from "@/hooks/core/useAuthentication";
+import { useForm } from "@tanstack/react-form";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { zodValidator } from "@tanstack/zod-form-adapter";
+import { useState } from "react";
+import { toast } from "sonner";
+import { z } from "zod";
 
 export const Route = createFileRoute("/authentication/forgot-password")({
   component: ForgotPassword,
 });
 
 export default function ForgotPassword() {
+  const { sendResetPasswordConfirmationMutation } = useAuthentication();
+  const [errorMap, setErrorMap] = useState<Record<string, string> | null>(null);
+
+  const form = useForm({
+    defaultValues: {
+      email: "",
+    } as z.infer<typeof formSchema>,
+    validatorAdapter: zodValidator(),
+    validators: {
+      onChange: formSchema,
+    },
+    onSubmit: async ({ value }) => {
+      await sendResetPasswordConfirmationMutation
+        .mutateAsync(value)
+        .then(() => {
+          toast.success("Successfully sent instructions to your email.");
+        })
+        .catch((error) => {
+          setErrorMap(
+            error["response"]["data"]["errors"] as Record<string, string>,
+          );
+          toast.error("An error has occured.");
+        });
+    },
+  });
   return (
     <CenteredLayout>
       <FormCard>
@@ -23,20 +55,41 @@ export default function ForgotPassword() {
         </FormCard.Header>
 
         <FormCard.Body>
-          <form className="grid">
+          <form
+            className="grid"
+            onSubmit={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              form.handleSubmit();
+            }}
+          >
             <div className="grid gap-4 py-8">
-              <div className="grid gap-2">
-                <Label>Email</Label>
-                <Input />
-              </div>
+              <form.Field
+                name="email"
+                children={(field) => (
+                  <div className="grid gap-2">
+                    <Label htmlFor={field.name}>Email</Label>
+                    <Input
+                      id={field.name}
+                      name={field.name}
+                      value={field.state.value}
+                      onBlur={field.handleBlur}
+                      onChange={(e) => field.handleChange(e.target.value)}
+                    />
+                    <FieldInfo field={field} />
+                  </div>
+                )}
+              />
+              <FormError errorMap={errorMap} />
             </div>
-            <Button
-              variant={"default"}
-              size={"lg"}
-              className="font-bold uppercase"
-            >
-              Reset password
-            </Button>
+            <form.Subscribe
+              selector={(state) => [state.canSubmit, state.isSubmitting]}
+              children={([canSubmit, isSubmitting]) => (
+                <Button type="submit" disabled={!canSubmit}>
+                  {isSubmitting ? "..." : "Submit"}
+                </Button>
+              )}
+            />
           </form>
           <div className="flex flex-col items-center justify-center pt-4 lg:flex-row">
             <p className="text-sm text-gray-600">

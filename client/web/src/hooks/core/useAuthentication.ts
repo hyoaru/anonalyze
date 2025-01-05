@@ -35,10 +35,18 @@ export default function useAuthentication() {
     },
   });
 
+  const sendResetPasswordConfirmationMutation = useMutation({
+    mutationFn: CoreService.authentication.sendResetPasswordConfirmation,
+    onSuccess: () => {
+      queryClient.resetQueries();
+    },
+  });
+
   return {
     signInMutation,
     signUpMutation,
     signOutMutation,
     authenticatedUserQuery,
+    sendResetPasswordConfirmationMutation,
   };
 }

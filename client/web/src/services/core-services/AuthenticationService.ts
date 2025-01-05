@@ -71,4 +71,18 @@ export class AuthenticationService {
     const response = await axiosInstance.get(endPoint);
     return response.data;
   };
+
+  /**
+   * Sends a password reset email confirmation to the user.
+   * @returns {Promise<Authentication["Response"]["SendResetPasswordConfirmation"]>}
+   */
+  static sendResetPasswordConfirmation = async (
+    params: Authentication["Request"]["SendResetPasswordConfirmation"],
+  ): Promise<Authentication["Response"]["SendResetPasswordConfirmation"]> => {
+    const endPoint: keyof paths = "/api/auth/send-reset-password-confirmation";
+    const requestBody = params;
+
+    const response = await axiosInstance.post(endPoint, requestBody);
+    return response.data;
+  };
 }
