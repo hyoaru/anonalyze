@@ -16,6 +16,7 @@ import { Route as IndexImport } from './routes/index'
 import { Route as ThreadsThreadIdImport } from './routes/threads/$threadId'
 import { Route as AuthenticationSignUpImport } from './routes/authentication/sign-up'
 import { Route as AuthenticationSignInImport } from './routes/authentication/sign-in'
+import { Route as AuthenticationResetPasswordImport } from './routes/authentication/reset-password'
 import { Route as AuthenticationForgotPasswordImport } from './routes/authentication/forgot-password'
 import { Route as ThreadsThreadIdPostsImport } from './routes/threads/$threadId_.posts'
 import { Route as ThreadsThreadIdPostsNewImport } from './routes/threads/$threadId_.posts_.new'
@@ -51,6 +52,13 @@ const AuthenticationSignInRoute = AuthenticationSignInImport.update({
   path: '/authentication/sign-in',
   getParentRoute: () => rootRoute,
 } as any)
+
+const AuthenticationResetPasswordRoute =
+  AuthenticationResetPasswordImport.update({
+    id: '/authentication/reset-password',
+    path: '/authentication/reset-password',
+    getParentRoute: () => rootRoute,
+  } as any)
 
 const AuthenticationForgotPasswordRoute =
   AuthenticationForgotPasswordImport.update({
@@ -94,6 +102,13 @@ declare module '@tanstack/react-router' {
       path: '/authentication/forgot-password'
       fullPath: '/authentication/forgot-password'
       preLoaderRoute: typeof AuthenticationForgotPasswordImport
+      parentRoute: typeof rootRoute
+    }
+    '/authentication/reset-password': {
+      id: '/authentication/reset-password'
+      path: '/authentication/reset-password'
+      fullPath: '/authentication/reset-password'
+      preLoaderRoute: typeof AuthenticationResetPasswordImport
       parentRoute: typeof rootRoute
     }
     '/authentication/sign-in': {
@@ -140,6 +155,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
   '/authentication/forgot-password': typeof AuthenticationForgotPasswordRoute
+  '/authentication/reset-password': typeof AuthenticationResetPasswordRoute
   '/authentication/sign-in': typeof AuthenticationSignInRoute
   '/authentication/sign-up': typeof AuthenticationSignUpRoute
   '/threads/$threadId': typeof ThreadsThreadIdRoute
@@ -151,6 +167,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
   '/authentication/forgot-password': typeof AuthenticationForgotPasswordRoute
+  '/authentication/reset-password': typeof AuthenticationResetPasswordRoute
   '/authentication/sign-in': typeof AuthenticationSignInRoute
   '/authentication/sign-up': typeof AuthenticationSignUpRoute
   '/threads/$threadId': typeof ThreadsThreadIdRoute
@@ -163,6 +180,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
   '/authentication/forgot-password': typeof AuthenticationForgotPasswordRoute
+  '/authentication/reset-password': typeof AuthenticationResetPasswordRoute
   '/authentication/sign-in': typeof AuthenticationSignInRoute
   '/authentication/sign-up': typeof AuthenticationSignUpRoute
   '/threads/$threadId': typeof ThreadsThreadIdRoute
@@ -176,6 +194,7 @@ export interface FileRouteTypes {
     | '/'
     | '/dashboard'
     | '/authentication/forgot-password'
+    | '/authentication/reset-password'
     | '/authentication/sign-in'
     | '/authentication/sign-up'
     | '/threads/$threadId'
@@ -186,6 +205,7 @@ export interface FileRouteTypes {
     | '/'
     | '/dashboard'
     | '/authentication/forgot-password'
+    | '/authentication/reset-password'
     | '/authentication/sign-in'
     | '/authentication/sign-up'
     | '/threads/$threadId'
@@ -196,6 +216,7 @@ export interface FileRouteTypes {
     | '/'
     | '/dashboard'
     | '/authentication/forgot-password'
+    | '/authentication/reset-password'
     | '/authentication/sign-in'
     | '/authentication/sign-up'
     | '/threads/$threadId'
@@ -208,6 +229,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DashboardRoute: typeof DashboardRoute
   AuthenticationForgotPasswordRoute: typeof AuthenticationForgotPasswordRoute
+  AuthenticationResetPasswordRoute: typeof AuthenticationResetPasswordRoute
   AuthenticationSignInRoute: typeof AuthenticationSignInRoute
   AuthenticationSignUpRoute: typeof AuthenticationSignUpRoute
   ThreadsThreadIdRoute: typeof ThreadsThreadIdRoute
@@ -219,6 +241,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DashboardRoute: DashboardRoute,
   AuthenticationForgotPasswordRoute: AuthenticationForgotPasswordRoute,
+  AuthenticationResetPasswordRoute: AuthenticationResetPasswordRoute,
   AuthenticationSignInRoute: AuthenticationSignInRoute,
   AuthenticationSignUpRoute: AuthenticationSignUpRoute,
   ThreadsThreadIdRoute: ThreadsThreadIdRoute,
@@ -241,6 +264,7 @@ export const routeTree = rootRoute
         "/",
         "/dashboard",
         "/authentication/forgot-password",
+        "/authentication/reset-password",
         "/authentication/sign-in",
         "/authentication/sign-up",
         "/threads/$threadId",
@@ -256,6 +280,9 @@ export const routeTree = rootRoute
     },
     "/authentication/forgot-password": {
       "filePath": "authentication/forgot-password.tsx"
+    },
+    "/authentication/reset-password": {
+      "filePath": "authentication/reset-password.tsx"
     },
     "/authentication/sign-in": {
       "filePath": "authentication/sign-in.tsx"

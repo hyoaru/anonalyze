@@ -5,7 +5,7 @@ import { FormCard } from "@/components/ui/FormCard";
 import { FormError } from "@/components/ui/FormError";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { sendResetPasswordFormSchema as formSchema } from "@/constants/form-schemas/authentication";
+import { forgotPasswordFormSchema as formSchema } from "@/constants/form-schemas/authentication";
 import useAuthentication from "@/hooks/core/useAuthentication";
 import { useForm } from "@tanstack/react-form";
 import { createFileRoute, Link } from "@tanstack/react-router";
@@ -34,6 +34,7 @@ export default function ForgotPassword() {
       await forgotPasswordMutation
         .mutateAsync(value)
         .then(() => {
+          setErrorMap(null);
           toast.success("Successfully sent instructions to your email.");
         })
         .catch((error) => {

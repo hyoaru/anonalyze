@@ -1,4 +1,3 @@
-// App imports
 import { axiosInstance } from "@/services/core-services/axiosInstance";
 import { Authentication } from "@/types/core-types";
 import { paths } from "@/types/generated/core-api-schema";
@@ -80,6 +79,20 @@ export class AuthenticationService {
     params: Authentication["Request"]["ForgotPassword"],
   ): Promise<Authentication["Response"]["ForgotPassword"]> => {
     const endPoint: keyof paths = "/api/auth/forgot-password";
+    const requestBody = params;
+
+    const response = await axiosInstance.post(endPoint, requestBody);
+    return response.data;
+  };
+
+  /**
+   * Resets users password.
+   * @returns {Promise<Authentication["Response"]["ResetPassword"]>}
+   */
+  static resetPassword = async (
+    params: Authentication["Request"]["ResetPassword"],
+  ): Promise<Authentication["Response"]["ResetPassword"]> => {
+    const endPoint: keyof paths = "/api/auth/reset-password";
     const requestBody = params;
 
     const response = await axiosInstance.post(endPoint, requestBody);

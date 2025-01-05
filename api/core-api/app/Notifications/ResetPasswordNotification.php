@@ -12,18 +12,21 @@ class ResetPasswordNotification extends Notification
 
     protected string $token;
 
+    protected string $email;
+
     protected string $clientBaseUrl;
 
-    protected string $resetPasswordUrl;
+    protected string $resetPasswordUrl = 'authentication/reset-password';
 
     /**
      * Create a new notification instance.
      */
-    public function __construct(string $token)
+    public function __construct(string $email, string $token)
     {
+        $this->email = $email;
         $this->token = $token;
         $this->clientBaseUrl = env('CLIENT_URL');
-        $this->resetPasswordUrl = $this->clientBaseUrl.'/authentication/reset-password?token='.$token;
+        $this->resetPasswordUrl = "{$this->clientBaseUrl}/{$this->resetPasswordUrl}?token={$this->token}&email={$this->email}";
     }
 
     /**

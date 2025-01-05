@@ -42,11 +42,19 @@ export default function useAuthentication() {
     },
   });
 
+  const resetPasswordMutation = useMutation({
+    mutationFn: CoreService.authentication.resetPassword,
+    onSuccess: () => {
+      queryClient.resetQueries();
+    },
+  });
+
   return {
     signInMutation,
     signUpMutation,
     signOutMutation,
     authenticatedUserQuery,
     forgotPasswordMutation,
+    resetPasswordMutation,
   };
 }

@@ -60,6 +60,7 @@ export default function SignUp() {
           password_confirmation: value.passwordConfirmation,
         })
         .then(() => {
+          setErrorMap(null);
           toast.success("Successfully signed in");
           router.navigate({ to: "/" });
         })

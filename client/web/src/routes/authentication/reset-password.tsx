@@ -1,59 +1,63 @@
-import {
-  createFileRoute,
-  Link,
-  redirect,
-  useRouter,
-} from "@tanstack/react-router";
-import { zodValidator } from "@tanstack/zod-form-adapter";
-import { useForm } from "@tanstack/react-form";
-import * as z from "zod";
-import { toast } from "sonner";
-import { useState } from "react";
-
-// App imports
+import CenteredLayout from "@/components/layout/CenteredLayout";
+import { Button } from "@/components/ui/button";
+import FieldInfo from "@/components/ui/FieldInfo";
+import { FormCard } from "@/components/ui/FormCard";
+import { FormError } from "@/components/ui/FormError";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
-import CenteredLayout from "@/components/layout/CenteredLayout";
-import { signInFormSchema as formSchema } from "@/constants/form-schemas/authentication";
-import FieldInfo from "@/components/ui/FieldInfo";
+import { resetPasswordFormSchema as formSchema } from "@/constants/form-schemas/authentication";
 import useAuthentication from "@/hooks/core/useAuthentication";
-import { FormError } from "@/components/ui/FormError";
-import { FormCard } from "@/components/ui/FormCard";
+import { useForm } from "@tanstack/react-form";
+import { createFileRoute, Link, redirect } from "@tanstack/react-router";
+import { zodValidator as zodRouteValidator } from "@tanstack/zod-adapter";
+import { zodValidator as zodFormValidator } from "@tanstack/zod-form-adapter";
+import { useState } from "react";
+import { toast } from "sonner";
+import { z } from "zod";
 
-export const Route = createFileRoute("/authentication/sign-in")({
-  beforeLoad: async ({ context }) => {
-    const authenticatedUser = await context.authState.refetch();
-    if (authenticatedUser) {
+const ResetPasswordSearchSchema = z.object({
+  token: z.string(),
+  email: z.string(),
+});
+
+export const Route = createFileRoute("/authentication/reset-password")({
+  component: ResetPassword,
+  beforeLoad: ({ search }) => {
+    if (!search.token && !search.email) {
       throw redirect({
-        to: "/dashboard",
+        to: "/authentication/forgot-password",
       });
     }
   },
-  component: SignIn,
+  validateSearch: zodRouteValidator(ResetPasswordSearchSchema),
 });
 
-export default function SignIn() {
-  const router = useRouter();
-  const { signInMutation } = useAuthentication();
+export default function ResetPassword() {
+  const searchParams = Route.useSearch();
+  const navigate = Route.useNavigate();
+  const { resetPasswordMutation } = useAuthentication();
   const [errorMap, setErrorMap] = useState<Record<string, string> | null>(null);
 
   const form = useForm({
     defaultValues: {
-      email: "",
+      email: searchParams.email,
       password: "",
     } as z.infer<typeof formSchema>,
-    validatorAdapter: zodValidator(),
+    validatorAdapter: zodFormValidator(),
     validators: {
       onChange: formSchema,
     },
     onSubmit: async ({ value }) => {
-      await signInMutation
-        .mutateAsync(value)
+      await resetPasswordMutation
+        .mutateAsync({
+          email: value.email,
+          password: value.password,
+          token: searchParams.token,
+        })
         .then(() => {
           setErrorMap(null);
-          toast.success("Successfully signed in");
-          router.navigate({ to: "/" });
+          toast.success("Successfully updated password.");
+          navigate({ to: "/authentication/sign-in" });
         })
         .catch((error) => {
           setErrorMap(
@@ -61,18 +65,15 @@ export default function SignIn() {
           );
           toast.error("An error has occured.");
         });
-
-      router.invalidate();
     },
   });
-
   return (
     <CenteredLayout>
       <FormCard>
         <FormCard.Header>
-          <FormCard.HeaderTitle>Sign In</FormCard.HeaderTitle>
+          <FormCard.HeaderTitle>Reset Password</FormCard.HeaderTitle>
           <FormCard.HeaderDescription>
-            Enter your credentials to access your account
+            Enter your credentials to reset password
           </FormCard.HeaderDescription>
         </FormCard.Header>
 
@@ -92,6 +93,7 @@ export default function SignIn() {
                   <div className="grid gap-2">
                     <Label htmlFor={field.name}>Email</Label>
                     <Input
+                      readOnly
                       id={field.name}
                       name={field.name}
                       value={field.state.value}
@@ -130,29 +132,15 @@ export default function SignIn() {
               )}
             />
           </form>
-
           <div className="flex flex-col items-center justify-center pt-4 lg:flex-row">
-            <Button
-              variant="link"
-              asChild
-              className="px-0 text-sm font-bold text-primary"
-            >
-              <Link href="/authentication/forgot-password">
-                Forgot password?
-              </Link>
-            </Button>
-
-            <hr className="mx-1 hidden w-4 border-black lg:block" />
-
             <p className="text-sm text-gray-600">
               Don't have an account yet?{" "}
-              <Button
-                variant={"link"}
-                asChild
-                className="px-0 text-sm font-bold text-primary"
+              <Link
+                to="/authentication/sign-up"
+                className="font-bold text-primary hover:underline"
               >
-                <Link to="/authentication/sign-up">Sign up</Link>
-              </Button>
+                Sign up
+              </Link>
             </p>
           </div>
         </FormCard.Body>

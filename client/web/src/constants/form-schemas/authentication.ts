@@ -11,9 +11,14 @@ export const signUpFormSchema = z.object({
 
 export const signInFormSchema = z.object({
   email: USER_BASE_FORM_SCHEMA.email,
-  password: USER_BASE_FORM_SCHEMA.password,
+  password: z.string(),
 });
 
-export const sendResetPasswordFormSchema = z.object({
+export const forgotPasswordFormSchema = z.object({
   email: USER_BASE_FORM_SCHEMA.email,
+});
+
+export const resetPasswordFormSchema = z.object({
+  email: USER_BASE_FORM_SCHEMA.email,
+  password: z.string(),
 });

@@ -11,6 +11,7 @@ export type Authentication = {
     SignOut: paths["/api/auth/sign-out"]["post"]["requestBody"];
     GetAuthenticatedUser: paths["/api/account"]["get"]["requestBody"];
     ForgotPassword: paths["/api/auth/forgot-password"]["post"]["requestBody"]["content"]["application/json"];
+    ResetPassword: paths["/api/auth/reset-password"]["post"]["requestBody"]["content"]["application/json"];
   };
   Response: {
     SignIn: paths["/api/auth/sign-in"]["post"]["responses"]["200"]["content"]["application/json"];
@@ -18,6 +19,7 @@ export type Authentication = {
     SignOut: paths["/api/auth/sign-out"]["post"]["responses"]["200"]["content"]["application/json"];
     GetAuthenticatedUser: paths["/api/account"]["get"]["responses"]["200"]["content"]["application/json"];
     ForgotPassword: paths["/api/auth/forgot-password"]["post"]["requestBody"]["content"]["application/json"];
+    ResetPassword: paths["/api/auth/reset-password"]["post"]["requestBody"]["content"]["application/json"];
   };
 };
 
