@@ -42,7 +42,7 @@ function Account() {
   return (
     <>
       <CenteredLayout>
-        <FormCard className="xl:w-10/12">
+        <FormCard className="">
           <FormCard.Header>
             <FormCard.HeaderTitle>Account Settings</FormCard.HeaderTitle>
             <FormCard.HeaderDescription>

@@ -78,7 +78,7 @@ export default function Header() {
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem className="p-0">
-                    <Link className="h-full w-full p-2" to="/dashboard">
+                    <Link className="h-full w-full p-2" to="/account">
                       Account
                     </Link>
                   </DropdownMenuItem>

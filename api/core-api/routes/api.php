@@ -26,7 +26,7 @@ Route::prefix('auth')->group(
 Route::prefix('account')->group(
     function () {
         Route::get('', [AccountController::class, 'getAccountInformation']);
-        Route::post('update-information', [AccountController::class, 'updateAccountInformation']);
+        Route::post('update-information', [AccountController::class, 'updateInformation']);
         Route::post('update-password', [AccountController::class, 'updatePassword']);
         Route::post('update-email', [AccountController::class, 'updateEmail']);
     }

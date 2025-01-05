@@ -26,6 +26,23 @@ export type Authentication = {
 };
 
 /**
+ * Types related to account requests and responses.
+ * These are organized by request and response for each endpoint.
+ */
+export type Account = {
+  Request: {
+    UpdateInformation: paths["/api/account/update-information"]["post"]["requestBody"]["content"]["application/json"];
+    UpdateEmail: paths["/api/account/update-email"]["post"]["requestBody"]["content"]["application/json"];
+    UpdatePassword: paths["/api/account/update-password"]["post"]["requestBody"]["content"]["application/json"];
+  };
+  Response: {
+    UpdateInformation: paths["/api/account/update-information"]["post"]["responses"]["200"]["content"]["application/json"];
+    UpdateEmail: paths["/api/account/update-email"]["post"]["responses"]["200"]["content"]["application/json"];
+    UpdatePassword: paths["/api/account/update-password"]["post"]["responses"]["200"]["content"]["application/json"];
+  };
+};
+
+/**
  * Types related to threads requests and responses.
  * These are organized by request and response for each endpoint.
  */
