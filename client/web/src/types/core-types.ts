@@ -10,14 +10,14 @@ export type Authentication = {
     SignUp: paths["/api/auth/sign-up"]["post"]["requestBody"]["content"]["application/json"];
     SignOut: paths["/api/auth/sign-out"]["post"]["requestBody"];
     GetAuthenticatedUser: paths["/api/account"]["get"]["requestBody"];
-    SendResetPasswordConfirmation: paths["/api/auth/send-reset-password-confirmation"]["post"]["requestBody"]["content"]["application/json"];
+    ForgotPassword: paths["/api/auth/forgot-password"]["post"]["requestBody"]["content"]["application/json"];
   };
   Response: {
     SignIn: paths["/api/auth/sign-in"]["post"]["responses"]["200"]["content"]["application/json"];
     SignUp: paths["/api/auth/sign-up"]["post"]["responses"]["200"]["content"]["application/json"];
     SignOut: paths["/api/auth/sign-out"]["post"]["responses"]["200"]["content"]["application/json"];
     GetAuthenticatedUser: paths["/api/account"]["get"]["responses"]["200"]["content"]["application/json"];
-    SendResetPasswordConfirmation: paths["/api/auth/send-reset-password-confirmation"]["post"]["requestBody"]["content"]["application/json"];
+    ForgotPassword: paths["/api/auth/forgot-password"]["post"]["requestBody"]["content"]["application/json"];
   };
 };
 

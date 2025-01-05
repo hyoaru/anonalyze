@@ -164,7 +164,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/auth/send-reset-password-confirmation": {
+    "/api/auth/forgot-password": {
         parameters: {
             query?: never;
             header?: never;
@@ -177,7 +177,7 @@ export interface paths {
          * User send reset password confirmation
          * @description Sends a password reset email confirmation to the user
          */
-        post: operations["15799788afafcbe802fbe7f0cab57fc3"];
+        post: operations["cff9b52a898f73f39d684747bd69c4e1"];
         delete?: never;
         options?: never;
         head?: never;
@@ -506,6 +506,16 @@ export interface components {
             /** @description The new password of the user */
             new_password: string;
         };
+        ForgotPasswordRequest: {
+            /**
+             * Format: email
+             * @description The email of the user
+             */
+            email: string;
+        };
+        ForgotPasswordResponse: {
+            ""?: components["schemas"]["User"];
+        };
         ResetPasswordRequest: {
             /**
              * Format: email
@@ -518,16 +528,6 @@ export interface components {
             password: string;
         };
         ResetPasswordResponse: {
-            ""?: components["schemas"]["User"];
-        };
-        SendResetPasswordConfirmationRequest: {
-            /**
-             * Format: email
-             * @description The email of the user
-             */
-            email: string;
-        };
-        SendResetPasswordConfirmationResponse: {
             ""?: components["schemas"]["User"];
         };
         SignInRequest: {
@@ -1131,7 +1131,7 @@ export interface operations {
             };
         };
     };
-    "15799788afafcbe802fbe7f0cab57fc3": {
+    cff9b52a898f73f39d684747bd69c4e1: {
         parameters: {
             query?: never;
             header?: never;
@@ -1140,7 +1140,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["SendResetPasswordConfirmationRequest"];
+                "application/json": components["schemas"]["ForgotPasswordRequest"];
             };
         };
         responses: {
@@ -1150,7 +1150,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["SendResetPasswordConfirmationResponse"];
+                    "application/json": components["schemas"]["ForgotPasswordResponse"];
                 };
             };
             /** @description Validation errors */

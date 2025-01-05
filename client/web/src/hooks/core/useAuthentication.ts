@@ -35,8 +35,8 @@ export default function useAuthentication() {
     },
   });
 
-  const sendResetPasswordConfirmationMutation = useMutation({
-    mutationFn: CoreService.authentication.sendResetPasswordConfirmation,
+  const forgotPasswordMutation = useMutation({
+    mutationFn: CoreService.authentication.forgotPassword,
     onSuccess: () => {
       queryClient.resetQueries();
     },
@@ -47,6 +47,6 @@ export default function useAuthentication() {
     signUpMutation,
     signOutMutation,
     authenticatedUserQuery,
-    sendResetPasswordConfirmationMutation,
+    forgotPasswordMutation,
   };
 }

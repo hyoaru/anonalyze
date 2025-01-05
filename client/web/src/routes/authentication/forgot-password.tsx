@@ -19,7 +19,7 @@ export const Route = createFileRoute("/authentication/forgot-password")({
 });
 
 export default function ForgotPassword() {
-  const { sendResetPasswordConfirmationMutation } = useAuthentication();
+  const { forgotPasswordMutation } = useAuthentication();
   const [errorMap, setErrorMap] = useState<Record<string, string> | null>(null);
 
   const form = useForm({
@@ -31,7 +31,7 @@ export default function ForgotPassword() {
       onChange: formSchema,
     },
     onSubmit: async ({ value }) => {
-      await sendResetPasswordConfirmationMutation
+      await forgotPasswordMutation
         .mutateAsync(value)
         .then(() => {
           toast.success("Successfully sent instructions to your email.");

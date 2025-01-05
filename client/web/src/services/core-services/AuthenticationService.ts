@@ -74,12 +74,12 @@ export class AuthenticationService {
 
   /**
    * Sends a password reset email confirmation to the user.
-   * @returns {Promise<Authentication["Response"]["SendResetPasswordConfirmation"]>}
+   * @returns {Promise<Authentication["Response"]["ForgotPassword"]>}
    */
-  static sendResetPasswordConfirmation = async (
-    params: Authentication["Request"]["SendResetPasswordConfirmation"],
-  ): Promise<Authentication["Response"]["SendResetPasswordConfirmation"]> => {
-    const endPoint: keyof paths = "/api/auth/send-reset-password-confirmation";
+  static forgotPassword = async (
+    params: Authentication["Request"]["ForgotPassword"],
+  ): Promise<Authentication["Response"]["ForgotPassword"]> => {
+    const endPoint: keyof paths = "/api/auth/forgot-password";
     const requestBody = params;
 
     const response = await axiosInstance.post(endPoint, requestBody);
