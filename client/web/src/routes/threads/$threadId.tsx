@@ -29,6 +29,7 @@ import {
   DialogDescription,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import ThreadSummaryCard from "@/components/dashboard/ThreadSummaryCard";
 
 export const Route = createFileRoute("/threads/$threadId")({
@@ -92,7 +93,7 @@ export default function Thread() {
                 />
               )}
             </div>
-            <div className="h-full w-full xl:w-2/5">
+            <div className="h-[400px] w-full lg:h-full xl:w-2/5">
               <ThreadSummaryCard threadId={data.id} />
             </div>
           </div>

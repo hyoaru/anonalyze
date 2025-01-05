@@ -54,7 +54,7 @@ function LoadingComponent() {
 
 function ErrorComponent() {
   return (
-    <div className="flex h-96 w-full items-center justify-center rounded-lg border border-destructive bg-destructive/5">
+    <div className="flex h-full w-full items-center justify-center rounded-lg border border-destructive bg-destructive/5">
       <p className="text-2xl font-bold uppercase text-destructive">Error</p>
     </div>
   );
@@ -62,7 +62,7 @@ function ErrorComponent() {
 
 function EmptyComponent() {
   return (
-    <div className="flex h-96 w-full items-center justify-center rounded-lg border border-main-accent bg-main-accent/5">
+    <div className="flex h-full w-full items-center justify-center rounded-lg border border-main-accent bg-main-accent/5">
       <p className="text-2xl font-bold uppercase text-main-accent">{"N/A"}</p>
     </div>
   );
