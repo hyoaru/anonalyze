@@ -18,6 +18,8 @@ Route::prefix('/auth')->group(
         Route::post('/sign-out', [AuthController::class, 'signOut']);
         Route::get('/email/verify/{id}/{hash}', [AuthController::class, 'verifyEmail'])->name('verification.verify');
         Route::post('/email/resend-verification', [AuthController::class, 'sendEmailVerification'])->name('verification.send');
+        Route::post('/send-reset-password-confirmation', [AuthController::class, 'sendResetPasswordConfirmation']);
+        Route::get('/reset-password', [AuthController::class, 'resetPassword'])->name('password.reset');
     }
 );
 

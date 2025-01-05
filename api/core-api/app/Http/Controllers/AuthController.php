@@ -2,14 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use Illuminate\Http\Request;
+use App\Http\Requests\Authentication\ResetPasswordRequest;
+use App\Http\Requests\Authentication\SendResetPasswordConfirmationRequest;
 use App\Http\Requests\Authentication\SignInRequest;
 use App\Http\Requests\Authentication\SignUpRequest;
+use App\Models\User;
+use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Auth\Events\Verified;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller implements HasMiddleware
 {
@@ -21,11 +26,12 @@ class AuthController extends Controller implements HasMiddleware
                 'sendEmailVerification',
             ]),
             new Middleware('throttle:6,1', only: [
-                'sendEmailVerification'
+                'sendEmailVerification',
+                'sendResetPasswordConfirmation',
             ]),
             new Middleware('signed', only: [
-                'verifyEmail'
-            ])
+                'verifyEmail',
+            ]),
         ];
     }
 
@@ -35,16 +41,20 @@ class AuthController extends Controller implements HasMiddleware
      *     tags={"Authentication"},
      *     summary="User resend email verification",
      *     description="Send user an email verification",
+     *
      *     @OA\Response(
      *         response=200,
      *         description="User signed up successfully",
+     *
      *         @OA\JsonContent(
+     *
      *              @OA\Property(
      *                  property="message",
      *                  type="string",
-     *              ),                
+     *              ),
      *         ),
      *     ),
+     *
      *     @OA\Response(
      *         response=400,
      *         description="Validation errors"
@@ -54,7 +64,7 @@ class AuthController extends Controller implements HasMiddleware
      *         description="Server error"
      *     ),
      *     security={{ "Bearer":{} }}
-     *      
+     *
      * )
      */
     public function sendEmailVerification(Request $request)
@@ -66,6 +76,7 @@ class AuthController extends Controller implements HasMiddleware
         }
 
         $user->sendEmailVerificationNotification();
+
         return response()->json(['message' => 'Email verification sent'], 200);
     }
 
@@ -84,22 +95,26 @@ class AuthController extends Controller implements HasMiddleware
         return response()->json(['message' => 'Email has been verified'], 200);
     }
 
-
     /**
      * @OA\Post(
      *     path="/api/auth/sign-up",
      *     tags={"Authentication"},
      *     summary="User sign-up",
      *     description="Sign up a new user",
+     *
      *     @OA\RequestBody(
      *         required=true,
+     *
      *         @OA\JsonContent(ref="#/components/schemas/SignUpRequest")
      *     ),
+     *
      *     @OA\Response(
      *         response=200,
      *         description="User signed up successfully",
+     *
      *         @OA\JsonContent(ref="#/components/schemas/SignUpResponse")
      *     ),
+     *
      *     @OA\Response(
      *         response=400,
      *         description="Validation errors"
@@ -133,22 +148,26 @@ class AuthController extends Controller implements HasMiddleware
         return response()->json($data, 200);
     }
 
-
     /**
      * @OA\Post(
      *     path="/api/auth/sign-in",
      *     tags={"Authentication"},
      *     summary="User sign-in",
      *     description="Sign in a user",
+     *
      *     @OA\RequestBody(
      *         required=true,
+     *
      *         @OA\JsonContent(ref="#/components/schemas/SignInRequest")
      *     ),
+     *
      *     @OA\Response(
      *         response=200,
      *         description="User signed in successfully",
+     *
      *         @OA\JsonContent(ref="#/components/schemas/SignInResponse")
      *     ),
+     *
      *     @OA\Response(
      *         response=400,
      *         description="Validation errors"
@@ -165,7 +184,7 @@ class AuthController extends Controller implements HasMiddleware
 
         $user = User::where('email', $validatedData['email'])->first();
 
-        if (!$user || !Hash::check($validatedData['password'], $user->password)) {
+        if (! $user || ! Hash::check($validatedData['password'], $user->password)) {
             abort(400, 'The provided credentials are incorrect');
         }
 
@@ -185,15 +204,20 @@ class AuthController extends Controller implements HasMiddleware
      *     tags={"Authentication"},
      *     summary="Sign out a user",
      *     description="Signs out the authenticated user by invalidating their token.",
+     *
      *     @OA\Response(
      *         response=200,
      *         description="User signed out successfully",
+     *
      *         @OA\JsonContent(ref="#/components/schemas/SignOutResponse")
      *     ),
+     *
      *     @OA\Response(
      *         response=401,
      *         description="Unauthorized",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="message", type="string", example="Unauthenticated.")
      *         )
      *     ),
@@ -208,5 +232,100 @@ class AuthController extends Controller implements HasMiddleware
         $data = $user;
 
         return response()->json($data, 200);
+    }
+
+    /**
+     * @OA\Post(
+     *     path="/api/auth/send-reset-password-confirmation",
+     *     tags={"Authentication"},
+     *     summary="User send reset password confirmation",
+     *     description="Sends a password reset email confirmation to the user",
+     *
+     *     @OA\RequestBody(
+     *         required=true,
+     *
+     *         @OA\JsonContent(ref="#/components/schemas/SendResetPasswordConfirmationRequest")
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="Password reset link sent",
+     *
+     *         @OA\JsonContent(ref="#/components/schemas/SendResetPasswordConfirmationResponse")
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=400,
+     *         description="Validation errors"
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Server error"
+     *     )
+     * )
+     */
+    public function sendResetPasswordConfirmation(SendResetPasswordConfirmationRequest $request)
+    {
+        $validatedData = $request->validated();
+        $user = User::where('email', $validatedData['email'])->first();
+
+        if (! $user->hasVerifiedEmail()) {
+            abort(400, 'Email is not verified');
+        }
+
+        Password::sendResetLink($user->only('email'));
+
+        return response()->json($user, 200);
+    }
+
+    /**
+     * @OA\Post(
+     *     path="/api/auth/reset-password",
+     *     tags={"Authentication"},
+     *     summary="User reset password",
+     *     description="Resets a user's password",
+     *
+     *     @OA\RequestBody(
+     *         required=true,
+     *
+     *         @OA\JsonContent(ref="#/components/schemas/ResetPasswordRequest")
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="Password reset link sent",
+     *
+     *         @OA\JsonContent(ref="#/components/schemas/ResetPasswordResponse")
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=400,
+     *         description="Validation errors"
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Server error"
+     *     )
+     * )
+     */
+    public function resetPassword(ResetPasswordRequest $request)
+    {
+        $validatedData = $request->validated();
+        $user = User::where('email', $validatedData['email'])->first();
+
+        $status = Password::reset(
+            $validatedData,
+            function (User $user, string $password) {
+                $user->forceFill([
+                    'password' => Hash::make($password),
+                ])->setRememberToken(Str::random(60));
+
+                $user->save();
+
+                event(new PasswordReset($user));
+            }
+        );
+
+        return response()->json($user, 200);
     }
 }

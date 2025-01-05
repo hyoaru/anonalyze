@@ -349,6 +349,82 @@
                 ]
             }
         },
+        "/api/auth/send-reset-password-confirmation": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "User send reset password confirmation",
+                "description": "Sends a password reset email confirmation to the user",
+                "operationId": "15799788afafcbe802fbe7f0cab57fc3",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SendResetPasswordConfirmationRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Password reset link sent",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SendResetPasswordConfirmationResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Validation errors"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                }
+            }
+        },
+        "/api/auth/reset-password": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "User reset password",
+                "description": "Resets a user's password",
+                "operationId": "6af92e090f994419a2295111b391a205",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ResetPasswordRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Password reset link sent",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResetPasswordResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Validation errors"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                }
+            }
+        },
         "/api/emotions": {
             "get": {
                 "tags": [
@@ -1108,6 +1184,58 @@
                     "new_password": {
                         "description": "The new password of the user",
                         "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "ResetPasswordRequest": {
+                "required": [
+                    "email",
+                    "token",
+                    "password"
+                ],
+                "properties": {
+                    "email": {
+                        "description": "User's email address",
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "token": {
+                        "description": "Password reset token",
+                        "type": "string"
+                    },
+                    "password": {
+                        "description": "New password",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "ResetPasswordResponse": {
+                "properties": {
+                    "": {
+                        "$ref": "#/components/schemas/User"
+                    }
+                },
+                "type": "object"
+            },
+            "SendResetPasswordConfirmationRequest": {
+                "required": [
+                    "email"
+                ],
+                "properties": {
+                    "email": {
+                        "description": "The email of the user",
+                        "type": "string",
+                        "format": "email"
+                    }
+                },
+                "type": "object"
+            },
+            "SendResetPasswordConfirmationResponse": {
+                "properties": {
+                    "": {
+                        "$ref": "#/components/schemas/User"
                     }
                 },
                 "type": "object"
