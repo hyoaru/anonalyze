@@ -98,4 +98,17 @@ export class AuthenticationService {
     const response = await axiosInstance.post(endPoint, requestBody);
     return response.data;
   };
+
+  /**
+   * Resends email verification to the user.
+   * @returns {Promise<Authentication["Response"]["VerifyEmail"]>}
+   */
+  static verifyEmail = async (): Promise<
+    Authentication["Response"]["VerifyEmail"]
+  > => {
+    const endPoint: keyof paths = "/api/auth/email/resend-verification";
+
+    const response = await axiosInstance.post(endPoint);
+    return response.data;
+  };
 }

@@ -92,6 +92,10 @@ class AuthController extends Controller implements HasMiddleware
             event(new Verified($user));
         }
 
+        $clientBaseUrl = env('CLIENT_URL');
+
+        return redirect("{$clientBaseUrl}/account");
+
         return response()->json(['message' => 'Email has been verified'], 200);
     }
 

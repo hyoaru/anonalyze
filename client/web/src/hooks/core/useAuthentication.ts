@@ -49,6 +49,13 @@ export default function useAuthentication() {
     },
   });
 
+  const verifyEmailMutation = useMutation({
+    mutationFn: CoreService.authentication.verifyEmail,
+    onSuccess: () => {
+      queryClient.resetQueries();
+    },
+  });
+
   return {
     signInMutation,
     signUpMutation,
@@ -56,5 +63,6 @@ export default function useAuthentication() {
     authenticatedUserQuery,
     forgotPasswordMutation,
     resetPasswordMutation,
+    verifyEmailMutation,
   };
 }
