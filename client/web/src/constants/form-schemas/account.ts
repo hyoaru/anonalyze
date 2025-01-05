@@ -7,7 +7,7 @@ export const updateInformationFormSchema = z.object({
 });
 
 export const updateEmailFormSchema = z.object({
-  email: USER_BASE_FORM_SCHEMA.email,
+  newEmail: USER_BASE_FORM_SCHEMA.email,
   password: z.string(),
 });
 
