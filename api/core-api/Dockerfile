@@ -19,4 +19,6 @@ RUN chown -R www-data:www-data /app && \
     chown -R www-data:www-data /app/bootstrap/cache && \
     chmod -R 775 /app/bootstrap/cache
 
+RUN cd /app && composer install --no-interaction --prefer-dist --optimize-autoloader
+
 CMD ["php", "artisan", "octane:frankenphp", "--port", "8002"]
