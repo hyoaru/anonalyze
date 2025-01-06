@@ -1,8 +1,6 @@
 import { createRootRouteWithContext, Outlet } from "@tanstack/react-router";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 
-// App imports
 import Header from "@/components/partial/Header";
 import Footer from "@/components/partial/Footer";
 import BaseContainer from "@/components/partial/BaseContainer";

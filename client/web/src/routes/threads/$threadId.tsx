@@ -29,7 +29,6 @@ import {
   DialogDescription,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import ThreadSummaryCard from "@/components/dashboard/ThreadSummaryCard";
 
 export const Route = createFileRoute("/threads/$threadId")({

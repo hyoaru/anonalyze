@@ -79,7 +79,7 @@ function About() {
             <div className="space-y-4 rounded-xl border p-8">
               <img
                 className="w-full rounded-xl object-cover"
-                src="/public/images/cabrera.jpg"
+                src="/images/cabrera.jpg"
                 alt=""
               />
               <div className="text-center">
@@ -92,7 +92,7 @@ function About() {
             <div className="space-y-4 rounded-xl border p-8">
               <img
                 className="w-full rounded-xl object-cover"
-                src="/public/images/rubia.jpg"
+                src="/images/rubia.jpg"
                 alt=""
               />
               <div className="text-center">
@@ -105,7 +105,7 @@ function About() {
             <div className="space-y-4 rounded-xl border p-8">
               <img
                 className="w-full rounded-xl object-cover"
-                src="/public/images/sotelo.jpg"
+                src="/images/sotelo.jpg"
                 alt=""
               />
               <div className="text-center">
