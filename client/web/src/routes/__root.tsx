@@ -25,7 +25,7 @@ export const Route = createRootRouteWithContext<RouterContext>()({
     return <ErrorComponent error={error} />;
   },
   notFoundComponent: NotFoundComponent,
-  pendingComponent: LoadingComponent
+  pendingComponent: LoadingComponent,
 });
 
 export function Root() {
@@ -44,7 +44,6 @@ export function Root() {
 
       <Toaster richColors theme={theme} toastOptions={{}} />
       <ReactQueryDevtools />
-      <TanStackRouterDevtools />
     </>
   );
 }
