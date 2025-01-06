@@ -102,7 +102,7 @@ export default function Header() {
             <>
               <Link to="/authentication/sign-in">
                 <Button variant={"secondary"} className="font-custom">
-                  Sign in
+                  Get Started
                 </Button>
               </Link>
             </>

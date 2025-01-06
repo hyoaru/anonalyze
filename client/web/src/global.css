@@ -80,10 +80,10 @@
 }
 @layer base {
   * {
-    @apply border-border;
+    @apply border-border tracking-tight;
   }
   body {
-    @apply bg-grid bg-background text-foreground;
+    @apply bg-grid bg-background font-custom text-foreground;
   }
 }
 
