@@ -31,7 +31,7 @@ export default function Footer() {
             asChild
             className="px-0 text-base font-medium"
           >
-            <Link to="/">
+            <Link to="/about">
               <p>about</p>
             </Link>
           </Button>

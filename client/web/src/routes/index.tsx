@@ -1,7 +1,12 @@
 import { Button } from "@/components/ui/button";
 
 import { useThemeContext } from "@/context/ThemeContext";
-import { createFileRoute, redirect, useRouter } from "@tanstack/react-router";
+import {
+  createFileRoute,
+  Link,
+  redirect,
+  useRouter,
+} from "@tanstack/react-router";
 import { CirclePlus, Key, Laugh, MicVocal } from "lucide-react";
 
 export const Route = createFileRoute("/")({
@@ -62,11 +67,11 @@ export function Index() {
               Get Started
             </Button>
           </div>
-          <a href="#learnMore">
+          <Link to="/about">
             <Button variant="secondary" className="uppercase">
               Learn More
             </Button>
-          </a>
+          </Link>
         </div>
       </div>
 

@@ -12,6 +12,7 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as DashboardImport } from './routes/dashboard'
+import { Route as AboutImport } from './routes/about'
 import { Route as IndexImport } from './routes/index'
 import { Route as AccountIndexImport } from './routes/account/index'
 import { Route as ThreadsThreadIdImport } from './routes/threads/$threadId'
@@ -30,6 +31,12 @@ import { Route as ThreadsThreadIdPostsNewImport } from './routes/threads/$thread
 const DashboardRoute = DashboardImport.update({
   id: '/dashboard',
   path: '/dashboard',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AboutRoute = AboutImport.update({
+  id: '/about',
+  path: '/about',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -116,6 +123,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutImport
       parentRoute: typeof rootRoute
     }
     '/dashboard': {
@@ -209,6 +223,7 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/dashboard': typeof DashboardRoute
   '/account/update-email': typeof AccountUpdateEmailRoute
   '/account/update-information': typeof AccountUpdateInformationRoute
@@ -225,6 +240,7 @@ export interface FileRoutesByFullPath {
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/dashboard': typeof DashboardRoute
   '/account/update-email': typeof AccountUpdateEmailRoute
   '/account/update-information': typeof AccountUpdateInformationRoute
@@ -242,6 +258,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/dashboard': typeof DashboardRoute
   '/account/update-email': typeof AccountUpdateEmailRoute
   '/account/update-information': typeof AccountUpdateInformationRoute
@@ -260,6 +277,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/about'
     | '/dashboard'
     | '/account/update-email'
     | '/account/update-information'
@@ -275,6 +293,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/about'
     | '/dashboard'
     | '/account/update-email'
     | '/account/update-information'
@@ -290,6 +309,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/about'
     | '/dashboard'
     | '/account/update-email'
     | '/account/update-information'
@@ -307,6 +327,7 @@ export interface FileRouteTypes {
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
   DashboardRoute: typeof DashboardRoute
   AccountUpdateEmailRoute: typeof AccountUpdateEmailRoute
   AccountUpdateInformationRoute: typeof AccountUpdateInformationRoute
@@ -323,6 +344,7 @@ export interface RootRouteChildren {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
   DashboardRoute: DashboardRoute,
   AccountUpdateEmailRoute: AccountUpdateEmailRoute,
   AccountUpdateInformationRoute: AccountUpdateInformationRoute,
@@ -350,6 +372,7 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/about",
         "/dashboard",
         "/account/update-email",
         "/account/update-information",
@@ -366,6 +389,9 @@ export const routeTree = rootRoute
     },
     "/": {
       "filePath": "index.tsx"
+    },
+    "/about": {
+      "filePath": "about.tsx"
     },
     "/dashboard": {
       "filePath": "dashboard.tsx"
