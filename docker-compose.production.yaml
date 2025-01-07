@@ -72,6 +72,7 @@ services:
     container_name: anonalyze_client_web
     working_dir: /app
     volumes:
+      - /app/node_modules
       - ./client/web:/app
     networks:
       - network
