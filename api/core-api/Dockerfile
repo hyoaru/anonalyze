@@ -1,24 +1,32 @@
 FROM dunglas/frankenphp:php8.3
 
+# Install necessary PHP extensions
 RUN install-php-extensions \
-	pdo_mysql \
-	gd \
-	intl \
-	zip \
-	opcache \
+    pdo_mysql \
+    gd \
+    intl \
+    zip \
+    opcache \
     pcntl
 
-COPY --from=composer:2.8 /usr/bin/composer /usr/bin/composer
+# Install procps package to use `ps`
+RUN apt-get update && apt-get install -y procps
 
-COPY . /app
+# Install Composer
+RUN curl -sS https://getcomposer.org/installer | php -- --version=2.8.4 && mv composer.phar /usr/local/bin/composer
 
-RUN chown -R www-data:www-data /app && \
-    chmod -R 775 /app && \
-    chown -R www-data:www-data /app/storage && \
-    chmod -R 775 /app/storage && \
-    chown -R www-data:www-data /app/bootstrap/cache && \
-    chmod -R 775 /app/bootstrap/cache
+WORKDIR /app
+COPY . .
 
-RUN cd /app && composer install --no-interaction --prefer-dist --optimize-autoloader
+# Set permissions
+RUN chmod -R 775 /app/storage /app/bootstrap/cache
 
+# Install dependencies
+RUN composer install --no-dev --optimize-autoloader
+
+# Laravel commands
+RUN php artisan config:clear
+
+# Run the Laravel Octane server
 CMD ["php", "artisan", "octane:frankenphp", "--port", "8002"]
+

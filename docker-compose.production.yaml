@@ -46,6 +46,7 @@ services:
     container_name: anonalyze_api_core
     working_dir: /app
     volumes:
+      - /app/vendor
       - ./api/core-api:/app
     depends_on:
       - api_ml_flask
