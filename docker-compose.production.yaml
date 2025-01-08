@@ -1,6 +1,7 @@
 services:
   web_server_nginx:
     build: ./web-server
+    restart: unless-stopped
     container_name: anonalyze_web_server
     volumes:
       - ./client/web/dist:/var/www/public
@@ -19,6 +20,7 @@ services:
 
   database_administration_phpmyadmin:
     image: phpmyadmin/phpmyadmin
+    restart: unless-stopped
     container_name: anonalyze_database_administration
     environment:
       PMA_HOST: database_mysql
@@ -32,6 +34,7 @@ services:
 
   database_mysql:
     image: mysql:8
+    restart: unless-stopped
     container_name: anonalyze_database
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
@@ -46,7 +49,6 @@ services:
 
   api_core_laravel:
     build: ./api/core-api
-    container_name: anonalyze_api_core
     working_dir: /app
     volumes:
       - api_core_volume:/app/vendor
@@ -56,22 +58,30 @@ services:
       - database_mysql
     expose:
       - 8002
+    deploy:
+      replicas: 6
+      restart_policy:
+        condition: unless-stopped
     networks:
       - network
 
   api_ml_flask:
     build: ./api/ml-api
-    container_name: anonalyze_api_ml
     working_dir: /app
     volumes:
       - ./api/ml-api:/app
     expose:
       - 8003
+    deploy:
+      replicas: 6
+      restart_policy:
+        condition: unless-stopped
     networks:
       - network
 
   client_web:
     build: ./client/web
+    restart: unless-stopped
     container_name: anonalyze_client_web
     working_dir: /app
     volumes:
