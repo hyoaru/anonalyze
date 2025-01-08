@@ -47,13 +47,16 @@ export const ThreadTile = ({
   threadId,
 }: ThreadTileProps) => (
   <Link
-    className={cn("group flex h-full break-inside-avoid w-full", classNames?.link)}
+    className={cn(
+      "group flex h-full w-full break-inside-avoid",
+      classNames?.link,
+    )}
     to="/threads/$threadId"
     params={{ threadId: threadId.toString() }}
   >
     <div
       className={cn(
-        "flex w-full h-full flex-col break-inside-avoid rounded-lg border bg-secondary p-6 transition-colors duration-200 ease-in-out group-hover:border-main-accent/20 dark:bg-secondary/60",
+        "flex h-full w-full break-inside-avoid flex-col rounded-lg border bg-secondary p-6 transition-colors duration-200 ease-in-out group-hover:border-main-accent/20 dark:bg-secondary/60",
         classNames?.container,
       )}
     >
