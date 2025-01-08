@@ -17,7 +17,7 @@ class MlApiHttpClient
     {
         $this->baseUrl = env(
             'ML_API_URL',
-            'http://anonalyze_api_ml:8003'
+            'http://localhost:8003'
         );
 
         $this->headers = [
