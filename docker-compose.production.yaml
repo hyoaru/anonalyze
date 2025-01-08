@@ -49,7 +49,7 @@ services:
     container_name: anonalyze_api_core
     working_dir: /app
     volumes:
-      - /app/vendor
+      - api_core_volume:/app/vendor
       - ./api/core-api:/app
     depends_on:
       - api_ml_flask
@@ -75,7 +75,7 @@ services:
     container_name: anonalyze_client_web
     working_dir: /app
     volumes:
-      - /app/node_modules
+      - client_web_volume:/app/node_modules
       - ./client/web:/app
     networks:
       - network
@@ -86,3 +86,5 @@ networks:
 
 volumes:
   database_volume_mysql:
+  api_core_volume:
+  client_web_volume:
