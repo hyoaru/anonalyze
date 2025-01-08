@@ -24,7 +24,21 @@ def create_app():
 
     # Instances lazy loading
     api.init_app(app, version="1.1", title="Anonalyze ML API")
-    cors.init_app(app)
+    cors.init_app(
+        app,
+        resources={
+            r"/*": {
+                "origins": [
+                    "http://localhost",
+                    "https://localhost",
+                    "http://localhost:8002",
+                    "https://localhost:8002",
+                    "http://core.anonalyze.org",
+                    "https://core.anonalyze.org",
+                ]
+            }
+        },
+    )
 
     return app
 

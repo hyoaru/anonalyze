@@ -19,7 +19,14 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['*'],
+    'allowed_origins' => [
+        'http://localhost',
+        'https://localhost',
+        'http://localhost:8000',
+        'https://localhost:8000',
+        'http://anonalyze.org',
+        'https://anonalyze.org',
+    ],
 
     'allowed_origins_patterns' => [],
 
