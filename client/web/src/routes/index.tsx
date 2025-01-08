@@ -1,22 +1,13 @@
 import { Button } from "@/components/ui/button";
 
 import { useThemeContext } from "@/context/ThemeContext";
-import {
-  createFileRoute,
-  Link,
-  redirect,
-  useRouter,
-} from "@tanstack/react-router";
+import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import { CirclePlus, Key, Laugh, MicVocal } from "lucide-react";
+import heroImgLight from "@/assets/images/hero_light_mode.png";
+import heroImgDark from "@/assets/images/hero_dark_mode.png";
 
 export const Route = createFileRoute("/")({
   component: Index,
-  beforeLoad: async ({ context }) => {
-    const authenticatedUser = await context.authState.refetch();
-    if (authenticatedUser) {
-      throw redirect({ to: "/dashboard" });
-    }
-  },
 });
 
 export function Index() {
@@ -33,11 +24,7 @@ export function Index() {
         <div className="h-full w-full overflow-hidden">
           <img
             className="-translate-x-[20px] scale-125 opacity-80 sm:-translate-x-[50px]"
-            src={
-              theme === "light"
-                ? "/images/hero_light_mode.png"
-                : "/images/hero_dark_mode.png"
-            }
+            src={theme === "light" ? heroImgLight : heroImgDark}
             alt=""
           />
         </div>

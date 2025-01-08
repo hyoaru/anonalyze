@@ -1,5 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 
+import sotelo from "@/assets/images/sotelo.jpg";
+import cabrera from "@/assets/images/cabrera.jpg";
+import rubia from "@/assets/images/rubia.jpg";
+
 export const Route = createFileRoute("/about")({
   component: About,
 });
@@ -79,7 +83,7 @@ function About() {
             <div className="space-y-4 rounded-xl border p-8">
               <img
                 className="w-full rounded-xl object-cover"
-                src="/images/cabrera.jpg"
+                src={cabrera}
                 alt=""
               />
               <div className="text-center">
@@ -92,7 +96,7 @@ function About() {
             <div className="space-y-4 rounded-xl border p-8">
               <img
                 className="w-full rounded-xl object-cover"
-                src="/images/rubia.jpg"
+                src={rubia}
                 alt=""
               />
               <div className="text-center">
@@ -105,7 +109,7 @@ function About() {
             <div className="space-y-4 rounded-xl border p-8">
               <img
                 className="w-full rounded-xl object-cover"
-                src="/images/sotelo.jpg"
+                src={sotelo}
                 alt=""
               />
               <div className="text-center">
