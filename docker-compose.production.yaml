@@ -81,7 +81,7 @@ services:
 
   client_web:
     build: ./client/web
-    restart: unless-stopped
+    restart: on-failure
     container_name: anonalyze_client_web
     working_dir: /app
     volumes:
