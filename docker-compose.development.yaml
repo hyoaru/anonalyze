@@ -62,7 +62,7 @@ services:
     working_dir: /app
     command: php artisan serve --host 0.0.0.0 --port 8002
     volumes:
-      - /app/vendor
+      - api_core_volume:/app/vendor
       - ./api/core-api:/app
     depends_on:
       - api_ml_flask
@@ -91,7 +91,7 @@ services:
     working_dir: /app
     command: npm run dev -- --host 0.0.0.0 --port 8004
     volumes:
-      - /app/node_modules
+      - client_web_volume:/app/node_modules
       - ./client/web:/app
     expose:
       - 8004
@@ -104,3 +104,5 @@ networks:
 
 volumes:
   database_volume_mysql:
+  api_core_volume:
+  client_web_volume:

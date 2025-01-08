@@ -22,7 +22,7 @@ COPY . .
 RUN chmod -R 775 /app/storage /app/bootstrap/cache
 
 # Install dependencies
-RUN composer install --no-dev --optimize-autoloader
+RUN composer install --optimize-autoloader
 
 # Laravel commands
 RUN php artisan config:clear
