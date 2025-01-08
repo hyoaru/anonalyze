@@ -20,6 +20,10 @@ services:
       - api_core_laravel
     ports:
       - 8000:8000
+      - 8002:8002
+      - 8003:8003
+      - 7999:7999
+      - 7998:7998
     networks:
       - network
 
