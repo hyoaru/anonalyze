@@ -9,7 +9,7 @@ export default function useThreadSummaries() {
     useQuery({
       queryFn: () => CoreService.threadSummary.getById(params),
       queryKey: ["thread_summaries", { id: params.id }],
-      refetchInterval: 10 * 1000,
+      refetchInterval: 3 * 1000,
     });
 
   return {

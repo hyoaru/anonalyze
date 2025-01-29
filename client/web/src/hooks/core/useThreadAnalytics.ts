@@ -11,7 +11,7 @@ export default function useThreadAnalytics() {
     useQuery({
       queryFn: () => CoreService.threadAnalytic.getById(params),
       queryKey: ["thread_analytics", { id: params.id }],
-      refetchInterval: 10 * 1000,
+      refetchInterval: 3 * 1000,
     });
 
   const getThreadAnalyticMetrics = (
@@ -23,7 +23,7 @@ export default function useThreadAnalytics() {
       queryFn: () =>
         CoreService.threadAnalytic.getThreadAnalyticMetrics(params),
       queryKey: ["thread_analytics_metrics", { thread_id: params.id }],
-      refetchInterval: 10 * 1000,
+      refetchInterval: 3 * 1000,
     });
   /* eslint-enable react-hooks/rules-of-hooks */
 
