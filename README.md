@@ -1,6 +1,6 @@
 # Anonalyze: An NLP-Enhanced and ML-Driven Platform for Sentiment and Insight Extraction
 
-<video src="./preview.mp4"></video>
+https://github.com/user-attachments/assets/5daea2f7-081d-4c4c-8b92-f0b65ba805c1
 
 Anonalyze is a **research-driven AI-powered web platform** developed as part of an undergraduate thesis project. The platform focuses on analyzing **anonymous user-generated content** through **Machine Learning (ML)** and **Natural Language Processing (NLP)** techniques.  
 
