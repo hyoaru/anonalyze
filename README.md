@@ -2,12 +2,23 @@
 
 https://github.com/user-attachments/assets/5daea2f7-081d-4c4c-8b92-f0b65ba805c1
 
-Anonalyze is a **research-driven AI-powered web platform** developed as part of an undergraduate thesis project. The platform focuses on analyzing **anonymous user-generated content** through **Machine Learning (ML)** and **Natural Language Processing (NLP)** techniques.  
+Anonalyze is a **research-driven AI, ML, and NLP-powered web platform** developed as part of an undergraduate thesis project. The platform focuses on analyzing **anonymous user-generated content** through **Machine Learning (ML)** and **Natural Language Processing (NLP)** techniques.  
 
 - **Sentiment Analysis** (positive, negative, neutral)  
 - **Emotion Classification** (joy, sadness, anger, fear, love, surprise)  
 - **Keyword & Keyphrase Extraction** (RAKE algorithm)  
 - **Discussion Summarization** (LLM-based summaries)  
+
+## Model Training Process
+This project utilizes a **sentiment and emotion classification model** using **Machine Learning (ML)** and **Natural Language Processing (NLP)**. The system analyzes text and predicts:
+- **Sentiment**: positive, negative, or neutral
+- **Emotion**: sadness, joy, love, anger, fear, or surprise
+
+The core model utilizes a **Multinomial Naive Bayes classifier**, trained on a large dataset of Twitter messages.
+
+**Model Training Process**: 
+- Repository: https://github.com/hyoaru/anonalyze-process
+- [See the training process live](https://htmlpreview.github.io/?https://github.com/hyoaru/anonalyze-process/blob/master/models/sentiment-emotion-classification/model-training-process.html)
 
 ## Tech Stack
 - **Frontend:** React + Typescript + Tanstack
@@ -41,7 +52,7 @@ sudo docker compose -f docker-compose.development.yaml up
 
 ### 4. Configure Core API
 Enter the container:
-```bash
+```bash 
 docker exec -it anonalyze_api_core bash
 ```
 Run the following commands inside:
